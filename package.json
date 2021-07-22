@@ -7,8 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,json,css}'",
     "test": "jest"
+  },
+  "lint-staged": {
+    "*.@(ts|tsx)": [
+      "yarn lint",
+      "yarn format"
+    ]
   },
   "dependencies": {
     "next": "^11.0.1",
@@ -26,9 +33,11 @@
     "eslint": "^7.31.0",
     "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.6",
     "jest-watch-typeahead": "^0.6.4",
+    "lint-staged": "^11.1.0",
     "prettier": "^2.3.2",
     "typescript": "^4.2.4"
   }
