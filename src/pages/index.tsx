@@ -1,8 +1,7 @@
 import { NextPage } from 'next';
-import styles from 'styles/Home.module.css';
 
 const Home: NextPage = () => {
-  return <div className={styles.container}>cafe shares</div>;
+  return <div className='text-green-500'>cafe shares</div>;
 };
 
 export default Home;
