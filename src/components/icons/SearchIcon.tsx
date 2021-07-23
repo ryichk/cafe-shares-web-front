@@ -2,15 +2,13 @@ import React from 'react';
 
 import type { IconProps } from './icon';
 
-export const SearchIcon: React.FC<IconProps> = (props: IconProps) => (
+export const SearchIcon: React.FC<IconProps> = ({ classes }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    className='h-6 w-6'
+    className={classes}
     fill='none'
     viewBox='0 0 24 24'
-    stroke={props.color || 'currentColor'}
-    width={props.size || 24}
-    height={props.size || 24}
+    stroke='currentColor'
   >
     <path
       strokeLinecap='round'
