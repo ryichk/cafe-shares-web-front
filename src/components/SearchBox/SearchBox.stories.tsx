@@ -8,6 +8,6 @@ export default {
   component: SearchBox,
 } as ComponentMeta<typeof SearchBox>;
 
-const Template: ComponentStory<typeof SearchBox> = (props) => <SearchBox {...props} />;
+const Template: ComponentStory<typeof SearchBox> = () => <SearchBox />;
 
 export const Default = Template.bind({});
