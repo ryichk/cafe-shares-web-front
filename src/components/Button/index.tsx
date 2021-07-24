@@ -8,7 +8,7 @@ const SIZES = {
   large: 'py-1 px-14 text-base',
 };
 
-export const Button: React.FunctionComponent<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   bgColor = 'bg-primary',
   size = 'medium',
   label,
