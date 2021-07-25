@@ -6,7 +6,7 @@ import { CardListProps } from './CardList';
 
 export const CardList: React.FC<CardListProps> = ({ loading, cafes }) => {
   const LoadingCard = (
-    <div className='my-6 p-2 max-w-sm mx-auto bg-white border border-gray-400 rounded-lg shadow-lg flex items-center space-x-4'>
+    <div className='my-6 p-2 max-w-sm mx-auto rounded-lg shadow-md flex items-center space-x-4'>
       <div className='flex-shrink-0 w-28 h-28 grid text-gray-400 border border-gray-300 rounded-lg'>
         <div className='place-self-center'>Loading...</div>
       </div>
