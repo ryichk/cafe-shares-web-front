@@ -1,6 +1,6 @@
 export interface CardProps {
-  imageUrl: string;
   name: string;
-  description: string;
+  imageURL: string;
+  catchCopy: string;
   area: string;
 }
