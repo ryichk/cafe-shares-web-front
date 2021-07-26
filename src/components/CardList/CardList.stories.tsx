@@ -17,15 +17,41 @@ export const Default = Template.bind({});
 Default.args = {
   loading: false,
   cafes: [
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
-    { ...CardStories.Default.args },
+    {
+      name: CardStories.Default.args.name,
+      logo_image: CardStories.Default.args.imageURL,
+      catch: CardStories.Default.args.catchCopy,
+      large_area: { name: '東京' },
+      middle_area: { name: '渋谷' },
+    },
+    {
+      name: CardStories.Default.args.name,
+      logo_image: CardStories.Default.args.imageURL,
+      catch: CardStories.Default.args.catchCopy,
+      large_area: { name: '東京' },
+      middle_area: { name: '渋谷' },
+    },
+    {
+      name: CardStories.Default.args.name,
+      logo_image: CardStories.Default.args.imageURL,
+      catch: CardStories.Default.args.catchCopy,
+      large_area: { name: '東京' },
+      middle_area: { name: '渋谷' },
+    },
+    {
+      name: CardStories.Default.args.name,
+      logo_image: CardStories.Default.args.imageURL,
+      catch: CardStories.Default.args.catchCopy,
+      large_area: { name: '東京' },
+      middle_area: { name: '渋谷' },
+    },
+    {
+      name: CardStories.Default.args.name,
+      logo_image: CardStories.Default.args.imageURL,
+      catch: CardStories.Default.args.catchCopy,
+      large_area: { name: '東京' },
+      middle_area: { name: '渋谷' },
+    },
   ],
 };
 
