@@ -3,4 +3,4 @@ export interface CardProps {
   imageURL: string;
   catchCopy: string;
   area: string;
-};
+}
