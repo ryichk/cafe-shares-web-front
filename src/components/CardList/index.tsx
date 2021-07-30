@@ -39,7 +39,7 @@ export const CardList: React.FC<CardListProps> = ({ loading, cafes }) => {
         <div className='my-6' key={String(index)}>
           <Card
             name={cafe.name}
-            imageURL={cafe.logo_image}
+            imageURL={cafe.photo}
             catchCopy={cafe.catch}
             area={`${cafe.large_area.name} ${cafe.middle_area.name}`}
           />
