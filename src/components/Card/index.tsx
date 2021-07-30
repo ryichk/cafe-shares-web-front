@@ -7,7 +7,7 @@ import type { CardProps } from './Card';
 export const Card: React.FC<CardProps> = ({ name, imageURL, catchCopy, area }) => (
   <div className='p-2 max-w-sm mx-auto bg-white rounded-lg shadow-md flex items-center space-x-4'>
     <div className='flex-shrink-0'>
-      <Image src={imageURL} width={130} height={130} alt={name} className='rounded-lg' />
+      <Image src={imageURL.pc.l} width={130} height={130} alt={name} className='rounded-lg' />
     </div>
     <div className='flex-grow'>
       <div className='mt-1 text-md font-semibold tracking-wide text-gray-700'>{name}</div>

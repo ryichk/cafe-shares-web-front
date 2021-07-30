@@ -11,7 +11,9 @@ export const CardList: React.FC<CardListProps> = ({ loading, cafes }) => {
         <div className='place-self-center'>Loading...</div>
       </div>
       <div className='flex-grow'>
-        <div className='text-xl font-semibold tracking-wide text-gray-700'>......</div>
+        <div className='text-xl font-semibold tracking-wide text-gray-700'>
+          ......
+        </div>
         <p className='text-xs text-gray-500'>......</p>
         <div>
           <LocationIcon classes={'h-4 w-4 mt-1 mr-1 text-gray-500'} />
@@ -39,7 +41,7 @@ export const CardList: React.FC<CardListProps> = ({ loading, cafes }) => {
         <div className='my-6' key={String(index)}>
           <Card
             name={cafe.name}
-            imageURL={cafe.logo_image}
+            imageURL={cafe.photo}
             catchCopy={cafe.catch}
             area={`${cafe.large_area.name} ${cafe.middle_area.name}`}
           />
