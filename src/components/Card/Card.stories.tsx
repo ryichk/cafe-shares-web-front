@@ -13,8 +13,14 @@ const Template: ComponentStory<typeof Card> = (args: CardProps) => <Card {...arg
 
 export const Default = Template.bind({});
 Default.args = {
+  loading: false,
   name: 'and people jinnan (アンドピープル神南)',
   imageURL: 'https://imgfp.hotp.jp/IMGH/62/45/P021566245/P021566245_480.jpg',
   catchCopy: '海外の廃墟がコンセプトのダイニングバー★',
   area: '東京都渋谷区神南',
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  loading: true,
 };
