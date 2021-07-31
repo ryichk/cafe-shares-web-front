@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Card } from '../Card';
-import { LocationIcon, HeartIcon } from '../icons';
 import { CardListProps } from './CardList';
 
 export const CardList: React.FC<CardListProps> = ({ loading, cafes }) => {
