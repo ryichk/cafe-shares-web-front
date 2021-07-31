@@ -3,20 +3,20 @@ import React from 'react';
 import type { ButtonProps } from './Button';
 
 const SIZES = {
-  small: 'py-1 px-4 text-xs',
-  medium: 'py-1 px-5 text-base',
-  large: 'py-1 px-14 text-base',
+  small: 'px-7 text-xs',
+  medium: 'px-10 text-base',
+  large: 'px-14 text-base',
 };
 
 export const Button: React.FC<ButtonProps> = ({
-  bgColor = 'bg-primary',
+  btnColor = 'btn-primary',
   size = 'medium',
   label,
   ...props
 }: ButtonProps) => (
   <button
     type='button'
-    className={`${bgColor} ${SIZES[size]} text-white hover:bg-opacity-70 shadow-md rounded-3xl border border-gray-200`}
+    className={`${btnColor} ${SIZES[size]} btn shadow-md rounded-3xl`}
     {...props}
   >
     {label}

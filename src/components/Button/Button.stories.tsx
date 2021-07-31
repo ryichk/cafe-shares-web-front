@@ -4,7 +4,7 @@ import React from 'react';
 import { Button } from '.';
 
 export default {
-  title: 'Example/Button',
+  title: 'Button',
   component: Button,
 } as ComponentMeta<typeof Button>;
 
@@ -12,23 +12,29 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  label: 'Button',
+  label: 'Primary',
 };
 
-export const Danger = Template.bind({});
-Danger.args = {
-  bgColor: 'bg-danger',
-  label: 'リセット',
+export const Secondary = Template.bind({});
+Secondary.args = {
+  btnColor: 'btn-secondary',
+  label: 'Secondary',
+};
+
+export const Accent = Template.bind({});
+Accent.args = {
+  btnColor: 'btn-accent',
+  label: 'Accent',
 };
 
 export const Large = Template.bind({});
 Large.args = {
   size: 'large',
-  label: '検索',
+  label: 'Large',
 };
 
 export const Small = Template.bind({});
 Small.args = {
   size: 'small',
-  label: 'Button',
+  label: 'Small',
 };
