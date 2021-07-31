@@ -58,5 +58,41 @@ Default.args = {
 export const Loading = Template.bind({});
 Loading.args = {
   loading: true,
-  cafes: [],
+  cafes: [
+    {
+      name: '',
+      photo: { pc: { l: '' } },
+      catch: '',
+      large_area: { name: '' },
+      middle_area: { name: '' },
+    },
+    {
+      name: '',
+      photo: { pc: { l: '' } },
+      catch: '',
+      large_area: { name: '' },
+      middle_area: { name: '' },
+    },
+    {
+      name: '',
+      photo: { pc: { l: '' } },
+      catch: '',
+      large_area: { name: '' },
+      middle_area: { name: '' },
+    },
+    {
+      name: '',
+      photo: { pc: { l: '' } },
+      catch: '',
+      large_area: { name: '' },
+      middle_area: { name: '' },
+    },
+    {
+      name: '',
+      photo: { pc: { l: '' } },
+      catch: '',
+      large_area: { name: '' },
+      middle_area: { name: '' },
+    },
+  ],
 };
