@@ -17,7 +17,8 @@ Default.args = {
   name: 'and people jinnan (アンドピープル神南)',
   imageURL: 'https://imgfp.hotp.jp/IMGH/62/45/P021566245/P021566245_480.jpg',
   catchCopy: '海外の廃墟がコンセプトのダイニングバー★',
-  area: '東京都渋谷区神南',
+  genre: 'カフェ・スイーツ / ダイニングバー・バル',
+  area: '東京 渋谷',
 };
 
 export const Loading = Template.bind({});
