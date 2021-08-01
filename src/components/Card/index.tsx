@@ -7,24 +7,24 @@ import type { CardProps } from './Card';
 
 export const Card: React.FC<CardProps> = ({
   loading,
-  id,
-  name,
-  imageURL,
-  catchCopy,
   genre,
   area,
-  address,
+  id,
+  imageURL,
+  name,
+  catchCopy,
   stationName,
   access,
-  capacity,
-  cafeURL,
+  address,
   businessHours,
   closeDay,
+  budget,
+  card,
+  capacity,
   wifi,
   parking,
   pet,
-  card,
-  budget,
+  cafeURL,
 }) => {
   {
     return loading ? (
@@ -58,21 +58,21 @@ export const Card: React.FC<CardProps> = ({
         <input type='checkbox' id={id} className='modal-toggle' />
         <CafeDetailModal
           id={id}
-          name={name}
           imageURL={imageURL}
+          name={name}
           catchCopy={catchCopy}
-          address={address}
           stationName={stationName}
           access={access}
-          capacity={capacity}
-          cafeURL={cafeURL}
+          address={address}
           businessHours={businessHours}
           closeDay={closeDay}
+          budget={budget}
+          card={card}
+          capacity={capacity}
           wifi={wifi}
           parking={parking}
           pet={pet}
-          card={card}
-          budget={budget}
+          cafeURL={cafeURL}
         />
       </>
     );
