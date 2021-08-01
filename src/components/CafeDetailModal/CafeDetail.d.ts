@@ -1,18 +1,18 @@
 export interface CafeDetailProps {
   id: string;
-  name: string;
   imageURL: string;
+  name: string;
   catchCopy: string;
-  address: string;
   stationName: string;
   access: string;
-  capacity: number;
-  cafeURL: string;
+  address: string;
   businessHours: string;
   closeDay: string;
+  budget: string;
+  card: string;
+  capacity: number;
   wifi: string;
   parking: string;
   pet: string;
-  card: string;
-  budget: string;
+  cafeURL: string;
 }
