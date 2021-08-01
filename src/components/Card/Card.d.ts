@@ -1,7 +1,7 @@
-export interface CardProps {
+import type { CafeDetailProps } from '../CafeDetailModal/CafeDetail';
+
+export interface CardProps extends CafeDetailProps {
   loading: boolean;
-  name: string;
-  imageURL: string;
-  catchCopy: string;
+  genre: string;
   area: string;
 }
