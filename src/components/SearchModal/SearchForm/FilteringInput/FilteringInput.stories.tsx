@@ -6,6 +6,13 @@ import { FilteringInput } from '.';
 export default {
   title: 'FilteringInput',
   component: FilteringInput,
+  decorators: [
+    (Story) => (
+      <div className='max-w-sm'>
+        <Story />
+      </div>
+    )
+  ]
 } as ComponentMeta<typeof FilteringInput>;
 
 const Template: ComponentStory<typeof FilteringInput> = (args) => <FilteringInput {...args} />;

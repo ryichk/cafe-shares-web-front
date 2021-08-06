@@ -7,6 +7,13 @@ import { FilteringSelect } from '.';
 export default {
   title: 'FilteringSelect',
   component: FilteringSelect,
+  decorators: [
+    (Story) => (
+      <div className='max-w-sm'>
+        <Story />
+      </div>
+    )
+  ]
 } as ComponentMeta<typeof FilteringSelect>;
 
 const Template: ComponentStory<typeof FilteringSelect> = (args) => <FilteringSelect {...args} />;
