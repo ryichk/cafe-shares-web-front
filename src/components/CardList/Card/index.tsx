@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
 
-import { CafeDetailModal } from '../CafeDetailModal';
-import { LocationIcon } from '../icons';
+import { LocationIcon } from '../../icons';
+import { CafeDetail } from '../CafeDetail';
 import type { CardProps } from './Card';
 
 export const Card: React.FC<CardProps> = ({
@@ -56,24 +56,26 @@ export const Card: React.FC<CardProps> = ({
           </div>
         </label>
         <input type='checkbox' id={id} className='modal-toggle' />
-        <CafeDetailModal
-          id={id}
-          imageURL={imageURL}
-          name={name}
-          catchCopy={catchCopy}
-          stationName={stationName}
-          access={access}
-          address={address}
-          businessHours={businessHours}
-          closeDay={closeDay}
-          budget={budget}
-          card={card}
-          capacity={capacity}
-          wifi={wifi}
-          parking={parking}
-          pet={pet}
-          cafeURL={cafeURL}
-        />
+        <div id={id} className='modal overflow-scroll py-3'>
+          <CafeDetail
+            id={id}
+            imageURL={imageURL}
+            name={name}
+            catchCopy={catchCopy}
+            stationName={stationName}
+            access={access}
+            address={address}
+            businessHours={businessHours}
+            closeDay={closeDay}
+            budget={budget}
+            card={card}
+            capacity={capacity}
+            wifi={wifi}
+            parking={parking}
+            pet={pet}
+            cafeURL={cafeURL}
+          />
+        </div>
       </>
     );
   }

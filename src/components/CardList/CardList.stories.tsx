@@ -1,7 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import React from 'react';
 
-import * as CardStories from '../Card/Card.stories';
+import * as CardStories from './Card/Card.stories';
 import { CardListProps } from './CardList';
 import { CardList } from '.';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CafeInfo } from '../../interfaces';
-import { Card } from '../Card';
+import { Card } from './Card';
 import { CardListProps } from './CardList';
 
 export const CardList: React.FC<CardListProps> = ({ loading, cafes }) => {
