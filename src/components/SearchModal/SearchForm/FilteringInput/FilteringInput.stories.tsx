@@ -1,6 +1,7 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
+import { InputProps } from '../../.../../../../interfaces';
 import { FilteringInput } from '.';
 
 export default {
@@ -11,11 +12,11 @@ export default {
       <div className='max-w-sm'>
         <Story />
       </div>
-    )
-  ]
-} as ComponentMeta<typeof FilteringInput>;
+    ),
+  ],
+} as Meta<typeof FilteringInput>;
 
-const Template: ComponentStory<typeof FilteringInput> = (args) => <FilteringInput {...args} />;
+const Template: Story<InputProps> = (args) => <FilteringInput {...args} />;
 
 export const Keyword = Template.bind({});
 Keyword.args = {

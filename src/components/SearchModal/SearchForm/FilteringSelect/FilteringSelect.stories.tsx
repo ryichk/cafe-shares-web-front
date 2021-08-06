@@ -1,7 +1,8 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import React from 'react';
 
 import { filteringOrNot, largeAreas, order } from '../../../../data';
+import { SelectProps } from '../../../../interfaces';
 import { FilteringSelect } from '.';
 
 export default {
@@ -12,11 +13,11 @@ export default {
       <div className='max-w-sm'>
         <Story />
       </div>
-    )
-  ]
-} as ComponentMeta<typeof FilteringSelect>;
+    ),
+  ],
+} as Meta<typeof FilteringSelect>;
 
-const Template: ComponentStory<typeof FilteringSelect> = (args) => <FilteringSelect {...args} />;
+const Template: Story<SelectProps> = (args) => <FilteringSelect {...args} />;
 
 export const Prefecture = Template.bind({});
 Prefecture.args = {

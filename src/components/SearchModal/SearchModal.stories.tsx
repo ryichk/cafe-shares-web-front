@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
 import { SearchModal } from '.';
@@ -6,8 +6,8 @@ import { SearchModal } from '.';
 export default {
   title: 'SearchModal',
   component: SearchModal,
-} as ComponentMeta<typeof SearchModal>;
+} as Meta<typeof SearchModal>;
 
-const Template: ComponentStory<typeof SearchModal> = () => <SearchModal />;
+const Template: Story<typeof SearchModal> = () => <SearchModal />;
 
 export const Default = Template.bind({});
