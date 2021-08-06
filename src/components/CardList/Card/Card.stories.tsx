@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
 import type { CardProps } from './Card';
@@ -7,9 +7,9 @@ import { Card } from '.';
 export default {
   title: 'Card',
   component: Card,
-} as ComponentMeta<typeof Card>;
+} as Meta<typeof Card>;
 
-const Template: ComponentStory<typeof Card> = (args: CardProps) => <Card {...args} />;
+const Template: Story<CardProps> = (args: CardProps) => <Card {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
