@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
 import * as CardStories from './Card/Card.stories';
@@ -8,10 +8,9 @@ import { CardList } from '.';
 export default {
   component: CardList,
   title: 'CardList',
-  decorators: [(story) => <div>{story()}</div>],
-} as ComponentMeta<typeof CardList>;
+} as Meta<typeof CardList>;
 
-const Template = (args: CardListProps) => <CardList {...args} />;
+const Template: Story<CardListProps> = (args: CardListProps) => <CardList {...args} />;
 
 export const Default = Template.bind({});
 const cafeInfo = {
