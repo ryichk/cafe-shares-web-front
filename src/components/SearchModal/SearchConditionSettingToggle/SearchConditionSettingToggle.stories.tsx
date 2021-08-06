@@ -8,8 +8,6 @@ export default {
   component: SearchConditionSettingToggle,
 } as Meta<typeof SearchConditionSettingToggle>;
 
-const Template: Story<typeof SearchConditionSettingToggle> = () => (
-  <SearchConditionSettingToggle />
-);
+const Template: Story<typeof SearchConditionSettingToggle> = () => <SearchConditionSettingToggle />;
 
 export const Default = Template.bind({});
