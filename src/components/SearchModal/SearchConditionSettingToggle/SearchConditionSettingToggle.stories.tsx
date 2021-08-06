@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
 import { SearchConditionSettingToggle } from '.';
@@ -6,9 +6,9 @@ import { SearchConditionSettingToggle } from '.';
 export default {
   title: 'SearchConditionSettingToggle',
   component: SearchConditionSettingToggle,
-} as ComponentMeta<typeof SearchConditionSettingToggle>;
+} as Meta<typeof SearchConditionSettingToggle>;
 
-const Template: ComponentStory<typeof SearchConditionSettingToggle> = () => (
+const Template: Story<typeof SearchConditionSettingToggle> = () => (
   <SearchConditionSettingToggle />
 );
 
