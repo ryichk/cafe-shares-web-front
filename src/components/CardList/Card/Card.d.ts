@@ -1,4 +1,4 @@
-import type { CafeDetailProps } from '../CafeDetailModal/CafeDetail';
+import type { CafeDetailProps } from '../CafeDetail/CafeDetail';
 
 export interface CardProps extends CafeDetailProps {
   loading: boolean;

@@ -1,20 +1,17 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import React from 'react';
 
-import * as CardListStories from '../CardList/CardList.stories';
+import * as CardListStories from '../CardList.stories';
 import { CafeDetailProps } from './CafeDetail';
-import { CafeDetailModal } from '.';
+import { CafeDetail } from '.';
 
 export default {
-  title: 'CardDetailModal',
-  component: CafeDetailModal,
-} as ComponentMeta<typeof CafeDetailModal>;
+  title: 'CardDetail',
+  component: CafeDetail,
+} as ComponentMeta<typeof CafeDetail>;
 
-const Template: ComponentStory<typeof CafeDetailModal> = (args: CafeDetailProps) => (
-  <>
-    <input type='checkbox' id={args.id} className='modal-toggle' checked />
-    <CafeDetailModal {...args} />
-  </>
+const Template: ComponentStory<typeof CafeDetail> = (args: CafeDetailProps) => (
+  <CafeDetail {...args} />
 );
 
 export const Default = Template.bind({});
