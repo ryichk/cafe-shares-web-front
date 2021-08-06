@@ -71,6 +71,24 @@ export interface HotpepperResponse {
     results_available: number;
     results_returned: number;
     results_start: number;
-    shop: CafeInfo;
+    shop: Array<CafeInfo>;
   };
+}
+
+export interface SelectData {
+  name: string;
+  code: string;
+}
+
+export interface Input {
+  label: string;
+  name: string;
+}
+
+export interface SelectProps extends Input {
+  data: Array<SelectData>;
+}
+
+export interface InputProps extends Input {
+  placeholder: string;
 }
