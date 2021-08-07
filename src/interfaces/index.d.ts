@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface Photo {
   pc: {
     l: string;
@@ -75,20 +77,41 @@ export interface HotpepperResponse {
   };
 }
 
+export interface ResultCounts {
+  results_available: number;
+  results_returned: number;
+  results_start: number;
+}
+
+export interface SearchParams {
+  start: number;
+  largeArea: string;
+  keyword: string;
+  wifi: string;
+  privateRoom: string;
+  noSmoking: string;
+  parking: string;
+  pet: string;
+  card: string;
+  order: string;
+}
+
 export interface SelectData {
   name: string;
   code: string;
 }
 
-export interface Input {
+export interface FormItem {
   label: string;
   name: string;
+  state: string;
+  setState: React.Dispatch<React.SetStateAction>;
 }
 
-export interface SelectProps extends Input {
+export interface SelectProps extends FormItem {
   data: Array<SelectData>;
 }
 
-export interface InputProps extends Input {
+export interface InputProps extends FormItem {
   placeholder: string;
 }

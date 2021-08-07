@@ -1,7 +1,6 @@
 import { SelectData } from '../interfaces';
 
 export const largeAreas: Array<SelectData> = [
-  { name: '未選択', code: '0' },
   { name: '北海道', code: 'Z041' },
   { name: '青森県', code: 'Z051' },
   { name: '岩手県', code: 'Z052' },

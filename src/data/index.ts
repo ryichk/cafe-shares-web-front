@@ -1,3 +1,3 @@
-export { filteringOrNot } from './filteringOrNot';
+export { thereOrNot, whetherPossible } from './filteringOrNot';
 export { largeAreas } from './largeAreas';
-export { order } from './order';
+export { sortOrderTypes } from './sortOrderTypes';
