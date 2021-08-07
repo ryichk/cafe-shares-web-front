@@ -7,13 +7,13 @@ import { CardList } from '.';
 
 export default {
   component: CardList,
-  title: 'CardList',
+  title: 'Components/CardList',
 } as Meta<typeof CardList>;
 
 const Template: Story<CardListProps> = (args: CardListProps) => <CardList {...args} />;
 
 export const Default = Template.bind({});
-const cafeInfo = {
+export const cafeInfo = {
   name: CardStories.Default.args.name,
   photo: { pc: { l: CardStories.Default.args.imageURL } },
   genre: { name: 'カフェ・スイーツ' },

@@ -5,7 +5,7 @@ import { InputProps } from '../../.../../../../interfaces';
 import { FilteringInput } from '.';
 
 export default {
-  title: 'FilteringInput',
+  title: 'Components/SearchModal/SearchForm/FilteringInput',
   component: FilteringInput,
   decorators: [
     (Story) => (

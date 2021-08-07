@@ -4,7 +4,7 @@ import React from 'react';
 import { SearchConditionSettingToggle } from '.';
 
 export default {
-  title: 'SearchConditionSettingToggle',
+  title: 'Components/SearchModal/SearchConditionSettingToggle',
   component: SearchConditionSettingToggle,
 } as Meta<typeof SearchConditionSettingToggle>;
 
