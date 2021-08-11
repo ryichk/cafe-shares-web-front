@@ -13,7 +13,7 @@ export default {
 const Template: Story<CardListProps> = (args: CardListProps) => <CardList {...args} />;
 
 export const Default = Template.bind({});
-export const cafeInfo = {
+const cafeInfo = {
   name: CardStories.Default.args.name,
   photo: { pc: { l: CardStories.Default.args.imageURL } },
   genre: { name: 'カフェ・スイーツ' },
