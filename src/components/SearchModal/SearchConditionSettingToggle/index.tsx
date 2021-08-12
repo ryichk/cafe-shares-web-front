@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { PlusIcon, SearchIcon } from '../../icons';
 
 export const SearchConditionSettingToggle: React.FC = () => (

@@ -6,7 +6,7 @@ import { CafeDetailProps } from './CafeDetail';
 import { CafeDetail } from '.';
 
 export default {
-  title: 'CardDetail',
+  title: 'Components/CardList/CardDetail',
   component: CafeDetail,
 } as Meta<typeof CafeDetail>;
 
