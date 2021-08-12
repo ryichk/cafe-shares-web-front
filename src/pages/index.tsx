@@ -57,7 +57,7 @@ const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
   }, [searchParams]);
 
   const handleReadMore = (): void => {
-    if (shop.length <= page.results_start) return;
+    if (shop.length === page.results_available) return;
 
     setSearchParams((prev) => {
       return {
@@ -86,13 +86,13 @@ const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
             </div>
           </div>
           <div className='flex flex-wrap lg:flex-row sm:flex-col sm:justify-center'>
-            {page.results_returned === 0 ? (
+            {page.results_available === 0 ? (
               <p className='m-10'>お探しの条件では検索結果がヒットしませんでした。</p>
             ) : (
               <CardList loading={loading} cafes={shop} />
             )}
           </div>
-          {shop.length <= page.results_start || page.results_returned === 0 ? (
+          {shop.length === page.results_available ? (
             <></>
           ) : (
             <div className='grid justify-center mt-5'>
