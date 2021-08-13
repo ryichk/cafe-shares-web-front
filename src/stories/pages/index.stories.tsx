@@ -1,9 +1,9 @@
 import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
-import * as CardListStories from '../components/CardList/CardList.stories';
-import type { HotpepperResponse } from '../interfaces';
-import Home from '.';
+import * as CardListStories from '../../components/CardList/CardList.stories';
+import type { HotpepperResponse } from '../../interfaces';
+import Home from '../../pages';
 
 export default {
   title: 'Pages/Home',
