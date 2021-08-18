@@ -83,18 +83,17 @@ export interface ResultCounts {
   results_start: number;
 }
 
-export interface SearchParams {
-  start: number;
-  largeArea: string;
-  keyword: string;
-  wifi: string;
-  privateRoom: string;
-  noSmoking: string;
-  parking: string;
-  pet: string;
-  card: string;
-  order: string;
-}
+export type SearchParams =
+  | 'start'
+  | 'largeArea'
+  | 'keyword'
+  | 'wifi'
+  | 'privateRoom'
+  | 'noSmoking'
+  | 'parking'
+  | 'pet'
+  | 'card'
+  | 'order';
 
 export interface SelectData {
   name: string;

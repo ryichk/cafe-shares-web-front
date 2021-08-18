@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cafeshareswebfront-staging-14008-authRole",
+      "UnauthRoleArn": "arn:aws:iam::553258776374:role/amplify-cafeshareswebfront-staging-14008-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::553258776374:role/amplify-cafeshareswebfront-staging-14008-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-cafeshareswebfront-staging-14008-deployment",
+      "UnauthRoleName": "amplify-cafeshareswebfront-staging-14008-unauthRole",
+      "StackName": "amplify-cafeshareswebfront-staging-14008",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:553258776374:stack/amplify-cafeshareswebfront-staging-14008/751adea0-fde7-11eb-9b5b-0a9a881894a7",
+      "AmplifyAppId": "d1609inlndbsbo"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1609inlndbsbo",
+          "type": "cicd"
+        }
+      }
+    }
+  }
+}

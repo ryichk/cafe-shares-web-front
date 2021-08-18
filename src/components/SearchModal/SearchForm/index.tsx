@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 import { thereOrNot, whetherPossible, largeAreas, sortOrderTypes } from '../../../data';
-import { SearchParams } from '../../../interfaces';
 import { Button } from '../../Button';
 import { CloseIcon } from '../../icons';
 
 import { FilteringInput } from './FilteringInput';
 import { FilteringSelect } from './FilteringSelect';
+import { SearchParams } from 'interfaces';
 
 export interface SearchFormProps {
-  setSearchParams: React.Dispatch<React.SetStateAction<SearchParams>>;
+  setSearchParams: React.Dispatch<React.SetStateAction<Record<SearchParams, string>>>;
 }
 
 export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
@@ -27,7 +27,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
     event.preventDefault();
 
     setSearchParams({
-      start: 1,
+      start: '1',
       largeArea: largeArea,
       keyword: keyword,
       wifi: wifi,

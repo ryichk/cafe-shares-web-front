@@ -14,8 +14,8 @@ const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
     results_returned: Number(data.results.results_returned),
     results_start: Number(data.results.results_start),
   });
-  const [searchParams, setSearchParams] = useState<SearchParams>({
-    start: page.results_start,
+  const [searchParams, setSearchParams] = useState<Record<SearchParams, string>>({
+    start: '1',
     largeArea: 'Z011',
     keyword: '',
     wifi: '0',
@@ -62,7 +62,7 @@ const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
     setSearchParams((prev) => {
       return {
         ...prev,
-        start: prev.start + 10,
+        start: String(Number(prev.start) + 10),
       };
     });
   };
