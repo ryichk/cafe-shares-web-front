@@ -7,11 +7,9 @@
     "config": {
       "SourceDir": "src",
       "DistributionDir": ".next",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "npm run-script start"
+      "BuildCommand": "yarn build",
+      "StartCommand": "yarn start"
     }
   },
-  "providers": [
-    "awscloudformation"
-  ]
+  "providers": ["awscloudformation"]
 }
