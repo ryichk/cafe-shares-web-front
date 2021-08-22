@@ -9,7 +9,7 @@ export const SearchModal: React.FC<SearchFormProps> = ({ setSearchParams }) => (
       <SearchConditionSettingToggle />
     </label>
     <input type='checkbox' id='search-form' className='modal-toggle' />
-    <div id='search-form' className='modal pb-20'>
+    <div id='search-form' className='modal'>
       <SearchForm setSearchParams={setSearchParams} />
     </div>
   </>
