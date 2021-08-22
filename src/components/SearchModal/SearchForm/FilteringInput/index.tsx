@@ -18,14 +18,14 @@ export const FilteringInput: React.FC<InputProps> = ({
 
   return (
     <div className='flex flex-row justify-between items-center bg-white border-b-2 form-control'>
-      <label htmlFor={name} className='text-lg font-semibold'>
+      <label htmlFor={name} className='text-base sm:text-lg font-semibold'>
         {label}
       </label>
       <input
         type='text'
         placeholder={placeholder}
         id={name}
-        className='p-1'
+        className='p-1 text-xs sm:text-lg'
         value={state}
         onChange={handleChange}
       />

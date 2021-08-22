@@ -55,7 +55,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
   };
 
   return (
-    <div className='flex flex-col justify-center max-w-lg w-full bg-white p-10'>
+    <div className='modal-box flex flex-col justify-center max-w-lg h-full sm:h-3/4 w-full bg-white pt-20 xs:p-10 overflow-y-scroll'>
       <div className='max-w-sm w-full m-auto'>
         <div className='flex justify-between'>
           <h2 className='text-2xl font-semibold'>検索条件</h2>
