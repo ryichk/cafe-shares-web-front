@@ -38,6 +38,11 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
       card: card,
       order: sortOrder,
     });
+
+    const modalToggle: HTMLInputElement = document.getElementById(
+      'search-form',
+    ) as HTMLInputElement;
+    modalToggle.checked = false;
   };
 
   const handleResetSearchParams = (event: React.MouseEvent<HTMLButtonElement>) => {
