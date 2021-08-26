@@ -10,7 +10,7 @@ const search = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   URL =
     typeof req.query.keyword === undefined
       ? URL
-      : `${URL}&keyword=${String(req.query.keyword).replace('　', ' ')}`;
+      : `${URL}&keyword=${String(req.query.keyword).replace(/[\u3000]/g, '+')}`;
   URL = typeof req.query.wifi === undefined ? URL : `${URL}&wifi=${req.query.wifi}`;
   URL =
     typeof req.query.privateRoom === undefined
