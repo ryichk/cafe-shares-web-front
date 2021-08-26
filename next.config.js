@@ -5,4 +5,8 @@ module.exports = {
   env: {
     API_KEY: process.env.API_KEY,
   },
+  i18n: {
+    locales: ['en', 'ja'],
+    defaultLocale: 'ja',
+  },
 };
