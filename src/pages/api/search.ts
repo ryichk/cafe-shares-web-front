@@ -7,7 +7,10 @@ const search = async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
   URL =
     typeof req.query.large_area === undefined ? URL : `${URL}&large_area=${req.query.largeArea}`;
-  URL = typeof req.query.keyword === undefined ? URL : `${URL}&keyword=${req.query.keyword}`;
+  URL =
+    typeof req.query.keyword === undefined
+      ? URL
+      : `${URL}&keyword=${String(req.query.keyword).replace(/[\u3000]/g, '+')}`;
   URL = typeof req.query.wifi === undefined ? URL : `${URL}&wifi=${req.query.wifi}`;
   URL =
     typeof req.query.privateRoom === undefined
