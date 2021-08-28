@@ -2,7 +2,7 @@ import { NextPage, GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { SearchModal, CardList, Button } from '../components';
+import { SearchModal, CardList, Button, ScrollToTop } from '../components';
 import hotpepperImg from '../components/assets/images/hotpepper-s.gif';
 import type { HotpepperResponse, ResultCounts, CafeInfo, SearchParams } from '../interfaces';
 
@@ -99,6 +99,9 @@ const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
               <Button size='large' label='Read More' onClick={handleReadMore} />
             </div>
           )}
+        </div>
+        <div className='fixed right-3 sm:right-48 bottom-3'>
+          <ScrollToTop />
         </div>
       </div>
     </div>
