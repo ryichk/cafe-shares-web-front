@@ -20,7 +20,7 @@ export const SEO: VFC<MetaData> = ({
   const defaultTitle = 'Cafe Shares';
   const defaultDescription = '日本全国のカフェを検索して探せます';
   const defaultURL = 'cafe-shares.com';
-  const defaultImgURL = 'https://staging-env.cafe-shares.com/cafe-shares.png';
+  const defaultImgURL = 'https://cafe-shares.com/cafe-shares.png';
 
   const title = pageTitle ? `${pageTitle} | ${defaultTitle}` : defaultTitle;
   const description = pageDescription ? pageDescription : defaultDescription;
