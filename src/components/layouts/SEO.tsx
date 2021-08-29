@@ -34,6 +34,7 @@ export const SEO: VFC<MetaData> = ({
       <title>{title}</title>
       <meta name='viewport' content='width=device-width,initial-scale=1.0' />
       <meta name='description' content={description} />
+      <meta property='fb:app_id' content='2165548063462833' />
       <meta property='og:url' content={url} />
       <meta property='og:title' content={title} />
       <meta property='og:site_name' content={title} />
