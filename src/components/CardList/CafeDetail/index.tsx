@@ -81,7 +81,7 @@ export const CafeDetail: React.FC<CafeDetailProps> = ({
       </div>
       <div className='my-3'>
         <h3 className='font-semibold mb-1'>店舗URL</h3>
-        <a href={cafeURL} target='blank' className='link link-primary'>
+        <a href={cafeURL} target='_blank' rel='noopener noreferrer' className='link link-primary'>
           {cafeURL}
         </a>
       </div>
