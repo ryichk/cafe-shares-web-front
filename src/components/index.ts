@@ -4,3 +4,4 @@ export { CardList } from './CardList';
 export { SearchModal } from './SearchModal';
 export { ScrollToTop } from './ScrollToTop';
 export { SEO } from './layouts/SEO';
+export { Footer } from './layouts/Footer';
