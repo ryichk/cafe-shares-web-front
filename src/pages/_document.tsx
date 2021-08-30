@@ -40,12 +40,6 @@ export default class MyDocument extends Document {
                     });
 
                     const perfData = window.performance.timing;
-                    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-                    gtag('event', 'page_load_timing_complete', {
-                      'name': 'load',
-                      'value': pageLoadTime,
-                      'event_category': 'Page Load Time'
-                    });
 
                     const requestResponseTime = perfData.responseEnd - perfData.requestStart;
                     gtag('event', 'request_response_timing_complete', {
@@ -54,12 +48,23 @@ export default class MyDocument extends Document {
                       'event_category': 'Request Response Time'
                     });
 
-                    const renderTime = perfData.domComplete - perfData.domLoading;
-                    gtag('event', 'rendering_timing_complete', {
-                      'name': 'load',
-                      'value': renderTime,
-                      'event_category': 'Rendering Time'
-                    });
+                    if (perfData.loadEventEnd) {
+                      const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                      async gtag('event', 'page_load_timing_complete', {
+                        'name': 'load',
+                        'value': pageLoadTime,
+                        'event_category': 'Page Load Time'
+                      });
+                    }
+
+                    if (perfData.domComplete) {
+                      const renderTime = perfData.domComplete - perfData.domLoading;
+                      gtag('event', 'rendering_timing_complete', {
+                        'name': 'load',
+                        'value': renderTime,
+                        'event_category': 'Rendering Time'
+                      });
+                    }
                   }
                 `,
                 }}
