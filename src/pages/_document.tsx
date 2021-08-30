@@ -50,7 +50,7 @@ export default class MyDocument extends Document {
 
                     if (perfData.loadEventEnd) {
                       const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-                      async gtag('event', 'page_load_timing_complete', {
+                      gtag('event', 'page_load_timing_complete', {
                         'name': 'load',
                         'value': pageLoadTime,
                         'event_category': 'Page Load Time'
