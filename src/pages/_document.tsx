@@ -33,7 +33,7 @@ export default class MyDocument extends Document {
 
                   if (window.performance) {
                     const timeSincePageLoad = Math.round(performance.now());
-                    gtag('event', 'timing_complete', {
+                    gtag('event', 'js_dependencies_timing_complete', {
                       'name': 'load',
                       'value': timeSincePageLoad,
                       'event_category': 'JS Dependencies'
@@ -41,21 +41,21 @@ export default class MyDocument extends Document {
 
                     const perfData = window.performance.timing;
                     const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-                    gtag('event', 'timing_complete', {
+                    gtag('event', 'page_load_timing_complete', {
                       'name': 'load',
                       'value': pageLoadTime,
                       'event_category': 'Page Load Time'
                     });
 
                     const requestResponseTime = perfData.responseEnd - perfData.requestStart;
-                    gtag('event', 'timing_complete', {
+                    gtag('event', 'request_response_timing_complete', {
                       'name': 'load',
                       'value': requestResponseTime,
                       'event_category': 'Request Response Time'
                     });
 
                     const renderTime = perfData.domComplete - perfData.domLoading;
-                    gtag('event', 'timing_complete', {
+                    gtag('event', 'rendering_timing_complete', {
                       'name': 'load',
                       'value': renderTime,
                       'event_category': 'Rendering Time'
