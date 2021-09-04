@@ -30,42 +30,6 @@ export default class MyDocument extends Document {
                   gtag('config', '${GA_TRACKING_ID}', {
                     page_path: window.location.pathname,
                   });
-
-                  if (window.performance) {
-                    const timeSincePageLoad = Math.round(performance.now());
-                    gtag('event', 'js_dependencies_timing_complete', {
-                      'name': 'load',
-                      'value': timeSincePageLoad,
-                      'event_category': 'JS Dependencies'
-                    });
-
-                    const perfData = window.performance.timing;
-
-                    const requestResponseTime = perfData.responseEnd - perfData.requestStart;
-                    gtag('event', 'request_response_timing_complete', {
-                      'name': 'load',
-                      'value': requestResponseTime,
-                      'event_category': 'Request Response Time'
-                    });
-
-                    if (perfData.loadEventEnd) {
-                      const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-                      gtag('event', 'page_load_timing_complete', {
-                        'name': 'load',
-                        'value': pageLoadTime,
-                        'event_category': 'Page Load Time'
-                      });
-                    }
-
-                    if (perfData.domComplete) {
-                      const renderTime = perfData.domComplete - perfData.domLoading;
-                      gtag('event', 'rendering_timing_complete', {
-                        'name': 'load',
-                        'value': renderTime,
-                        'event_category': 'Rendering Time'
-                      });
-                    }
-                  }
                 `,
                 }}
               />

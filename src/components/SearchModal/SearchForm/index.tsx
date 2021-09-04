@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { thereOrNot, whetherPossible, largeAreas, sortOrderTypes } from '../../../data';
+import * as gtag from '../../../lib/gtag';
 import { Button } from '../../Button';
 import { CloseIcon } from '../../icons';
 
@@ -23,7 +24,14 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
   const [card, setCard] = useState<string>('0');
   const [sortOrder, setSortOrder] = useState<string>('4');
 
-  const handleSetSearchParams = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const closeSearchForm = () => {
+    const modalToggle: HTMLInputElement = document.getElementById(
+      'search-form',
+    ) as HTMLInputElement;
+    modalToggle.checked = false;
+  };
+
+  const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     setSearchParams({
@@ -39,10 +47,23 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
       order: sortOrder,
     });
 
-    const modalToggle: HTMLInputElement = document.getElementById(
-      'search-form',
-    ) as HTMLInputElement;
-    modalToggle.checked = false;
+    closeSearchForm();
+
+    gtag.event({
+      action: 'search_cafe',
+      category: 'Cafe Search',
+      label: `${
+        largeArea
+          ? `large_area: ${largeAreas.filter((area) => area.code === largeArea)[0].name}, `
+          : ''
+      }${keyword ? `keyword: ${keyword}, ` : ''}${Number(wifi) ? 'wifi, ' : ''}${
+        Number(privateRoom) ? 'private_room, ' : ''
+      }${Number(noSmoking) ? 'no_smoking, ' : ''}${Number(parking) ? 'parking, ' : ''}${
+        Number(pet) ? 'pet, ' : ''
+      }${Number(card) ? 'card, ' : ''}sort_order: ${
+        sortOrderTypes.filter((order) => order.code === sortOrder)[0].name
+      }`,
+    });
   };
 
   const handleResetSearchParams = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -160,7 +181,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
             size='small'
             onClick={handleResetSearchParams}
           />
-          <Button label='検索' size='large' onClick={handleSetSearchParams} />
+          <Button label='検索' size='large' onClick={handleSearch} />
         </div>
       </div>
     </div>
