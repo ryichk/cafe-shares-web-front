@@ -9,8 +9,8 @@ export const pageView = (url: URL): void => {
 interface GTagEvent {
   action: string;
   category: string;
-  label: string;
-  value: number;
+  label?: string;
+  value?: number;
 }
 
 export const event = ({ action, category, label, value }: GTagEvent): void => {
