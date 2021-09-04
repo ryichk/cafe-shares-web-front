@@ -6,6 +6,7 @@ import { SearchModal, CardList, Button, ScrollToTop, Footer } from '../component
 import cafeSharesImg from '../components/assets/images/cafe-shares.png';
 import hotpepperImg from '../components/assets/images/hotpepper-s.gif';
 import type { HotpepperResponse, ResultCounts, CafeInfo, SearchParams } from '../interfaces';
+import * as gtag from '../lib/gtag';
 
 const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,6 +66,12 @@ const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
         ...prev,
         start: String(Number(prev.start) + 10),
       };
+    });
+
+    gtag.event({
+      action: 'click_read_more',
+      category: 'Click Read More Button',
+      label: 'clicked read more button',
     });
   };
 
