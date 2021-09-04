@@ -1,6 +1,10 @@
 # Cafe Shares
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a cafe search web application that uses the [API of Hotpepper gourmet](https://webservice.recruit.co.jp/doc/hotpepper/).
+
+This project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+Cafe Shares
 
 ## Getting Started
 
