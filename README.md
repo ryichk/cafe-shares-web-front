@@ -1,20 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cafe Shares
+
+This is a cafe search web application that uses the [API of Hotpepper gourmet](https://webservice.recruit.co.jp/doc/hotpepper/).
+
+This project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+Cafe Shares
 
 ## Getting Started
 
-set up:
+set up and run the development server:
 
 ```bash
-yarn
+docker-compose up
 ```
 
-run the development server:
+Next.js App: [http://localhost:8000](http://localhost:8000)
 
-```bash
-yarn dev
-```
-
-Open [http://localhost:8000](http://localhost:8000) with your browser to see the result.
+Storybook: [http://localhost:6006](http://localhost:6006)
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
@@ -31,8 +33,6 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy on AWS Amplify
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Deploy and host a hybrid app (SSG and SSR)](https://docs.amplify.aws/guides/hosting/nextjs/q/platform/js/#deploy-and-host-a-hybrid-app-ssg-and-ssr)
