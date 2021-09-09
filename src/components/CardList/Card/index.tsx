@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { MouseEvent } from 'react';
+import React from 'react';
 
 import * as gtag from '../../../lib/gtag';
 import { LocationIcon } from '../../icons';
@@ -27,9 +27,7 @@ export const Card: React.FC<CardProps> = ({
   pet,
   cafeURL,
 }) => {
-  const handleClick = (event: MouseEvent) => {
-    event.preventDefault();
-
+  const handleClick = () => {
     const modalToggle: HTMLInputElement = document.getElementById(id) as HTMLInputElement;
     modalToggle.checked = !modalToggle.checked;
 
