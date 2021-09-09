@@ -31,9 +31,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
     modalToggle.checked = false;
   };
 
-  const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
+  const handleSearch = () => {
     setSearchParams({
       start: '1',
       largeArea: largeArea,
@@ -66,9 +64,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
     });
   };
 
-  const handleResetSearchParams = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
+  const handleResetSearchParams = () => {
     setLargeArea('Z011');
     setKeyword('');
     setWifi('0');
