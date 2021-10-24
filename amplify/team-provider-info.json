@@ -17,6 +17,9 @@
           "appId": "d1609inlndbsbo",
           "type": "cicd"
         }
+      },
+      "auth": {
+        "cafeshareswebfrontdf3bfe6c": {}
       }
     }
   },
@@ -38,6 +41,9 @@
           "appId": "d1609inlndbsbo",
           "type": "cicd"
         }
+      },
+      "auth": {
+        "cafeshareswebfrontdf3bfe6c": {}
       }
     }
   }
