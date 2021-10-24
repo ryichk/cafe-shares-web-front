@@ -1,14 +1,14 @@
 import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
-import { ChevronUp } from '../icons';
+import { ChevronUpIcon } from '../icons';
 
 const ScrollToTop = ({ visible = false }) => {
   return (
     <>
       {visible && (
         <div className='btn btn-primary btn-circle btn-sm'>
-          <ChevronUp />
+          <ChevronUpIcon />
         </div>
       )}
     </>

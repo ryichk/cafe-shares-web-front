@@ -2,7 +2,7 @@ import { VFC } from 'react';
 
 import type { IconProps } from './icon';
 
-export const ChevronUp: VFC<IconProps> = ({ classes }) => (
+export const ChevronUpIcon: VFC<IconProps> = ({ classes }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     className={`h-5 w-5 ${classes}`}
