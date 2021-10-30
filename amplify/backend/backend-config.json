@@ -12,12 +12,8 @@
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
-        "loginMechanisms": [
-          "PREFERRED_USERNAME"
-        ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
+        "loginMechanisms": ["PREFERRED_USERNAME"],
+        "signupAttributes": ["EMAIL"],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": "12",
           "passwordPolicyCharacters": [
@@ -27,13 +23,8 @@
           ]
         },
         "mfaConfiguration": "OPTIONAL",
-        "mfaTypes": [
-          "SMS",
-          "TOTP"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
+        "mfaTypes": ["SMS", "TOTP"],
+        "verificationMechanisms": ["EMAIL"]
       }
     }
   },
@@ -46,9 +37,7 @@
         {
           "category": "auth",
           "resourceName": "cafeshares",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         }
       ]
     }
@@ -62,17 +51,12 @@
         {
           "category": "auth",
           "resourceName": "cafeshares",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         },
         {
           "category": "function",
           "resourceName": "AdminQueriesbe6deefd",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
+          "attributes": ["Arn", "Name"]
         }
       ]
     }

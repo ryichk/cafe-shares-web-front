@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 // Only perform tasks if the user is in a specific group
 const allowedGroup = process.env.GROUP;
 
-const checkGroup = function(req, res, next) {
+const checkGroup = function (req, res, next) {
   if (req.path == '/signUserOut') {
     return next();
   }
@@ -55,7 +55,8 @@ const checkGroup = function(req, res, next) {
 
   // Fail if group enforcement is being used
   if (req.apiGateway.event.requestContext.authorizer.claims['cognito:groups']) {
-    const groups = req.apiGateway.event.requestContext.authorizer.claims['cognito:groups'].split(',');
+    const groups =
+      req.apiGateway.event.requestContext.authorizer.claims['cognito:groups'].split(',');
     if (!(allowedGroup && groups.indexOf(allowedGroup) > -1)) {
       const err = new Error(`User does not have permissions to perform administrative tasks`);
       next(err);
@@ -202,7 +203,11 @@ app.get('/listGroupsForUser', async (req, res, next) => {
   try {
     let response;
     if (req.query.token) {
-      response = await listGroupsForUser(req.query.username, req.query.limit || 25, req.query.token);
+      response = await listGroupsForUser(
+        req.query.username,
+        req.query.limit || 25,
+        req.query.token,
+      );
     } else if (req.query.limit) {
       response = await listGroupsForUser(req.query.username, (Limit = req.query.limit));
     } else {
@@ -224,7 +229,11 @@ app.get('/listUsersInGroup', async (req, res, next) => {
   try {
     let response;
     if (req.query.token) {
-      response = await listUsersInGroup(req.query.groupname, req.query.limit || 25, req.query.token);
+      response = await listUsersInGroup(
+        req.query.groupname,
+        req.query.limit || 25,
+        req.query.token,
+      );
     } else if (req.query.limit) {
       response = await listUsersInGroup(req.query.groupname, (Limit = req.query.limit));
     } else {
@@ -264,10 +273,7 @@ app.post('/signUserOut', async (req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err.message);
   if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
-  res
-    .status(err.statusCode)
-    .json({ message: err.message })
-    .end();
+  res.status(err.statusCode).json({ message: err.message }).end();
 });
 
 app.listen(3000, () => {
