@@ -12,12 +12,12 @@ export const Button: React.FC<ButtonProps> = ({
   btnColor = 'btn-primary',
   size = 'medium',
   label,
-  ...props
+  onClick,
 }: ButtonProps) => (
   <button
     type='button'
     className={`${btnColor} ${SIZES[size]} btn shadow-md rounded-3xl`}
-    {...props}
+    onClick={onClick}
   >
     {label}
   </button>
