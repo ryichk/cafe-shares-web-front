@@ -1,6 +1,8 @@
 export { ArrowLeftIcon } from './ArrowLeftIcon';
 export { ChevronUpIcon } from './ChevronUp';
 export { CloseIcon } from './CloseIcon';
+export { EyeIcon } from './EyeIcon';
+export { EyeOffIcon } from './EyeOffIcon';
 export { HeartIcon } from './HeartIcon';
 export { LocationIcon } from './LocationIcon';
 export { LockIcon } from './LockIcon';
