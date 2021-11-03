@@ -12,7 +12,6 @@ const SignUp: NextPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [code, setCode] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -35,9 +34,6 @@ const SignUp: NextPage = () => {
         break;
       case 'password':
         setPassword(value);
-        break;
-      case 'confirmPassword':
-        setConfirmPassword(value);
         break;
       case 'code':
         setCode(value);
@@ -62,9 +58,6 @@ const SignUp: NextPage = () => {
       return false;
     } else if (password.length < 12 || password.length > 50) {
       setErrorMessage('passwordは12文字以上, 50文字以下にしてください。');
-      return false;
-    } else if (password !== confirmPassword) {
-      setErrorMessage('passwordとconfirm passwordが一致していません。');
       return false;
     } else {
       setErrorMessage('');
@@ -215,19 +208,6 @@ const SignUp: NextPage = () => {
                   placeholder='password'
                   className='bg-white ml-1 p-2'
                   value={password}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className='flex m-1 mb-10 p-2'>
-                <label className='label'>
-                  <LockIcon classes='h-6 w-6 text-primary' />
-                </label>
-                <input
-                  name='confirmPassword'
-                  type='password'
-                  placeholder='confirm password'
-                  className='bg-white ml-1 p-2'
-                  value={confirmPassword}
                   onChange={handleInputChange}
                 />
               </div>
