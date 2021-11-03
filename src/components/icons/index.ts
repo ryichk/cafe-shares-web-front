@@ -1,11 +1,11 @@
+export { ArrowLeftIcon } from './ArrowLeftIcon';
+export { ChevronUpIcon } from './ChevronUp';
 export { CloseIcon } from './CloseIcon';
 export { HeartIcon } from './HeartIcon';
 export { LocationIcon } from './LocationIcon';
+export { LockIcon } from './LockIcon';
+export { MailIcon } from './MailIcon';
+export { MessageIcon } from './MessageIcon';
 export { PlusIcon } from './PlusIcon';
 export { SearchIcon } from './SearchIcon';
-export { ChevronUpIcon } from './ChevronUp';
 export { UserIcon } from './UserIcon';
-export { MailIcon } from './MailIcon';
-export { LockIcon } from './LockIcon';
-export { ArrowLeftIcon } from './ArrowLeftIcon';
-export { MessageIcon } from './MessageIcon';
