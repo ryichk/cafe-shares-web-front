@@ -6,12 +6,21 @@ import { useState, useEffect } from 'react';
 
 import { Button } from '../components';
 import { ErrorAlert } from '../components/Alerts';
-import { ArrowLeftIcon, LockIcon, MailIcon, MessageIcon, UserIcon } from '../components/icons';
+import {
+  ArrowLeftIcon,
+  EyeIcon,
+  EyeOffIcon,
+  LockIcon,
+  MailIcon,
+  MessageIcon,
+  UserIcon,
+} from '../components/icons';
 
 const SignUp: NextPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isMasked, setIsMasked] = useState(true);
   const [code, setCode] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -204,12 +213,21 @@ const SignUp: NextPage = () => {
                 </label>
                 <input
                   name='password'
-                  type='password'
+                  type={isMasked ? 'password' : 'text'}
                   placeholder='password'
                   className='bg-white ml-1 p-2'
                   value={password}
                   onChange={handleInputChange}
                 />
+                {isMasked ? (
+                  <div onClick={() => setIsMasked(false)}>
+                    <EyeOffIcon classes='m-2 text-secondary' />
+                  </div>
+                ) : (
+                  <div onClick={() => setIsMasked(true)}>
+                    <EyeIcon classes='m-2' />
+                  </div>
+                )}
               </div>
             </div>
             <Button size='large' label='create user' onClick={signUp} />
