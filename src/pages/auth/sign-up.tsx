@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
-import { Button } from '../components';
-import { ErrorAlert } from '../components/Alerts';
+import { Button } from '../../components';
+import { ErrorAlert } from '../../components/Alerts';
 import {
   ArrowLeftIcon,
   EyeIcon,
@@ -14,7 +14,7 @@ import {
   MailIcon,
   MessageIcon,
   UserIcon,
-} from '../components/icons';
+} from '../../components/icons';
 
 const SignUp: NextPage = () => {
   const [username, setUsername] = useState('');

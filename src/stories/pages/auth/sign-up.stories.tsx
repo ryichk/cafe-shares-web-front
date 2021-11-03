@@ -1,10 +1,10 @@
 import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
-import SignUp from '../../pages/sign-up';
+import SignUp from '../../../pages/auth/sign-up';
 
 export default {
-  title: 'Pages/SignUp',
+  title: 'Pages/Auth/SignUp',
   component: SignUp,
 } as Meta<typeof SignUp>;
 
