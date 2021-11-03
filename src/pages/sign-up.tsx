@@ -141,6 +141,11 @@ const SignUp: NextPage = () => {
       {isSubmitted ? (
         <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
           <div className='form-control'>
+            <div className='mb-10'>
+              <a onClick={()=>setIsSubmitted(false)}>
+                <ArrowLeftIcon classes='h-5 w-5' />
+              </a>
+            </div>
             <div className='m-1 p-2'>
               <div className='flex border-b border-primary'>
                 <label className='label'>
@@ -173,8 +178,8 @@ const SignUp: NextPage = () => {
             </div>
           </div>
           <div className='mt-5 mx-auto'>
-              <Button size='large' label='activate account' onClick={confirmSignUp} />
-            </div>
+            <Button size='large' label='activate account' onClick={confirmSignUp} />
+          </div>
         </div>
       ) : (
         <>
@@ -244,6 +249,9 @@ const SignUp: NextPage = () => {
             </div>
             <div className='mt-5 mx-auto'>
               <Button size='large' label='create user' onClick={signUp} />
+            </div>
+            <div className='mt-10'>
+              Active your account? <a className='text-secondary' onClick={()=>setIsSubmitted(true)}>Activate account</a>
             </div>
           </div>
           <div className='mt-10 text-center'>
