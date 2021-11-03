@@ -257,7 +257,7 @@ const SignUp: NextPage = () => {
           <div className='mt-10 text-center'>
             <p>Already have an account?</p>
             <div className='mt-2'>
-              <Link href='/sign-in'>
+              <Link href='/auth/sign-in'>
                 <a>
                   <Button btnColor='btn-secondary' size='medium' label='sign in' />
                 </a>
