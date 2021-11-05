@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
 import { Button } from '../../components';
-import { ErrorAlert } from '../../components/Alerts';
+import { ErrorAlert, SuccessAlert } from '../../components/Alerts';
 import {
   ArrowLeftIcon,
   EyeIcon,
@@ -25,6 +25,8 @@ const SignUp: NextPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const [user, setUser] = useState();
   const router = useRouter();
 
@@ -106,9 +108,43 @@ const SignUp: NextPage = () => {
   const confirmSignUp = async (): Promise<void> => {
     try {
       await Auth.confirmSignUp(username, code);
-      await Auth.signIn({ username, password });
-      router.push('/user-profile');
+      setErrorMessage('');
+      setIsError(false);
+      setSuccessMessage('アカウントの確認が完了しました。');
+      setIsSuccess(true);
+      if (username && password) {
+        await Auth.signIn({ username, password });
+        router.push('/user-profile');
+      } else {
+        router.push('/auth/sign-in');
+      }
     } catch (error) {
+      setSuccessMessage('');
+      setIsSuccess(false);
+
+      switch (error.name) {
+        case 'CodeMismatchException':
+          setErrorMessage('確認コードが正しくありません。');
+          break;
+        default:
+          setErrorMessage(`${error}`);
+          break;
+      }
+
+      setIsError(true);
+    }
+  };
+
+  const resendVerificationCode = async (): Promise<void> => {
+    try {
+      await Auth.resendSignUp(username);
+      setErrorMessage('');
+      setIsError(false);
+      setSuccessMessage('確認コードを送信しました。');
+      setIsSuccess(true);
+    } catch (error) {
+      setSuccessMessage('');
+      setIsSuccess(false);
       setErrorMessage(`${error}`);
       setIsError(true);
     }
@@ -138,11 +174,12 @@ const SignUp: NextPage = () => {
   return (
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
+      {isSuccess ? <SuccessAlert message={successMessage} /> : <></>}
       {isSubmitted ? (
         <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
           <div className='form-control'>
             <div className='mb-10'>
-              <a onClick={()=>setIsSubmitted(false)}>
+              <a onClick={() => setIsSubmitted(false)}>
                 <ArrowLeftIcon classes='h-5 w-5' />
               </a>
             </div>
@@ -179,6 +216,12 @@ const SignUp: NextPage = () => {
           </div>
           <div className='mt-5 mx-auto'>
             <Button size='large' label='activate account' onClick={confirmSignUp} />
+          </div>
+          <div className='mt-10 mx-auto'>
+            Resend verification code?{' '}
+            <a className='text-secondary' onClick={resendVerificationCode}>
+              Resend
+            </a>
           </div>
         </div>
       ) : (
@@ -251,7 +294,10 @@ const SignUp: NextPage = () => {
               <Button size='large' label='create user' onClick={signUp} />
             </div>
             <div className='mt-10'>
-              Active your account? <a className='text-secondary' onClick={()=>setIsSubmitted(true)}>Activate account</a>
+              Active your account?{' '}
+              <a className='text-secondary' onClick={() => setIsSubmitted(true)}>
+                Activate account
+              </a>
             </div>
           </div>
           <div className='mt-10 text-center'>
