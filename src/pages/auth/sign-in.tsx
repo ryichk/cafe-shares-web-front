@@ -6,11 +6,12 @@ import { useState, useEffect } from 'react';
 
 import { Button } from '../../components';
 import { ErrorAlert } from '../../components/Alerts';
-import { ArrowLeftIcon, LockIcon, UserIcon } from '../../components/icons';
+import { ArrowLeftIcon, EyeIcon, EyeOffIcon, LockIcon, UserIcon } from '../../components/icons';
 
 const SignIn: NextPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isMasked, setIsMasked] = useState(true);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [user, setUser] = useState();
@@ -39,12 +40,12 @@ const SignIn: NextPage = () => {
         username,
         password,
       });
-      setIsError(false);
       setErrorMessage('');
+      setIsError(false);
       router.push('/user-profile');
     } catch (error) {
-      setIsError(true);
       setErrorMessage(`${error}`);
+      setIsError(true);
     }
   };
 
@@ -105,12 +106,21 @@ const SignIn: NextPage = () => {
               </label>
               <input
                 name='password'
-                type='password'
+                type={isMasked ? 'password' : 'text'}
                 placeholder='password'
                 className='bg-white ml-1 p-2'
                 value={password}
                 onChange={handleInputChange}
               />
+              {isMasked ? (
+                <div onClick={() => setIsMasked(false)}>
+                  <EyeOffIcon classes='m-2 text-secondary' />
+                </div>
+              ) : (
+                <div onClick={() => setIsMasked(true)}>
+                  <EyeIcon classes='m-2' />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -118,7 +128,7 @@ const SignIn: NextPage = () => {
           <Button size='large' label='sign in' onClick={signIn} />
         </div>
         <div className='mt-10'>
-          Forget your password?{' '}
+          Forgot your password?{' '}
           <Link href='/reset-password'>
             <a className='text-secondary'>Reset password</a>
           </Link>
