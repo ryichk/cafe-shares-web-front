@@ -129,7 +129,7 @@ const SignIn: NextPage = () => {
         </div>
         <div className='mt-10'>
           Forgot your password?{' '}
-          <Link href='/reset-password'>
+          <Link href='/auth/reset-password'>
             <a className='text-secondary'>Reset password</a>
           </Link>
         </div>
