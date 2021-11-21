@@ -1,7 +1,7 @@
-import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
-import { CloseIcon } from '../../icons';
+import { CloseIcon } from '../../../icons';
 import { CafeDetailProps } from './CafeDetail';
 
 export const CafeDetail: React.FC<CafeDetailProps> = ({
@@ -23,21 +23,22 @@ export const CafeDetail: React.FC<CafeDetailProps> = ({
   cafeURL,
 }) => (
   <div className='card bg-white mt-auto max-w-lg'>
-    <figure className='p-4'>
-      <Image
-        src={imageURL}
-        alt={name}
-        width={485}
-        height={300}
-        className='h-64 rounded-lg shadow-lg'
-      />
-    </figure>
+    <div
+      className='h-72'
+      style={{
+        background: `no-repeat center / cover url(${imageURL})`,
+      }}
+    />
     <div className='card-body py-3 px-5'>
-      <h2 className='card-title text-2xl'>{name}</h2>
+      <div className='my-4'>
+        <Link href={`/cafe/${id}`}>
+          <h2 className='card-title text-2xl underline hover:text-primary'>{name}</h2>
+        </Link>
+      </div>
       <p>{catchCopy}</p>
       <div className='mt-7 mb-3'>
         <h3 className='font-semibold mb-1'>最寄駅</h3>
-        <p>{stationName}</p>
+        <p>{stationName}駅</p>
       </div>
       <div className='my-3'>
         <h3 className='font-semibold mb-1'>アクセス</h3>

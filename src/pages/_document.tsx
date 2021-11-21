@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-import { SEO } from '../components';
-import { GA_TRACKING_ID } from 'lib/gtag';
+import { SEO } from '../layouts';
+import { GA_TRACKING_ID } from '../lib/gtag';
 
 export default class MyDocument extends Document {
   render(): JSX.Element {

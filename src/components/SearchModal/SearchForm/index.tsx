@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { thereOrNot, whetherPossible, largeAreas, sortOrderTypes } from '../../../data';
 import * as gtag from '../../../lib/gtag';
 import { Button } from '../../Button';
-import { CloseIcon } from '../../icons';
+import { CloseIcon } from '../../../icons';
 
 import { FilteringInput } from './FilteringInput';
 import { FilteringSelect } from './FilteringSelect';

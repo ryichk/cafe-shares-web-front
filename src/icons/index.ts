@@ -10,4 +10,6 @@ export { MailIcon } from './MailIcon';
 export { MessageIcon } from './MessageIcon';
 export { PlusIcon } from './PlusIcon';
 export { SearchIcon } from './SearchIcon';
+export { SignInIcon } from './SignInIcon';
+export { SignOutIcon } from './SignOutIcon';
 export { UserIcon } from './UserIcon';

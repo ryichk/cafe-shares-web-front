@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import React from 'react';
 
 import * as gtag from '../../../lib/gtag';
-import { LocationIcon } from '../../icons';
+import { LocationIcon } from '../../../icons';
 import { CafeDetail } from '../CafeDetail';
 import type { CardProps } from './Card';
 
@@ -48,9 +47,12 @@ export const Card: React.FC<CardProps> = ({
     ) : (
       <>
         <div onClick={handleClick} className='card bg-white max-w-xs shadow-md w-screen min-h-full'>
-          <figure className='p-3 pb-0'>
-            <Image src={imageURL} width={388} height={240} alt={name} className='h-48 rounded-lg' />
-          </figure>
+          <div
+            className='h-52'
+            style={{
+              background: `no-repeat center / cover url(${imageURL})`,
+            }}
+          />
           <div className='max-w-md card-body p-4 lg:p-3'>
             <h2 className='card-title'>{name}</h2>
             <p className='text-sm'>{catchCopy}</p>

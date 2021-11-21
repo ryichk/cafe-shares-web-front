@@ -1,6 +1,6 @@
 import { VFC, useEffect, useState } from 'react';
 
-import { ChevronUpIcon } from '../icons';
+import { ChevronUpIcon } from '../../icons';
 
 export const ScrollToTop: VFC = () => {
   const [visible, setVisible] = useState(false);
