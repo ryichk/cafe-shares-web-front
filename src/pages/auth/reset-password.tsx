@@ -92,7 +92,7 @@ const ResetPassword: NextPage = () => {
         <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
           <div className='form-control'>
             <div className='mb-6'>
-              <h1 className='text-xl font-bold'>Password Reset</h1>
+              <h1 className='text-xl font-bold text-center'>Password Reset</h1>
             </div>
             {isSent ? (
               <>

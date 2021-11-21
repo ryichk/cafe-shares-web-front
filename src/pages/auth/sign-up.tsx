@@ -171,6 +171,9 @@ const SignUp: NextPage = () => {
         {isSubmitted ? (
           <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
             <div className='form-control'>
+              <div className='mb-6'>
+                <h1 className='text-xl font-bold text-center'>Sign Up</h1>
+              </div>
               <div className='m-1 p-2'>
                 <div className='flex border-b border-primary'>
                   <label className='label'>
@@ -216,6 +219,9 @@ const SignUp: NextPage = () => {
           <>
             <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
               <div className='form-control'>
+                <div className='mb-6'>
+                  <h1 className='text-xl font-bold text-center'>Sign Up</h1>
+                </div>
                 <div className='m-1 p-2'>
                   <div className='flex border-b border-primary'>
                     <label className='label'>
