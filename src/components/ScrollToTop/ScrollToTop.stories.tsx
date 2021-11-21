@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
-import { ChevronUpIcon } from '../icons';
+import { ChevronUpIcon } from '../../icons';
 
 const ScrollToTop = ({ visible = false }) => {
   return (
