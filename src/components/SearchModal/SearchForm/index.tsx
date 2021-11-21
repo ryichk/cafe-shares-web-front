@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import { thereOrNot, whetherPossible, largeAreas, sortOrderTypes } from '../../../data';
+import { CloseIcon } from '../../../icons';
 import * as gtag from '../../../lib/gtag';
 import { Button } from '../../Button';
-import { CloseIcon } from '../../icons';
 
 import { FilteringInput } from './FilteringInput';
 import { FilteringSelect } from './FilteringSelect';

@@ -1,6 +1,6 @@
 import { VFC, useEffect, useState } from 'react';
 
-import { ChevronUp } from '../icons';
+import { ChevronUpIcon } from '../../icons';
 
 export const ScrollToTop: VFC = () => {
   const [visible, setVisible] = useState(false);
@@ -30,7 +30,7 @@ export const ScrollToTop: VFC = () => {
     <>
       {visible && (
         <div className='btn btn-primary btn-circle btn-sm' onClick={scrollToTop}>
-          <ChevronUp />
+          <ChevronUpIcon />
         </div>
       )}
     </>

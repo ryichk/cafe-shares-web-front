@@ -2,10 +2,10 @@ import { NextPage, GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { SearchModal, CardList, Button, ScrollToTop, Footer } from '../components';
-import cafeSharesImg from '../components/assets/images/cafe-shares.png';
-import hotpepperImg from '../components/assets/images/hotpepper-s.gif';
+import hotpepperImg from '../assets/images/hotpepper-s.gif';
+import { Button, CardList, ScrollToTop, SearchModal } from '../components';
 import type { HotpepperResponse, ResultCounts, CafeInfo, SearchParams } from '../interfaces';
+import { Header, Footer } from '../layouts';
 import * as gtag from '../lib/gtag';
 
 const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
@@ -79,11 +79,7 @@ const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
     <>
       <div className='bg-primary'>
         <div className='container mx-auto'>
-          <div className='max-w-md w-48 sm:mx-auto pt-8 pl-4 pb-5'>
-            <h1>
-              <Image src={cafeSharesImg} alt='Cafe Shares' />
-            </h1>
-          </div>
+          <Header />
           <div className='mx-3'>
             <SearchModal setSearchParams={setSearchParams} />
           </div>

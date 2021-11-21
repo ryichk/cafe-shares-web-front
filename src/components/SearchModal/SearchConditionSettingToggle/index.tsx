@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PlusIcon, SearchIcon } from '../../icons';
+import { PlusIcon, SearchIcon } from '../../../icons';
 
 export const SearchConditionSettingToggle: React.FC = () => (
   <div className='flex p-1 pl-1.5 pr-3 max-w-sm mx-auto text-gray-500 bg-white border border-gray-200 rounded-md'>
