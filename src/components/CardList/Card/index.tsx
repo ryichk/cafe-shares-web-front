@@ -1,7 +1,7 @@
 import React from 'react';
 
-import * as gtag from '../../../lib/gtag';
 import { LocationIcon } from '../../../icons';
+import * as gtag from '../../../lib/gtag';
 import { CafeDetail } from '../CafeDetail';
 import type { CardProps } from './Card';
 

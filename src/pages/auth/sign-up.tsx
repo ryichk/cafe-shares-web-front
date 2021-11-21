@@ -1,19 +1,12 @@
 import { Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useState, useEffect } from 'react';
 
-import { Header, Footer } from '../../layouts';
-import {
-  EyeIcon,
-  EyeOffIcon,
-  LockIcon,
-  MailIcon,
-  MessageIcon,
-  UserIcon,
-} from '../../icons';
 import { Button, ErrorAlert, SuccessAlert } from '../../components';
+import { EyeIcon, EyeOffIcon, LockIcon, MailIcon, MessageIcon, UserIcon } from '../../icons';
+import { Header, Footer } from '../../layouts';
 
 const SignUp: NextPage = () => {
   const [username, setUsername] = useState('');
@@ -27,7 +20,6 @@ const SignUp: NextPage = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [user, setUser] = useState();
-  const router = useRouter();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { target } = event;
@@ -113,9 +105,9 @@ const SignUp: NextPage = () => {
       setIsSuccess(true);
       if (username && password) {
         await Auth.signIn({ username, password });
-        router.push('/user-profile');
+        Router.push('/user-profile');
       } else {
-        router.push('/auth/sign-in');
+        Router.push('/auth/sign-in');
       }
     } catch (error) {
       setSuccessMessage('');
@@ -162,7 +154,7 @@ const SignUp: NextPage = () => {
     init();
 
     if (user) {
-      router.push('/user-profile');
+      Router.push('/user-profile');
     }
 
     return () => {

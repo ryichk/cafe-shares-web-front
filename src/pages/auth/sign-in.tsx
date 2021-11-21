@@ -1,12 +1,12 @@
 import { Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useState, useEffect } from 'react';
 
-import { Header, Footer } from '../../layouts';
 import { Button, ErrorAlert } from '../../components';
 import { EyeIcon, EyeOffIcon, LockIcon, UserIcon } from '../../icons';
+import { Header, Footer } from '../../layouts';
 
 const SignIn: NextPage = () => {
   const [username, setUsername] = useState('');
@@ -15,7 +15,6 @@ const SignIn: NextPage = () => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [user, setUser] = useState();
-  const router = useRouter();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -42,7 +41,7 @@ const SignIn: NextPage = () => {
       });
       setErrorMessage('');
       setIsError(false);
-      router.push('/user-profile');
+      Router.push('/user-profile');
     } catch (error) {
       setErrorMessage(`${error}`);
       setIsError(true);
@@ -64,7 +63,7 @@ const SignIn: NextPage = () => {
     init();
 
     if (user) {
-      router.push('/user-profile');
+      Router.push('/user-profile');
     }
 
     return () => {

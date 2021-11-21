@@ -1,12 +1,12 @@
 import { Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useState, useEffect } from 'react';
 
-import { Header, Footer } from '../../layouts';
 import { Button, ErrorAlert, SuccessAlert } from '../../components';
 import { LockIcon, MessageIcon, UserIcon } from '../../icons';
+import { Header, Footer } from '../../layouts';
 
 const ResetPassword: NextPage = () => {
   const [username, setUsername] = useState('');
@@ -17,7 +17,6 @@ const ResetPassword: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const router = useRouter();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -56,7 +55,7 @@ const ResetPassword: NextPage = () => {
   const changePassword = async () => {
     try {
       await Auth.forgotPasswordSubmit(username, code, newPassword);
-      router.push('/auth/sign-in');
+      Router.push('/auth/sign-in');
     } catch (error) {
       setErrorMessage(`${error}`);
       setIsError(true);
@@ -69,7 +68,7 @@ const ResetPassword: NextPage = () => {
       try {
         const currentUser = await Auth.currentAuthenticatedUser();
         if (currentUser) {
-          router.push('/user-profile');
+          Router.push('/user-profile');
         }
         setIsError(false);
         setErrorMessage('');

@@ -31,7 +31,7 @@ export const CafeDetail: React.FC<CafeDetailProps> = ({
     />
     <div className='card-body py-3 px-5'>
       <div className='my-4'>
-        <Link href={`/cafe/${id}`}>
+        <Link href={`/cafe/${id}`} passHref>
           <h2 className='card-title text-2xl underline hover:text-primary'>{name}</h2>
         </Link>
       </div>

@@ -3,9 +3,9 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import hotpepperImg from '../assets/images/hotpepper-s.gif';
-import { Header, Footer } from '../layouts';
 import { Button, CardList, ScrollToTop, SearchModal } from '../components';
 import type { HotpepperResponse, ResultCounts, CafeInfo, SearchParams } from '../interfaces';
+import { Header, Footer } from '../layouts';
 import * as gtag from '../lib/gtag';
 
 const Home: NextPage<{ data: HotpepperResponse }> = ({ data }) => {
