@@ -19,7 +19,14 @@
         }
       },
       "auth": {
-        "cafeshareswebfrontdf3bfe6c": {}
+        "cafeshareswebfrontdf3bfe6c": {},
+        "cafeshares": {}
+      },
+      "function": {
+        "AdminQueriesbe6deefd": {
+          "deploymentBucketName": "amplify-cafeshareswebfront-production-32104-deployment",
+          "s3Key": "amplify-builds/AdminQueriesbe6deefd-6c594b782f4e56303437-build.zip"
+        }
       }
     }
   },
@@ -48,7 +55,7 @@
       "function": {
         "AdminQueriesbe6deefd": {
           "deploymentBucketName": "amplify-cafeshareswebfront-staging-02621-deployment",
-          "s3Key": "amplify-builds/AdminQueriesbe6deefd-362b3471656e647a7667-build.zip"
+          "s3Key": "amplify-builds/AdminQueriesbe6deefd-6c594b782f4e56303437-build.zip"
         }
       }
     }
