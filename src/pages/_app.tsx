@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import awsExports from '../aws-exports';
 import 'tailwindcss/tailwind.css';
+import { DefaultSeo } from 'next-seo';
+import SEO from '../../next-seo.config';
 
 import * as gtag from '../lib/gtag';
 
@@ -22,7 +24,12 @@ const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
     };
   }, [router.events]);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <DefaultSeo {...SEO} />
+      <Component {...pageProps} />
+    </>
+  );
 };
 
 export default MyApp;

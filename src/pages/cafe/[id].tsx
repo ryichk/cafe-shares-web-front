@@ -1,5 +1,6 @@
 import { NextPage, GetServerSideProps } from 'next';
 import React from 'react';
+import { NextSeo } from 'next-seo';
 
 import type { CafeInfo, HotpepperResponse } from '../../interfaces';
 import { Header, Footer } from '../../layouts';
@@ -38,6 +39,22 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
 
   return (
     <>
+      <NextSeo
+        title={cafe.name}
+        description={cafe.catch}
+        canonical={`https://cafe-shares.com/cafe/${cafe.id}`}
+        openGraph={{
+          images: [
+            {
+              url: cafe.photo.pc.l,
+              alt: cafe.name,
+            }
+          ],
+          url: `https://cafe-shares.com/cafe/${cafe.id}`,
+          title: cafe.name,
+          description: cafe.catch,
+        }}
+      />
       <div className='bg-primary'>
         <Header />
         <div className='bg-secondary m-auto max-w-5xl mt-5 p-5 sm:p-14 rounded-t-xl'>
