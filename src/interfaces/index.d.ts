@@ -49,6 +49,9 @@ export interface CafeInfo {
   budget_memo: string;
   catch: string;
   capacity: number;
+  party_capacity: number;
+  wedding: string;
+  charter: string;
   access: string;
   mobile_access: string;
   urls: {
@@ -56,9 +59,12 @@ export interface CafeInfo {
   };
   photo: Photo;
   open: string;
+  midnight: string;
   close: string;
   wifi: string;
   private_room: string;
+  horigotatsu: string;
+  tatami: string;
   card: string;
   non_smoking: string;
   parking: string;
@@ -66,6 +72,12 @@ export interface CafeInfo {
   pet: string;
   child: string;
   lunch: string;
+  course: string;
+  free_drink: string;
+  free_food: string;
+  barrier_free: string;
+  shop_detail_memo: string;
+  other_memo: string;
 }
 
 export interface HotpepperResponse {
