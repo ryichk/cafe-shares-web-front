@@ -1,8 +1,10 @@
 import { Amplify } from 'aws-amplify';
 import { NextPage } from 'next';
+import { DefaultSeo } from 'next-seo';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import SEO from '../../next-seo.config';
 import awsExports from '../aws-exports';
 import 'tailwindcss/tailwind.css';
 
@@ -22,7 +24,12 @@ const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
     };
   }, [router.events]);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <DefaultSeo {...SEO} />
+      <Component {...pageProps} />
+    </>
+  );
 };
 
 export default MyApp;
