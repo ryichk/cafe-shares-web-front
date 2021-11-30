@@ -1,6 +1,6 @@
 import { NextPage, GetServerSideProps } from 'next';
-import React from 'react';
 import { NextSeo } from 'next-seo';
+import React from 'react';
 
 import type { CafeInfo, HotpepperResponse } from '../../interfaces';
 import { Header, Footer } from '../../layouts';
@@ -48,7 +48,7 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
             {
               url: cafe.photo.pc.l,
               alt: cafe.name,
-            }
+            },
           ],
           url: `https://cafe-shares.com/cafe/${cafe.id}`,
           title: cafe.name,

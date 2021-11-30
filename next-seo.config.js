@@ -18,7 +18,7 @@ export default {
         width: 1280,
         height: 640,
         alt: 'Cafe Shares',
-      }
+      },
     ],
     url: 'https://cafe-shares.com',
     type: 'website',
@@ -27,4 +27,4 @@ export default {
     site_name: 'Cafe Shares',
     locale: 'ja',
   },
-}
+};

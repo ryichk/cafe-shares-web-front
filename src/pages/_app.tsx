@@ -1,12 +1,12 @@
 import { Amplify } from 'aws-amplify';
 import { NextPage } from 'next';
+import { DefaultSeo } from 'next-seo';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import SEO from '../../next-seo.config';
 import awsExports from '../aws-exports';
 import 'tailwindcss/tailwind.css';
-import { DefaultSeo } from 'next-seo';
-import SEO from '../../next-seo.config';
 
 import * as gtag from '../lib/gtag';
 
