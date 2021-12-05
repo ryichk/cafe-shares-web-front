@@ -95,7 +95,7 @@ export interface ResultCounts {
   results_start: number;
 }
 
-export type SearchParams =
+export type SearchKey =
   | 'start'
   | 'largeArea'
   | 'keyword'
