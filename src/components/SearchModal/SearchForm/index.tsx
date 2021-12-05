@@ -1,28 +1,40 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { thereOrNot, whetherPossible, largeAreas, sortOrderTypes } from '../../../data';
 import { CloseIcon } from '../../../icons';
 import * as gtag from '../../../lib/gtag';
+import { convertUrlParamsToJSON } from '../../../lib/util';
 import { Button } from '../../Button';
 
 import { FilteringInput } from './FilteringInput';
 import { FilteringSelect } from './FilteringSelect';
-import { SearchParams } from 'interfaces';
 
-export interface SearchFormProps {
-  setSearchParams: React.Dispatch<React.SetStateAction<Record<SearchParams, string>>>;
-}
-
-export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
-  const [largeArea, setLargeArea] = useState<string>('Z011');
-  const [keyword, setKeyword] = useState<string>('');
-  const [wifi, setWifi] = useState<string>('0');
-  const [privateRoom, setPrivateRoom] = useState<string>('0');
-  const [noSmoking, setNoSmoking] = useState<string>('0');
-  const [parking, setParking] = useState<string>('0');
-  const [pet, setPet] = useState<string>('0');
-  const [card, setCard] = useState<string>('0');
-  const [sortOrder, setSortOrder] = useState<string>('4');
+export const SearchForm: React.FC = () => {
+  const router = useRouter();
+  const { query } = router.query;
+  const params = query
+    ? convertUrlParamsToJSON(query as string)
+    : {
+        largeArea: 'Z011',
+        keyword: '',
+        wifi: '0',
+        privateRoom: '0',
+        noSmoking: '0',
+        parking: '0',
+        pet: '0',
+        card: '0',
+        order: '4',
+      };
+  const [largeArea, setLargeArea] = useState<string>(params.largeArea);
+  const [keyword, setKeyword] = useState<string>(params.keyword);
+  const [wifi, setWifi] = useState<string>(params.wifi);
+  const [privateRoom, setPrivateRoom] = useState<string>(params.privateRoom);
+  const [noSmoking, setNoSmoking] = useState<string>(params.noSmoking);
+  const [parking, setParking] = useState<string>(params.parking);
+  const [pet, setPet] = useState<string>(params.pet);
+  const [card, setCard] = useState<string>(params.card);
+  const [sortOrder, setSortOrder] = useState<string>(params.order);
 
   const closeSearchForm = () => {
     const modalToggle: HTMLInputElement = document.getElementById(
@@ -32,21 +44,22 @@ export const SearchForm: React.FC<SearchFormProps> = ({ setSearchParams }) => {
   };
 
   const handleSearch = () => {
-    setSearchParams({
+    const searchParams = {
+      largeArea,
+      keyword,
+      wifi,
+      privateRoom,
+      noSmoking,
+      parking,
+      pet,
+      card,
       start: '1',
-      largeArea: largeArea,
-      keyword: keyword,
-      wifi: wifi,
-      privateRoom: privateRoom,
-      noSmoking: noSmoking,
-      parking: parking,
-      pet: pet,
-      card: card,
       order: sortOrder,
-    });
+    };
+    const query = new URLSearchParams(searchParams);
+    router.push(`/search/${query}`);
 
     closeSearchForm();
-
     gtag.event({
       action: 'search_cafe',
       category: 'Cafe Search',
