@@ -9,7 +9,9 @@ frontend:
   phases:
     preBuild:
       commands:
-        - nvm use stable
+        - nvm install --lts --latest-npm
+        - nvm alias default 'lts/*'
+        - nvm install-latest-npm
         - yarn install
     build:
       commands:
