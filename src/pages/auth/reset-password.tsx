@@ -42,13 +42,29 @@ const ResetPassword: NextPage = () => {
     try {
       await Auth.forgotPassword(username);
       setIsSent(true);
-      setSuccessMessage('登録済みメールアドレス宛にパスワードリセットの認証コードを送信しました。');
+      setSuccessMessage(
+        '登録されているメールアドレスにパスワードリセットの確認コードを送信しました。',
+      );
       setIsSuccess(true);
       setIsError(false);
       setErrorMessage('');
     } catch (error) {
+      switch (error.name) {
+        case 'AuthError':
+          setErrorMessage('ユーザー名を入力してください。');
+          break;
+        case 'UserNotFoundException':
+          setErrorMessage('登録されていないユーザー名です。');
+          break;
+        case 'InvalidParameterException':
+          setErrorMessage('アカウントが有効化されていないため、パスワードをリセットできません。');
+          break;
+        default:
+          setErrorMessage(`${error}`);
+          break;
+      }
+
       setIsError(true);
-      setErrorMessage(`${error}`);
     }
   };
 
@@ -104,7 +120,7 @@ const ResetPassword: NextPage = () => {
                     <input
                       name='code'
                       type='text'
-                      placeholder='verification code'
+                      placeholder='確認コード'
                       className='bg-white ml-1 p-2'
                       value={code}
                       onChange={handleInputChange}
@@ -119,7 +135,7 @@ const ResetPassword: NextPage = () => {
                     <input
                       name='password'
                       type='password'
-                      placeholder='new password'
+                      placeholder='新しいパスワード'
                       className='bg-white ml-1 p-2'
                       value={newPassword}
                       onChange={handleInputChange}
@@ -140,7 +156,7 @@ const ResetPassword: NextPage = () => {
                     <input
                       name='username'
                       type='text'
-                      placeholder='username'
+                      placeholder='ユーザー名'
                       className='bg-white ml-1 p-2'
                       value={username}
                       onChange={handleInputChange}
@@ -155,7 +171,7 @@ const ResetPassword: NextPage = () => {
           </div>
         </div>
         <div className='mt-10 text-center'>
-          <p>No account?</p>
+          <p>アカウントがありませんか？</p>
           <div className='mt-2'>
             <Link href='/auth/sign-up'>
               <a>

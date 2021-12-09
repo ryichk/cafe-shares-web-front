@@ -117,6 +117,15 @@ const SignUp: NextPage = () => {
         case 'CodeMismatchException':
           setErrorMessage('確認コードが正しくありません。');
           break;
+        case 'AuthError':
+          setErrorMessage('ユーザー名と確認コードを入力してください。');
+          break;
+        case 'UserNotFoundException':
+          setErrorMessage('登録されていないユーザー名です。');
+          break;
+        case 'NotAuthorizedException':
+          setErrorMessage('確認済みのユーザーです。SignInページからログインしてください。');
+          break;
         default:
           setErrorMessage(`${error}`);
           break;
@@ -136,7 +145,19 @@ const SignUp: NextPage = () => {
     } catch (error) {
       setSuccessMessage('');
       setIsSuccess(false);
-      setErrorMessage(`${error}`);
+      switch (error.name) {
+        case 'AuthError':
+          setErrorMessage('ユーザー名を入力してください。');
+          break;
+        case 'UserNotFoundException':
+          setErrorMessage('登録されていないユーザー名です。');
+          break;
+        case 'InvalidParameterException':
+          setErrorMessage('確認済みのユーザーです。SignInページからログインしてください。');
+        default:
+          setErrorMessage(`${error}`);
+          break;
+      }
       setIsError(true);
     }
   };
@@ -182,7 +203,7 @@ const SignUp: NextPage = () => {
                   <input
                     name='username'
                     type='text'
-                    placeholder='username'
+                    placeholder='ユーザー名'
                     className='bg-white ml-1 p-2'
                     value={username}
                     onChange={handleInputChange}
@@ -197,7 +218,7 @@ const SignUp: NextPage = () => {
                   <input
                     name='code'
                     type='text'
-                    placeholder='verification code'
+                    placeholder='確認コード'
                     className='bg-white ml-1 p-2'
                     value={code}
                     onChange={handleInputChange}
@@ -209,96 +230,94 @@ const SignUp: NextPage = () => {
               <Button size='large' label='activate account' onClick={confirmSignUp} />
             </div>
             <div className='mt-10 mx-auto'>
-              Resend verification code?{' '}
-              <a className='text-secondary' onClick={resendVerificationCode}>
-                Resend
+              確認コードを再送しますか？{' '}
+              <a className='text-secondary hover:underline' onClick={resendVerificationCode}>
+                再送する
               </a>
             </div>
           </div>
         ) : (
-          <>
-            <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
-              <div className='form-control'>
-                <div className='mb-6'>
-                  <h1 className='text-xl font-bold text-center'>Sign Up</h1>
-                </div>
-                <div className='m-1 p-2'>
-                  <div className='flex border-b border-primary'>
-                    <label className='label'>
-                      <UserIcon classes='h-6 w-6 text-primary' />
-                    </label>
-                    <input
-                      name='username'
-                      type='text'
-                      placeholder='username'
-                      className='bg-white ml-1 p-2'
-                      value={username}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div className='m-1 p-2'>
-                  <div className='flex border-b border-primary'>
-                    <label className='label'>
-                      <MailIcon classes='h-6 w-6 text-primary' />
-                    </label>
-                    <input
-                      name='email'
-                      type='email'
-                      placeholder='user@email.com'
-                      className='bg-white ml-1 p-2'
-                      value={email}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div className='m-1 p-2'>
-                  <div className='flex border-b border-primary'>
-                    <label className='label'>
-                      <LockIcon classes='h-6 w-6 text-primary' />
-                    </label>
-                    <input
-                      name='password'
-                      type={isMasked ? 'password' : 'text'}
-                      placeholder='password'
-                      className='bg-white ml-1 p-2'
-                      value={password}
-                      onChange={handleInputChange}
-                    />
-                    {isMasked ? (
-                      <div onClick={() => setIsMasked(false)}>
-                        <EyeOffIcon classes='m-2 text-secondary' />
-                      </div>
-                    ) : (
-                      <div onClick={() => setIsMasked(true)}>
-                        <EyeIcon classes='m-2' />
-                      </div>
-                    )}
-                  </div>
+          <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
+            <div className='form-control'>
+              <div className='mb-6'>
+                <h1 className='text-xl font-bold text-center'>Sign Up</h1>
+              </div>
+              <div className='m-1 p-2'>
+                <div className='flex border-b border-primary'>
+                  <label className='label'>
+                    <UserIcon classes='h-6 w-6 text-primary' />
+                  </label>
+                  <input
+                    name='username'
+                    type='text'
+                    placeholder='ユーザー名'
+                    className='bg-white ml-1 p-2'
+                    value={username}
+                    onChange={handleInputChange}
+                  />
                 </div>
               </div>
-              <div className='mt-5 mx-auto'>
-                <Button size='large' label='create user' onClick={signUp} />
+              <div className='m-1 p-2'>
+                <div className='flex border-b border-primary'>
+                  <label className='label'>
+                    <MailIcon classes='h-6 w-6 text-primary' />
+                  </label>
+                  <input
+                    name='email'
+                    type='email'
+                    placeholder='user@email.com'
+                    className='bg-white ml-1 p-2'
+                    value={email}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-              <div className='mt-10'>
-                Active your account?{' '}
-                <a className='text-secondary' onClick={() => setIsSubmitted(true)}>
-                  Activate account
-                </a>
+              <div className='m-1 p-2'>
+                <div className='flex border-b border-primary'>
+                  <label className='label'>
+                    <LockIcon classes='h-6 w-6 text-primary' />
+                  </label>
+                  <input
+                    name='password'
+                    type={isMasked ? 'password' : 'text'}
+                    placeholder='パスワード'
+                    className='bg-white ml-1 p-2'
+                    value={password}
+                    onChange={handleInputChange}
+                  />
+                  {isMasked ? (
+                    <div onClick={() => setIsMasked(false)}>
+                      <EyeOffIcon classes='m-2 text-secondary' />
+                    </div>
+                  ) : (
+                    <div onClick={() => setIsMasked(true)}>
+                      <EyeIcon classes='m-2' />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-            <div className='mt-10 text-center'>
-              <p>Already have an account?</p>
-              <div className='mt-2'>
-                <Link href='/auth/sign-in'>
-                  <a>
-                    <Button btnColor='btn-secondary' size='medium' label='sign in' />
-                  </a>
-                </Link>
-              </div>
+            <div className='mt-5 mx-auto'>
+              <Button size='large' label='create user' onClick={signUp} />
             </div>
-          </>
+            <div className='mt-10'>
+              確認コードでアカウントを有効化しますか？{' '}
+              <a className='text-secondary hover:underline' onClick={() => setIsSubmitted(true)}>
+                アカウント有効化
+              </a>
+            </div>
+          </div>
         )}
+        <div className='mt-10 text-center'>
+          <p>すでにアカウントをお持ちですか？</p>
+          <div className='mt-2'>
+            <Link href='/auth/sign-in'>
+              <a>
+                <Button btnColor='btn-secondary' size='medium' label='sign in' />
+              </a>
+            </Link>
+          </div>
+        </div>
       </div>
       <Footer />
     </>

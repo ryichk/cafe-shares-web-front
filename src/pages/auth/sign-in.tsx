@@ -43,7 +43,24 @@ const SignIn: NextPage = () => {
       setIsError(false);
       Router.push('/user-profile');
     } catch (error) {
-      setErrorMessage(`${error}`);
+      switch (error.name) {
+        case 'AuthError':
+          setErrorMessage('ユーザー名を入力してください。');
+          break;
+        case 'UserNotFoundException':
+          setErrorMessage('ユーザーが存在しません。');
+          break;
+        case 'InvalidParameterException':
+          setErrorMessage('パスワードを入力してください。');
+          break;
+        case 'UserNotConfirmedException':
+          setErrorMessage('確認コードでアカウントを有効化してください。');
+          break;
+        default:
+          setErrorMessage(`${error}`);
+          break;
+      }
+
       setIsError(true);
     }
   };
@@ -89,7 +106,7 @@ const SignIn: NextPage = () => {
                 <input
                   name='username'
                   type='text'
-                  placeholder='username'
+                  placeholder='ユーザー名'
                   className='bg-white ml-1 p-2'
                   value={username}
                   onChange={handleInputChange}
@@ -104,7 +121,7 @@ const SignIn: NextPage = () => {
                 <input
                   name='password'
                   type={isMasked ? 'password' : 'text'}
-                  placeholder='password'
+                  placeholder='パスワード'
                   className='bg-white ml-1 p-2'
                   value={password}
                   onChange={handleInputChange}
@@ -125,14 +142,14 @@ const SignIn: NextPage = () => {
             <Button size='large' label='sign in' onClick={signIn} />
           </div>
           <div className='mt-10'>
-            Forgot your password?{' '}
+            パスワードをお忘れですか？{' '}
             <Link href='/auth/reset-password'>
-              <a className='text-secondary'>Reset password</a>
+              <a className='text-secondary hover:underline'>再設定</a>
             </Link>
           </div>
         </div>
         <div className='mt-10 text-center'>
-          <p>No account?</p>
+          <p>まだアカウントをお持ちではありませんか？</p>
           <div className='mt-2'>
             <Link href='/auth/sign-up'>
               <a>
