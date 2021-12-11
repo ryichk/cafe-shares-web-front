@@ -1,5 +1,5 @@
 export { ArrowLeftIcon } from './ArrowLeftIcon';
-export { ChevronUpIcon } from './ChevronUp';
+export { ChevronUpIcon } from './ChevronUpIcon';
 export { CloseIcon } from './CloseIcon';
 export { EyeIcon } from './EyeIcon';
 export { EyeOffIcon } from './EyeOffIcon';

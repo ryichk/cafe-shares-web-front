@@ -1,6 +1,6 @@
 import { VFC } from 'react';
 
-import type { IconProps } from './icon';
+import type { IconProps } from '../icon';
 
 export const ChevronUpIcon: VFC<IconProps> = ({ classes }) => (
   <svg

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { IconProps } from './icon';
+import type { IconProps } from '../icon';
 
 export const LocationIcon: React.FC<IconProps> = ({ classes }) => (
   <svg
