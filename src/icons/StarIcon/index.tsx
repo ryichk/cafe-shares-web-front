@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { IconProps } from './icon';
+import type { IconProps } from '../icon';
 
 export const StarIcon: React.FC<IconProps> = ({ classes }) => (
   <svg xmlns='http://www.w3.org/2000/svg' className={classes} fill='none' viewBox='0 0 24 24'>
