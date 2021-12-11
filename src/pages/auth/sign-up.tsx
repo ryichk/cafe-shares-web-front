@@ -2,13 +2,16 @@ import { Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import Router from 'next/router';
-import { useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Button, ErrorAlert, SuccessAlert } from '../../components';
+import { AuthContext } from '../../contexts/AuthContext';
 import { EyeIcon, EyeOffIcon, LockIcon, MailIcon, MessageIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
 const SignUp: NextPage = () => {
+  const { user, setUser } = useContext(AuthContext);
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +22,6 @@ const SignUp: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [user, setUser] = useState();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { target } = event;
@@ -104,8 +106,8 @@ const SignUp: NextPage = () => {
       setSuccessMessage('アカウントの確認が完了しました。');
       setIsSuccess(true);
       if (username && password) {
-        await Auth.signIn({ username, password });
-        Router.push('/user-profile');
+        const signInUser = await Auth.signIn({ username, password });
+        setUser(signInUser);
       } else {
         Router.push('/auth/sign-in');
       }
@@ -164,18 +166,8 @@ const SignUp: NextPage = () => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    const init = async () => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser();
-        setUser(currentUser);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    init();
-
     if (user) {
-      Router.push('/user-profile');
+      Router.push('/auth/user-profile');
     }
 
     return () => {
