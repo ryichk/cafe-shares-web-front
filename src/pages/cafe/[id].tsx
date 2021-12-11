@@ -1,7 +1,9 @@
 import { NextPage, GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
+import Image from 'next/image';
 import React from 'react';
 
+import hotpepperImg from '../../assets/images/hotpepper-s.gif';
 import type { CafeInfo, HotpepperResponse } from '../../interfaces';
 import { Header, Footer } from '../../layouts';
 
@@ -69,6 +71,9 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
                 background: `no-repeat center / cover url(${cafe.photo.pc.l})`,
               }}
             />
+            <div className='m-auto pt-1'>
+              <Image src={hotpepperImg} alt='hotpepper' />
+            </div>
             <div className='mt-5'>
               {Object.entries(cafeInfo).map(([key, value]) => (
                 <div className='flex border-t py-3' key={key}>
