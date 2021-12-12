@@ -75,7 +75,7 @@ const UserProfile: NextPage = () => {
     if (!user) {
       Router.push('/auth/sign-in');
     }
-    console.log(user?.attributes);
+
     return () => {
       abortController.abort();
     };
