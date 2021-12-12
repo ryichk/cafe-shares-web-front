@@ -131,5 +131,6 @@ export interface ICognitoUser {
   username: string;
   attributes: {
     email: string;
+    profile: string;
   };
 }
