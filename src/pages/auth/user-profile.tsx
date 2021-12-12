@@ -1,65 +1,58 @@
-import { Auth } from 'aws-amplify';
 import { NextPage } from 'next';
-import Link from 'next/link';
 import Router from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import { Button, ErrorAlert } from '../../components';
 import { AuthContext } from '../../contexts/AuthContext';
-import { ArrowLeftIcon, LockIcon, UserIcon } from '../../icons';
+import { UserIcon } from '../../icons';
+import { Header, Footer } from '../../layouts';
 
 const UserProfile: NextPage = () => {
-  const { user, setUser } = useContext(AuthContext);
-
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const signOut = async () => {
-    try {
-      await Auth.signOut();
-      setUser(null);
-      setIsError(false);
-      setErrorMessage('');
-      Router.push('/auth/sign-in');
-    } catch (error) {
-      setIsError(true);
-      setErrorMessage(`${error}`);
-    }
-  };
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser();
-        setUser(currentUser);
-        setIsError(false);
-        setErrorMessage('');
-      } catch (error) {
-        setIsError(true);
-        setErrorMessage(`${error}`);
-      }
+    const abortController = new AbortController();
+    if (!user) {
+      Router.push('/auth/sign-in');
+    }
+
+    return () => {
+      abortController.abort();
     };
-    init();
-  }, []);
+  }, [user]);
 
   return (
     <>
-      {isError ? <ErrorAlert message={errorMessage} /> : <></>}
-      <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
-        <div className='mb-20'>
-          <Link href='/'>
-            <a>
-              <ArrowLeftIcon classes='h-5 w-5' />
-            </a>
-          </Link>
-        </div>
-        <div>
-          <h1>{user?.username}</h1>
-          <div>
-            <Button btnColor='btn-secondary' size='medium' label='sign out' onClick={signOut} />
+      <div className='bg-primary min-h-screen'>
+        <Header />
+        <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
+          <div className='avatar m-auto'>
+            <div className='rounded-full w-24 h-24 bg-gray-200'>
+              <UserIcon classes='h-12 m-auto mt-6' />
+            </div>
+          </div>
+          <div className='m-auto mt-5'>
+            <h1>{user?.username}</h1>
+          </div>
+          <div className='m-auto mt-5'>
+            <p>user profile description</p>
+          </div>
+          <div className='flex m-auto mt-5 text-center'>
+            <div className='m-2'>
+              <p className='text-xl'>140</p>
+              <p className='text-sm'>投稿</p>
+            </div>
+            <div className='m-2'>
+              <p className='text-xl'>140</p>
+              <p className='text-sm'>フォロワー</p>
+            </div>
+            <div className='m-2'>
+              <p className='text-xl'>140</p>
+              <p className='text-sm'>フォロー中</p>
+            </div>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
