@@ -1,4 +1,3 @@
-import { CognitoUser } from '@aws-amplify/auth';
 import { Amplify, Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import { DefaultSeo } from 'next-seo';
@@ -10,13 +9,14 @@ import awsExports from '../aws-exports';
 import 'tailwindcss/tailwind.css';
 
 import { AuthContext } from '../contexts/AuthContext';
+import { ICognitoUser } from '../interfaces';
 import * as gtag from '../lib/gtag';
 
 Amplify.configure({ ...awsExports, ssr: true });
 
 const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
-  const [user, setUser] = useState<CognitoUser | undefined>();
+  const [user, setUser] = useState<ICognitoUser | undefined>();
 
   useEffect(() => {
     const init = async () => {

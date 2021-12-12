@@ -1,14 +1,14 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
-import { CognitoUser } from '@aws-amplify/auth';
+import { ICognitoUser } from '../interfaces';
 
-interface AuthContextType {
-  user: CognitoUser | undefined;
-  setUser: Dispatch<SetStateAction<CognitoUser>>;
+interface IAuthContext {
+  user: ICognitoUser | undefined;
+  setUser: Dispatch<SetStateAction<ICognitoUser>>;
 }
 
-const initialContext: AuthContextType = {
+const initialContext: IAuthContext = {
   user: undefined,
   setUser: () => {},
 };
 
-export const AuthContext = createContext<AuthContextType>(initialContext);
+export const AuthContext = createContext<IAuthContext>(initialContext);
