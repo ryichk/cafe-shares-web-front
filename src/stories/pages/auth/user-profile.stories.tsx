@@ -8,7 +8,7 @@ const sampleUser = {
   username: 'sample user',
   attributes: {
     email: 'sample@example.com',
-    profile: 'Hi guys. Nice to meet you.'
+    profile: 'Hi guys. Nice to meet you.',
   },
 };
 
