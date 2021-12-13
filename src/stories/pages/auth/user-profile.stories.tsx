@@ -8,6 +8,7 @@ const sampleUser = {
   username: 'sample user',
   attributes: {
     email: 'sample@example.com',
+    picture: '',
     profile: 'Hi guys. Nice to meet you.',
   },
 };
