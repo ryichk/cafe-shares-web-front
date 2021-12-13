@@ -1,6 +1,6 @@
 import { Auth, Storage } from 'aws-amplify';
 import { NextPage } from 'next';
-import Image from 'next/image';
+import Image, { ImageLoader } from 'next/image';
 import Router from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 
@@ -121,11 +121,20 @@ const UserProfile: NextPage = () => {
     };
   }, [user]);
 
+  const avatarImageLoader: ImageLoader = () => imageURL;
+
   const Avatar = () => (
     <div className='avatar m-auto w-24 h-24 rounded-full shadow'>
       {imageURL ? (
         <div className='rounded-full'>
-          <Image src={imageURL} alt={user.username} height={100} width={100} />
+          <Image
+            loader={avatarImageLoader}
+            src={imageURL}
+            alt={user.username}
+            height={100}
+            width={100}
+            unoptimized
+          />
         </div>
       ) : (
         <div className='rounded-full bg-gray-200'>
