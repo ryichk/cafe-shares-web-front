@@ -68,31 +68,35 @@ export const Header: VFC = () => {
               tabIndex={0}
               className='menu p-4 w-max bg-base-content dropdown-content rounded-box shadow-2xl text-white'
             >
-              <li>
-                {user ? (
-                  <Link href='/auth/user-profile'>
-                    <a>
-                      <UserIcon classes='h-5 sm:h-7 mr-1' />
-                      PROFILE
-                    </a>
-                  </Link>
-                ) : (
+              {user ? (
+                <>
+                  <li>
+                    <Link href='/auth/user-profile'>
+                      <a>
+                        <UserIcon classes='h-5 sm:h-7 mr-1' />
+                        PROFILE
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href='/'>
+                      <a>
+                        <BellIcon classes='h-5 sm:h-7 mr-1' />
+                        NOTIFICATIONS
+                      </a>
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li>
                   <Link href='/auth/sign-in'>
                     <a>
                       <SignInIcon classes='h-5 sm:h-7 mr-1' />
                       SIGN IN
                     </a>
                   </Link>
-                )}
-              </li>
-              <li>
-                <Link href='/'>
-                  <a>
-                    <BellIcon classes='h-5 sm:h-7 mr-1' />
-                    NOTIFICATIONS
-                  </a>
-                </Link>
-              </li>
+                </li>
+              )}
               <li>
                 <Link href='/'>
                   <a>
@@ -125,21 +129,23 @@ export const Header: VFC = () => {
                   </a>
                 </Link>
               </li>
-              <li>
-                <Link href='/'>
-                  <a>
-                    <CogIcon classes='h-5 sm:h-7 mr-1' />
-                    SETTINGS
-                  </a>
-                </Link>
-              </li>
               {user ? (
-                <li>
-                  <a onClick={signOut}>
-                    <SignOutIcon classes='h-5 sm:h-7 mr-1' />
-                    SIGN OUT
-                  </a>
-                </li>
+                <>
+                  <li>
+                    <Link href='/'>
+                      <a>
+                        <CogIcon classes='h-5 sm:h-7 mr-1' />
+                        SETTINGS
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <a onClick={signOut}>
+                      <SignOutIcon classes='h-5 sm:h-7 mr-1' />
+                      SIGN OUT
+                    </a>
+                  </li>
+                </>
               ) : (
                 <></>
               )}
