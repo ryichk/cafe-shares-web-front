@@ -34,7 +34,7 @@ const UserProfile: NextPage = () => {
       };
       reader.readAsDataURL(file);
 
-      const fileName = `${user.username}_${file.name}`;
+      const fileName = `${user?.username}_${file.name}`;
       setImageName(fileName);
 
       try {
@@ -130,7 +130,7 @@ const UserProfile: NextPage = () => {
           <Image
             loader={avatarImageLoader}
             src={imageURL}
-            alt={user.username}
+            alt={user?.username}
             height={100}
             width={100}
             unoptimized
