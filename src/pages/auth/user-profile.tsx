@@ -104,7 +104,7 @@ const UserProfile: NextPage = () => {
       Router.push('/auth/sign-in');
     }
 
-    if (user) {
+    if (user?.attributes.picture) {
       const getImageURL = async () => {
         try {
           const fileURL = await Storage.get(user.attributes.picture);
@@ -125,7 +125,7 @@ const UserProfile: NextPage = () => {
 
   const Avatar = () => (
     <div className='avatar m-auto w-24 h-24 rounded-full shadow'>
-      {imageURL ? (
+      {user?.attributes.picture && imageURL ? (
         <div className='rounded-full'>
           <Image
             loader={avatarImageLoader}
@@ -137,7 +137,7 @@ const UserProfile: NextPage = () => {
           />
         </div>
       ) : (
-        <div className='rounded-full bg-gray-200'>
+        <div className='rounded-full w-24 h-24 bg-gray-200'>
           <UserIcon classes='h-12 m-auto mt-6' />
         </div>
       )}
