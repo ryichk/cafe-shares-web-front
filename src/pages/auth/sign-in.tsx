@@ -2,19 +2,21 @@ import { Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import Router from 'next/router';
-import { useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Button, ErrorAlert } from '../../components';
+import { AuthContext } from '../../contexts/AuthContext';
 import { EyeIcon, EyeOffIcon, LockIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
 const SignIn: NextPage = () => {
+  const { user, setUser } = useContext(AuthContext);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isMasked, setIsMasked] = useState(true);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [user, setUser] = useState();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -35,13 +37,13 @@ const SignIn: NextPage = () => {
 
   const signIn = async () => {
     try {
-      await Auth.signIn({
+      const signInUser = await Auth.signIn({
         username,
         password,
       });
+      setUser(signInUser);
       setErrorMessage('');
       setIsError(false);
-      Router.push('/user-profile');
     } catch (error) {
       switch (error.name) {
         case 'AuthError':
@@ -56,6 +58,9 @@ const SignIn: NextPage = () => {
         case 'UserNotConfirmedException':
           setErrorMessage('確認コードでアカウントを有効化してください。');
           break;
+        case 'NotAuthorizedException':
+          setErrorMessage('ユーザー名またはパスワードが正しくありません。');
+          break;
         default:
           setErrorMessage(`${error}`);
           break;
@@ -67,20 +72,8 @@ const SignIn: NextPage = () => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    const init = async () => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser();
-        setUser(currentUser);
-        setIsError(false);
-        setErrorMessage('');
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    init();
-
     if (user) {
-      Router.push('/user-profile');
+      Router.push('/auth/user-profile');
     }
 
     return () => {

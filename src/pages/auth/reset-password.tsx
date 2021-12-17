@@ -2,9 +2,10 @@ import { Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import Router from 'next/router';
-import { useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Button, ErrorAlert, SuccessAlert } from '../../components';
+import { AuthContext } from '../../contexts/AuthContext';
 import { LockIcon, MessageIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
@@ -17,6 +18,7 @@ const ResetPassword: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const { user } = useContext(AuthContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -80,24 +82,14 @@ const ResetPassword: NextPage = () => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    const init = async () => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser();
-        if (currentUser) {
-          Router.push('/user-profile');
-        }
-        setIsError(false);
-        setErrorMessage('');
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    init();
+    if (user) {
+      Router.push('/auth/user-profile');
+    }
 
     return () => {
       abortController.abort();
     };
-  }, []);
+  }, [user]);
 
   return (
     <>

@@ -126,3 +126,12 @@ export interface SelectProps extends FormItem {
 export interface InputProps extends FormItem {
   placeholder: string;
 }
+
+export interface ICognitoUser {
+  username: string;
+  attributes: {
+    email: string;
+    picture: string | undefined;
+    profile: string | undefined;
+  };
+}

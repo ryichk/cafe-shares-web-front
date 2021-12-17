@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<SearchResultContainerProps> = (args) => <SearchResultContainer {...args} />;
 
-const shop = {
+const shop_info = {
   id: 0,
   genre: { name: CardListStories.Default.args.cafes[0].genre.name },
   sub_genre: { name: CardListStories.Default.args.cafes[0].sub_genre.name },
@@ -23,32 +23,16 @@ const shop = {
 
 export const Loading = Template.bind({});
 Loading.args = {
-  shop: [
-    { id: 1, ...shop },
-    { id: 2, ...shop },
-    { id: 3, ...shop },
-    { id: 4, ...shop },
-    { id: 5, ...shop },
-  ],
-  page: {
+  results: {
     results_available: '5',
+    results_returned: '5',
+    results_start: '1',
+    shop: [
+      { id: 1, ...shop_info },
+      { id: 2, ...shop_info },
+      { id: 3, ...shop_info },
+      { id: 4, ...shop_info },
+      { id: 5, ...shop_info },
+    ],
   },
-  loading: true,
-  handleReadMore: function () {},
-};
-
-export const FiveResults = Template.bind({});
-FiveResults.args = {
-  shop: [
-    { id: 1, ...shop },
-    { id: 2, ...shop },
-    { id: 3, ...shop },
-    { id: 4, ...shop },
-    { id: 5, ...shop },
-  ],
-  page: {
-    results_available: '5',
-  },
-  loading: false,
-  handleReadMore: function () {},
 };

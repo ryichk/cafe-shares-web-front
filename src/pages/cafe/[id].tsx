@@ -77,8 +77,8 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
             <div className='mt-5'>
               {Object.entries(cafeInfo).map(([key, value]) => (
                 <div className='flex border-t py-3' key={key}>
-                  <div className='w-1/3 sm:w-1/4 font-semibold'>{key}</div>
-                  <div className='w-2/3 sm:w-3/4'>{value}</div>
+                  <div className='w-1/4 font-bold'>{key}</div>
+                  <div className='w-3/4 ml-1'>{value}</div>
                 </div>
               ))}
               <div className='border-t border-b py-3'>
