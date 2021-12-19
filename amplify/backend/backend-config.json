@@ -12,8 +12,12 @@
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
-        "loginMechanisms": ["PREFERRED_USERNAME"],
-        "signupAttributes": ["EMAIL"],
+        "loginMechanisms": [
+          "PREFERRED_USERNAME"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": "12",
           "passwordPolicyCharacters": [
@@ -23,8 +27,13 @@
           ]
         },
         "mfaConfiguration": "OPTIONAL",
-        "mfaTypes": ["SMS", "TOTP"],
-        "verificationMechanisms": ["EMAIL"]
+        "mfaTypes": [
+          "SMS",
+          "TOTP"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
       }
     }
   },
@@ -37,7 +46,9 @@
         {
           "category": "auth",
           "resourceName": "cafeshares",
-          "attributes": ["UserPoolId"]
+          "attributes": [
+            "UserPoolId"
+          ]
         }
       ]
     }
@@ -51,14 +62,43 @@
         {
           "category": "auth",
           "resourceName": "cafeshares",
-          "attributes": ["UserPoolId"]
+          "attributes": [
+            "UserPoolId"
+          ]
         },
         {
           "category": "function",
           "resourceName": "AdminQueriesbe6deefd",
-          "attributes": ["Arn", "Name"]
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
         }
       ]
+    },
+    "CafeShares": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authcafeshares"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 7,
+                "apiKeyExpirationDate": "2021-12-27T16:18:23.749Z",
+                "description": "CafeShares GraphQL backend API"
+              }
+            }
+          ]
+        }
+      }
     }
   },
   "storage": {
