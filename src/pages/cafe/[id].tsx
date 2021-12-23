@@ -1,13 +1,38 @@
+import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { format } from 'date-fns';
 import { NextPage, GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
+import { CreatePostInput, Post } from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
-import type { CafeInfo, HotpepperResponse } from '../../interfaces';
+import { ErrorAlert, SuccessAlert } from '../../components';
+import { AlertContext, AuthContext } from '../../contexts';
+import { createPost } from '../../graphql/mutations';
+import { listPosts } from '../../graphql/queries';
+import { CloseIcon } from '../../icons';
+import type { CafeInfo, HotpepperResponse, GetPostData } from '../../interfaces';
 import { Header, Footer } from '../../layouts';
 
 const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
+  const { user } = useContext(AuthContext);
+  const {
+    isError,
+    errorMessage,
+    isSuccess,
+    successMessage,
+    setIsError,
+    setErrorMessage,
+    setIsSuccess,
+    setSuccessMessage,
+  } = useContext(AlertContext);
+
+  const [contents, setContents] = useState('');
+  const [previewURL, setPreviewURL] = useState('');
+  const [imageName, setImageName] = useState('');
+  const [posts, setPosts] = useState([]);
+
   const cafeInfo = {
     アクセス: cafe.access,
     住所: cafe.address,
@@ -39,6 +64,82 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
     その他: cafe.other_memo,
   };
 
+  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { target } = event;
+    if (!(target instanceof HTMLTextAreaElement)) return;
+
+    const { value } = target;
+    setContents(value);
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
+    const file = event.target.files[0];
+    if (file && file.type.includes('image')) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreviewURL(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      const now = format(new Date(), 'yyyyMMddhhmmss');
+      const fileName = `post_picture_${user?.username}_${file.name}_${now}`;
+      setImageName(fileName);
+
+      try {
+        await Storage.put(fileName, file);
+        setErrorMessage('');
+        setIsError(false);
+      } catch (error) {
+        setErrorMessage(error);
+        setIsError(true);
+      }
+    }
+  };
+
+  const isValidPost = () => {
+    if (imageName) {
+      return true;
+    } else {
+      setErrorMessage('写真が選択されていません。投稿する写真を選択してください。');
+      return false;
+    }
+  };
+
+  const sendPost = async () => {
+    try {
+      if (isValidPost()) {
+        const createPostInput: CreatePostInput = {
+          cafeId: String(cafe.id),
+          content: contents,
+          picture: imageName,
+        };
+        await API.graphql(
+          graphqlOperation(createPost, {
+            input: createPostInput,
+          }),
+        );
+        setContents('');
+        setImageName('');
+        setPreviewURL('');
+        setErrorMessage('');
+        setIsError(false);
+        setSuccessMessage('投稿が完了しました。');
+        setIsSuccess(true);
+      } else {
+        setIsError(true);
+        setSuccessMessage('');
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(error);
+      setIsError(true);
+      setSuccessMessage('');
+      setIsSuccess(false);
+    }
+  };
+
   return (
     <>
       <NextSeo
@@ -57,6 +158,20 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
           description: cafe.catch,
         }}
       />
+      {isError ? (
+        <div className='fixed w-full z-50 bg-secondary rounded-xl shadow-xl'>
+          <ErrorAlert message={errorMessage} />
+        </div>
+      ) : (
+        <></>
+      )}
+      {isSuccess ? (
+        <div className='fixed w-full z-50 bg-secondary rounded-xl shadow-xl'>
+          <SuccessAlert message={successMessage} />
+        </div>
+      ) : (
+        <></>
+      )}
       <div className='bg-primary'>
         <Header />
         <div className='bg-secondary m-auto max-w-5xl mt-5 p-5 sm:p-14 rounded-t-xl'>
@@ -64,7 +179,7 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
           <div className='my-5'>
             <p className='text-lg sm:text-xl'>{cafe.catch}</p>
           </div>
-          <div className=''>
+          <div className='mb-5'>
             <div
               className='h-56 sm:h-96 rounded'
               style={{
@@ -96,6 +211,66 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
               </div>
             </div>
           </div>
+          {user ? (
+            <>
+              <label htmlFor='posting-form' className='mt-5 btn btn-wide btn-primary modal-button'>
+                投稿する
+              </label>
+              <input type='checkbox' id='posting-form' className='modal-toggle' />
+              <div className='modal'>
+                <div className='modal-box'>
+                  <div className='form-control'>
+                    <div className='flex justify-between'>
+                      <span className='text-lg font-bold'>投稿フォーム</span>
+                      <label htmlFor='posting-form'>
+                        <CloseIcon classes='h-4' />
+                      </label>
+                    </div>
+                    <div className='mt-5'>
+                      <div className='form-control'>
+                        <textarea
+                          rows={5}
+                          className='textarea textarea-primary bg-white'
+                          value={contents}
+                          onChange={handleTextareaChange}
+                        />
+                        <label className='btn mt-4'>
+                          写真を選択
+                          <input
+                            type='file'
+                            accept='image/*'
+                            className='hidden'
+                            onChange={handleFileChange}
+                          />
+                        </label>
+                        {previewURL ? (
+                          <div
+                            className='mt-3 h-56 sm:h-96'
+                            style={{
+                              background: `no-repeat center / cover url(${previewURL})`,
+                            }}
+                          />
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className='modal-action mr-1'>
+                        <label
+                          htmlFor='posting-form'
+                          className='btn btn-primary rounded-2xl'
+                          onClick={sendPost}
+                        >
+                          投稿
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <Footer />

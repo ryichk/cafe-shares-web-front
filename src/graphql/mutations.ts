@@ -3,10 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const createPost = /* GraphQL */ `
-  mutation CreatePost(
-    $input: CreatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
+  mutation CreatePost($input: CreatePostInput!, $condition: ModelPostConditionInput) {
     createPost(input: $input, condition: $condition) {
       id
       cafeId
@@ -41,10 +38,7 @@ export const createPost = /* GraphQL */ `
   }
 `;
 export const deletePost = /* GraphQL */ `
-  mutation DeletePost(
-    $input: DeletePostInput!
-    $condition: ModelPostConditionInput
-  ) {
+  mutation DeletePost($input: DeletePostInput!, $condition: ModelPostConditionInput) {
     deletePost(input: $input, condition: $condition) {
       id
       cafeId
@@ -79,10 +73,7 @@ export const deletePost = /* GraphQL */ `
   }
 `;
 export const updatePost = /* GraphQL */ `
-  mutation UpdatePost(
-    $input: UpdatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
+  mutation UpdatePost($input: UpdatePostInput!, $condition: ModelPostConditionInput) {
     updatePost(input: $input, condition: $condition) {
       id
       cafeId
@@ -117,10 +108,7 @@ export const updatePost = /* GraphQL */ `
   }
 `;
 export const createTag = /* GraphQL */ `
-  mutation CreateTag(
-    $input: CreateTagInput!
-    $condition: ModelTagConditionInput
-  ) {
+  mutation CreateTag($input: CreateTagInput!, $condition: ModelTagConditionInput) {
     createTag(input: $input, condition: $condition) {
       id
       label
@@ -142,10 +130,7 @@ export const createTag = /* GraphQL */ `
   }
 `;
 export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
+  mutation CreateComment($input: CreateCommentInput!, $condition: ModelCommentConditionInput) {
     createComment(input: $input, condition: $condition) {
       id
       postID
@@ -172,10 +157,7 @@ export const createComment = /* GraphQL */ `
   }
 `;
 export const deleteComment = /* GraphQL */ `
-  mutation DeleteComment(
-    $input: DeleteCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
+  mutation DeleteComment($input: DeleteCommentInput!, $condition: ModelCommentConditionInput) {
     deleteComment(input: $input, condition: $condition) {
       id
       postID
@@ -202,10 +184,7 @@ export const deleteComment = /* GraphQL */ `
   }
 `;
 export const updateComment = /* GraphQL */ `
-  mutation UpdateComment(
-    $input: UpdateCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
+  mutation UpdateComment($input: UpdateCommentInput!, $condition: ModelCommentConditionInput) {
     updateComment(input: $input, condition: $condition) {
       id
       postID
@@ -262,10 +241,7 @@ export const deleteFollowRelationship = /* GraphQL */ `
   }
 `;
 export const createPostTags = /* GraphQL */ `
-  mutation CreatePostTags(
-    $input: CreatePostTagsInput!
-    $condition: ModelPostTagsConditionInput
-  ) {
+  mutation CreatePostTags($input: CreatePostTagsInput!, $condition: ModelPostTagsConditionInput) {
     createPostTags(input: $input, condition: $condition) {
       id
       postID
@@ -302,10 +278,7 @@ export const createPostTags = /* GraphQL */ `
   }
 `;
 export const updatePostTags = /* GraphQL */ `
-  mutation UpdatePostTags(
-    $input: UpdatePostTagsInput!
-    $condition: ModelPostTagsConditionInput
-  ) {
+  mutation UpdatePostTags($input: UpdatePostTagsInput!, $condition: ModelPostTagsConditionInput) {
     updatePostTags(input: $input, condition: $condition) {
       id
       postID
@@ -342,10 +315,7 @@ export const updatePostTags = /* GraphQL */ `
   }
 `;
 export const deletePostTags = /* GraphQL */ `
-  mutation DeletePostTags(
-    $input: DeletePostTagsInput!
-    $condition: ModelPostTagsConditionInput
-  ) {
+  mutation DeletePostTags($input: DeletePostTagsInput!, $condition: ModelPostTagsConditionInput) {
     deletePostTags(input: $input, condition: $condition) {
       id
       postID

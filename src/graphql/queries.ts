@@ -20,11 +20,7 @@ export const listFollowRelationships = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    listFollowRelationships(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listFollowRelationships(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         followeeId
         followerId
@@ -73,11 +69,7 @@ export const getPost = /* GraphQL */ `
   }
 `;
 export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -121,11 +113,7 @@ export const getTag = /* GraphQL */ `
   }
 `;
 export const listTags = /* GraphQL */ `
-  query ListTags(
-    $filter: ModelTagFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListTags($filter: ModelTagFilterInput, $limit: Int, $nextToken: String) {
     listTags(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -169,11 +157,7 @@ export const getComment = /* GraphQL */ `
   }
 `;
 export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListComments($filter: ModelCommentFilterInput, $limit: Int, $nextToken: String) {
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -234,11 +218,7 @@ export const getPostTags = /* GraphQL */ `
   }
 `;
 export const listPostTags = /* GraphQL */ `
-  query ListPostTags(
-    $filter: ModelPostTagsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListPostTags($filter: ModelPostTagsFilterInput, $limit: Int, $nextToken: String) {
     listPostTags(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
