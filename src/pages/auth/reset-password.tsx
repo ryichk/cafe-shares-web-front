@@ -5,20 +5,27 @@ import Router from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 import { Button, ErrorAlert, SuccessAlert } from '../../components';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AlertContext, AuthContext } from '../../contexts';
 import { LockIcon, MessageIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
 const ResetPassword: NextPage = () => {
+  const { user } = useContext(AuthContext);
+  const {
+    isError,
+    errorMessage,
+    isSuccess,
+    successMessage,
+    setIsError,
+    setErrorMessage,
+    setIsSuccess,
+    setSuccessMessage,
+  } = useContext(AlertContext);
+
   const [username, setUsername] = useState('');
   const [code, setCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [isSent, setIsSent] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const { user } = useContext(AuthContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;

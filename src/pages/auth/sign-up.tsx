@@ -5,12 +5,22 @@ import Router from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 import { Button, ErrorAlert, SuccessAlert } from '../../components';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AlertContext, AuthContext } from '../../contexts';
 import { EyeIcon, EyeOffIcon, LockIcon, MailIcon, MessageIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
 const SignUp: NextPage = () => {
   const { user, setUser } = useContext(AuthContext);
+  const {
+    isError,
+    errorMessage,
+    isSuccess,
+    successMessage,
+    setIsError,
+    setErrorMessage,
+    setIsSuccess,
+    setSuccessMessage,
+  } = useContext(AlertContext);
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -18,10 +28,6 @@ const SignUp: NextPage = () => {
   const [isMasked, setIsMasked] = useState(true);
   const [code, setCode] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { target } = event;
