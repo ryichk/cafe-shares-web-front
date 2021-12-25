@@ -5,12 +5,22 @@ import Router from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { ErrorAlert, SuccessAlert } from '../../components';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AlertContext, AuthContext } from '../../contexts';
 import { CheckIcon, CloseIcon, PencilIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
 const UserProfile: NextPage = () => {
   const { user, setUser } = useContext(AuthContext);
+  const {
+    isError,
+    errorMessage,
+    isSuccess,
+    successMessage,
+    setIsError,
+    setErrorMessage,
+    setIsSuccess,
+    setSuccessMessage,
+  } = useContext(AlertContext);
 
   const [previewURL, setPreviewURL] = useState('');
   const [imageName, setImageName] = useState(
@@ -20,10 +30,6 @@ const UserProfile: NextPage = () => {
   const [profile, setProfile] = useState(
     user?.attributes.profile ? user.attributes.profile : 'はじめまして。よろしくお願いします。',
   );
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files[0];
