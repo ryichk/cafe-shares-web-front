@@ -13,6 +13,7 @@ type Post
 {
   id: ID! @index(name: "byCafeId", sortKeyFields: ["cafeId"])
   cafeId: String!
+  cafeName: String!
   content: String
   picture: String!
   tags: [Tag] @manyToMany(relationName: "PostTags")
