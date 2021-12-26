@@ -11,7 +11,7 @@ type Post
     { allow: public, operations: [read] }
   ])
 {
-  id: ID!
+  id: ID! @index(name: "byCafeId", sortKeyFields: ["cafeId"])
   cafeId: String!
   content: String
   picture: String!
