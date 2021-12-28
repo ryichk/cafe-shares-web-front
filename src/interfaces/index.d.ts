@@ -135,3 +135,10 @@ export interface ICognitoUser {
     profile: string | undefined;
   };
 }
+
+export interface GetPostData {
+  listPosts: ListPosts;
+}
+export interface ListPosts {
+  items?: Array<Post>;
+}
