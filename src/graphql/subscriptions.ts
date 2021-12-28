@@ -31,6 +31,7 @@ export const onCreatePost = /* GraphQL */ `
     onCreatePost(owner: $owner) {
       id
       cafeId
+      cafeName
       content
       picture
       tags {
@@ -66,6 +67,7 @@ export const onUpdatePost = /* GraphQL */ `
     onUpdatePost(owner: $owner) {
       id
       cafeId
+      cafeName
       content
       picture
       tags {
@@ -101,6 +103,7 @@ export const onDeletePost = /* GraphQL */ `
     onDeletePost(owner: $owner) {
       id
       cafeId
+      cafeName
       content
       picture
       tags {
@@ -161,6 +164,7 @@ export const onCreateComment = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -188,6 +192,7 @@ export const onUpdateComment = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -215,6 +220,7 @@ export const onDeleteComment = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -243,6 +249,7 @@ export const onCreatePostTags = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -280,6 +287,7 @@ export const onUpdatePostTags = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -317,6 +325,7 @@ export const onDeletePostTags = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {

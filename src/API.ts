@@ -5,12 +5,14 @@
 export type CreatePostInput = {
   id?: string | null;
   cafeId: string;
+  cafeName: string;
   content?: string | null;
   picture: string;
 };
 
 export type ModelPostConditionInput = {
   cafeId?: ModelStringInput | null;
+  cafeName?: ModelStringInput | null;
   content?: ModelStringInput | null;
   picture?: ModelStringInput | null;
   and?: Array<ModelPostConditionInput | null> | null;
@@ -61,6 +63,7 @@ export type Post = {
   __typename: 'Post';
   id: string;
   cafeId: string;
+  cafeName: string;
   content?: string | null;
   picture: string;
   tags?: ModelPostTagsConnection | null;
@@ -122,6 +125,7 @@ export type DeletePostInput = {
 export type UpdatePostInput = {
   id: string;
   cafeId?: string | null;
+  cafeName?: string | null;
   content?: string | null;
   picture?: string | null;
 };
@@ -247,6 +251,7 @@ export type ModelFollowRelationshipConnection = {
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null;
   cafeId?: ModelStringInput | null;
+  cafeName?: ModelStringInput | null;
   content?: ModelStringInput | null;
   picture?: ModelStringInput | null;
   and?: Array<ModelPostFilterInput | null> | null;
@@ -302,6 +307,7 @@ export type CreatePostMutation = {
     __typename: 'Post';
     id: string;
     cafeId: string;
+    cafeName: string;
     content?: string | null;
     picture: string;
     tags?: {
@@ -346,6 +352,7 @@ export type DeletePostMutation = {
     __typename: 'Post';
     id: string;
     cafeId: string;
+    cafeName: string;
     content?: string | null;
     picture: string;
     tags?: {
@@ -390,6 +397,7 @@ export type UpdatePostMutation = {
     __typename: 'Post';
     id: string;
     cafeId: string;
+    cafeName: string;
     content?: string | null;
     picture: string;
     tags?: {
@@ -467,6 +475,7 @@ export type CreateCommentMutation = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -502,6 +511,7 @@ export type DeleteCommentMutation = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -537,6 +547,7 @@ export type UpdateCommentMutation = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -607,6 +618,7 @@ export type CreatePostTagsMutation = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -654,6 +666,7 @@ export type UpdatePostTagsMutation = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -701,6 +714,7 @@ export type DeletePostTagsMutation = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -780,6 +794,7 @@ export type GetPostQuery = {
     __typename: 'Post';
     id: string;
     cafeId: string;
+    cafeName: string;
     content?: string | null;
     picture: string;
     tags?: {
@@ -827,6 +842,7 @@ export type ListPostsQuery = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -911,6 +927,7 @@ export type GetCommentQuery = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -949,6 +966,7 @@ export type ListCommentsQuery = {
         __typename: 'Post';
         id: string;
         cafeId: string;
+        cafeName: string;
         content?: string | null;
         picture: string;
         createdAt: string;
@@ -978,6 +996,7 @@ export type GetPostTagsQuery = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -1028,6 +1047,7 @@ export type ListPostTagsQuery = {
         __typename: 'Post';
         id: string;
         cafeId: string;
+        cafeName: string;
         content?: string | null;
         picture: string;
         createdAt: string;
@@ -1091,6 +1111,7 @@ export type OnCreatePostSubscription = {
     __typename: 'Post';
     id: string;
     cafeId: string;
+    cafeName: string;
     content?: string | null;
     picture: string;
     tags?: {
@@ -1134,6 +1155,7 @@ export type OnUpdatePostSubscription = {
     __typename: 'Post';
     id: string;
     cafeId: string;
+    cafeName: string;
     content?: string | null;
     picture: string;
     tags?: {
@@ -1177,6 +1199,7 @@ export type OnDeletePostSubscription = {
     __typename: 'Post';
     id: string;
     cafeId: string;
+    cafeName: string;
     content?: string | null;
     picture: string;
     tags?: {
@@ -1252,6 +1275,7 @@ export type OnCreateCommentSubscription = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -1286,6 +1310,7 @@ export type OnUpdateCommentSubscription = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -1320,6 +1345,7 @@ export type OnDeleteCommentSubscription = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -1355,6 +1381,7 @@ export type OnCreatePostTagsSubscription = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -1401,6 +1428,7 @@ export type OnUpdatePostTagsSubscription = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {
@@ -1447,6 +1475,7 @@ export type OnDeletePostTagsSubscription = {
       __typename: 'Post';
       id: string;
       cafeId: string;
+      cafeName: string;
       content?: string | null;
       picture: string;
       tags?: {

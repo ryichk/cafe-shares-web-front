@@ -38,6 +38,7 @@ export const getPost = /* GraphQL */ `
     getPost(id: $id) {
       id
       cafeId
+      cafeName
       content
       picture
       tags {
@@ -74,6 +75,7 @@ export const listPosts = /* GraphQL */ `
       items {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -137,6 +139,7 @@ export const getComment = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -165,6 +168,7 @@ export const listComments = /* GraphQL */ `
         post {
           id
           cafeId
+          cafeName
           content
           picture
           createdAt
@@ -189,6 +193,7 @@ export const getPostTags = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -227,6 +232,7 @@ export const listPostTags = /* GraphQL */ `
         post {
           id
           cafeId
+          cafeName
           content
           picture
           createdAt

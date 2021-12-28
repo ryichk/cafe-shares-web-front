@@ -7,6 +7,7 @@ export const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       id
       cafeId
+      cafeName
       content
       picture
       tags {
@@ -42,6 +43,7 @@ export const deletePost = /* GraphQL */ `
     deletePost(input: $input, condition: $condition) {
       id
       cafeId
+      cafeName
       content
       picture
       tags {
@@ -77,6 +79,7 @@ export const updatePost = /* GraphQL */ `
     updatePost(input: $input, condition: $condition) {
       id
       cafeId
+      cafeName
       content
       picture
       tags {
@@ -137,6 +140,7 @@ export const createComment = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -164,6 +168,7 @@ export const deleteComment = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -191,6 +196,7 @@ export const updateComment = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -249,6 +255,7 @@ export const createPostTags = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -286,6 +293,7 @@ export const updatePostTags = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
@@ -323,6 +331,7 @@ export const deletePostTags = /* GraphQL */ `
       post {
         id
         cafeId
+        cafeName
         content
         picture
         tags {
