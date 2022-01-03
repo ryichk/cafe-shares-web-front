@@ -26,7 +26,6 @@ export type AmplifyDependentResourcesAttributes = {
       ApiId: 'string';
     };
     CafeShares: {
-      GraphQLAPIKeyOutput: 'string';
       GraphQLAPIIdOutput: 'string';
       GraphQLAPIEndpointOutput: 'string';
     };

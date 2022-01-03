@@ -4,17 +4,23 @@
 
 export type CreatePostInput = {
   id?: string | null;
+  type?: string | null;
   cafeId: string;
   cafeName: string;
   content?: string | null;
   picture: string;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 };
 
 export type ModelPostConditionInput = {
+  type?: ModelStringInput | null;
   cafeId?: ModelStringInput | null;
   cafeName?: ModelStringInput | null;
   content?: ModelStringInput | null;
   picture?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
+  updatedAt?: ModelStringInput | null;
   and?: Array<ModelPostConditionInput | null> | null;
   or?: Array<ModelPostConditionInput | null> | null;
   not?: ModelPostConditionInput | null;
@@ -62,20 +68,21 @@ export type ModelSizeInput = {
 export type Post = {
   __typename: 'Post';
   id: string;
+  type?: string | null;
   cafeId: string;
   cafeName: string;
   content?: string | null;
   picture: string;
-  tags?: ModelPostTagsConnection | null;
-  comments?: ModelCommentConnection | null;
   createdAt: string;
   updatedAt: string;
+  tags?: ModelPostTagsConnection | null;
+  comments?: ModelCommentConnection | null;
   owner?: string | null;
 };
 
 export type ModelPostTagsConnection = {
   __typename: 'ModelPostTagsConnection';
-  items: Array<PostTags>;
+  items: Array<PostTags | null>;
   nextToken?: string | null;
 };
 
@@ -103,7 +110,7 @@ export type Tag = {
 
 export type ModelCommentConnection = {
   __typename: 'ModelCommentConnection';
-  items: Array<Comment>;
+  items: Array<Comment | null>;
   nextToken?: string | null;
 };
 
@@ -118,16 +125,19 @@ export type Comment = {
   owner?: string | null;
 };
 
-export type DeletePostInput = {
-  id: string;
-};
-
 export type UpdatePostInput = {
   id: string;
+  type?: string | null;
   cafeId?: string | null;
   cafeName?: string | null;
   content?: string | null;
   picture?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+};
+
+export type DeletePostInput = {
+  id: string;
 };
 
 export type CreateTagInput = {
@@ -244,16 +254,19 @@ export type ModelFollowRelationshipFilterInput = {
 
 export type ModelFollowRelationshipConnection = {
   __typename: 'ModelFollowRelationshipConnection';
-  items: Array<FollowRelationship>;
+  items: Array<FollowRelationship | null>;
   nextToken?: string | null;
 };
 
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null;
+  type?: ModelStringInput | null;
   cafeId?: ModelStringInput | null;
   cafeName?: ModelStringInput | null;
   content?: ModelStringInput | null;
   picture?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
+  updatedAt?: ModelStringInput | null;
   and?: Array<ModelPostFilterInput | null> | null;
   or?: Array<ModelPostFilterInput | null> | null;
   not?: ModelPostFilterInput | null;
@@ -261,9 +274,24 @@ export type ModelPostFilterInput = {
 
 export type ModelPostConnection = {
   __typename: 'ModelPostConnection';
-  items: Array<Post>;
+  items: Array<Post | null>;
   nextToken?: string | null;
 };
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
+export enum ModelSortDirection {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
 
 export type ModelTagFilterInput = {
   id?: ModelIDInput | null;
@@ -275,7 +303,7 @@ export type ModelTagFilterInput = {
 
 export type ModelTagConnection = {
   __typename: 'ModelTagConnection';
-  items: Array<Tag>;
+  items: Array<Tag | null>;
   nextToken?: string | null;
 };
 
@@ -306,10 +334,13 @@ export type CreatePostMutation = {
   createPost?: {
     __typename: 'Post';
     id: string;
+    type?: string | null;
     cafeId: string;
     cafeName: string;
     content?: string | null;
     picture: string;
+    createdAt: string;
+    updatedAt: string;
     tags?: {
       __typename: 'ModelPostTagsConnection';
       items: Array<{
@@ -320,7 +351,7 @@ export type CreatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -333,56 +364,9 @@ export type CreatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner?: string | null;
-  } | null;
-};
-
-export type DeletePostMutationVariables = {
-  input: DeletePostInput;
-  condition?: ModelPostConditionInput | null;
-};
-
-export type DeletePostMutation = {
-  deletePost?: {
-    __typename: 'Post';
-    id: string;
-    cafeId: string;
-    cafeName: string;
-    content?: string | null;
-    picture: string;
-    tags?: {
-      __typename: 'ModelPostTagsConnection';
-      items: Array<{
-        __typename: 'PostTags';
-        id: string;
-        postID: string;
-        tagID: string;
-        createdAt: string;
-        updatedAt: string;
-        owner?: string | null;
-      }>;
-      nextToken?: string | null;
-    } | null;
-    comments?: {
-      __typename: 'ModelCommentConnection';
-      items: Array<{
-        __typename: 'Comment';
-        id: string;
-        postID: string;
-        content: string;
-        createdAt: string;
-        updatedAt: string;
-        owner?: string | null;
-      }>;
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
     owner?: string | null;
   } | null;
 };
@@ -396,10 +380,13 @@ export type UpdatePostMutation = {
   updatePost?: {
     __typename: 'Post';
     id: string;
+    type?: string | null;
     cafeId: string;
     cafeName: string;
     content?: string | null;
     picture: string;
+    createdAt: string;
+    updatedAt: string;
     tags?: {
       __typename: 'ModelPostTagsConnection';
       items: Array<{
@@ -410,7 +397,7 @@ export type UpdatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -423,11 +410,55 @@ export type UpdatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
+    owner?: string | null;
+  } | null;
+};
+
+export type DeletePostMutationVariables = {
+  input: DeletePostInput;
+  condition?: ModelPostConditionInput | null;
+};
+
+export type DeletePostMutation = {
+  deletePost?: {
+    __typename: 'Post';
+    id: string;
+    type?: string | null;
+    cafeId: string;
+    cafeName: string;
+    content?: string | null;
+    picture: string;
     createdAt: string;
     updatedAt: string;
+    tags?: {
+      __typename: 'ModelPostTagsConnection';
+      items: Array<{
+        __typename: 'PostTags';
+        id: string;
+        postID: string;
+        tagID: string;
+        createdAt: string;
+        updatedAt: string;
+        owner?: string | null;
+      } | null>;
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: 'ModelCommentConnection';
+      items: Array<{
+        __typename: 'Comment';
+        id: string;
+        postID: string;
+        content: string;
+        createdAt: string;
+        updatedAt: string;
+        owner?: string | null;
+      } | null>;
+      nextToken?: string | null;
+    } | null;
     owner?: string | null;
   } | null;
 };
@@ -452,7 +483,7 @@ export type CreateTagMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -474,10 +505,13 @@ export type CreateCommentMutation = {
     post?: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -486,8 +520,6 @@ export type CreateCommentMutation = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     } | null;
     content: string;
@@ -510,10 +542,13 @@ export type DeleteCommentMutation = {
     post?: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -522,8 +557,6 @@ export type DeleteCommentMutation = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     } | null;
     content: string;
@@ -546,10 +579,13 @@ export type UpdateCommentMutation = {
     post?: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -558,8 +594,6 @@ export type UpdateCommentMutation = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     } | null;
     content: string;
@@ -617,10 +651,13 @@ export type CreatePostTagsMutation = {
     post: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -629,8 +666,6 @@ export type CreatePostTagsMutation = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     };
     tag: {
@@ -665,10 +700,13 @@ export type UpdatePostTagsMutation = {
     post: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -677,8 +715,6 @@ export type UpdatePostTagsMutation = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     };
     tag: {
@@ -713,10 +749,13 @@ export type DeletePostTagsMutation = {
     post: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -725,8 +764,6 @@ export type DeletePostTagsMutation = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     };
     tag: {
@@ -780,7 +817,7 @@ export type ListFollowRelationshipsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    }>;
+    } | null>;
     nextToken?: string | null;
   } | null;
 };
@@ -793,10 +830,13 @@ export type GetPostQuery = {
   getPost?: {
     __typename: 'Post';
     id: string;
+    type?: string | null;
     cafeId: string;
     cafeName: string;
     content?: string | null;
     picture: string;
+    createdAt: string;
+    updatedAt: string;
     tags?: {
       __typename: 'ModelPostTagsConnection';
       items: Array<{
@@ -807,7 +847,7 @@ export type GetPostQuery = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -820,11 +860,9 @@ export type GetPostQuery = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
     owner?: string | null;
   } | null;
 };
@@ -841,10 +879,13 @@ export type ListPostsQuery = {
     items: Array<{
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -853,10 +894,44 @@ export type ListPostsQuery = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type PostsByDateQueryVariables = {
+  type?: string | null;
+  updatedAt?: ModelStringKeyConditionInput | null;
+  sortDirection?: ModelSortDirection | null;
+  filter?: ModelPostFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type PostsByDateQuery = {
+  postsByDate?: {
+    __typename: 'ModelPostConnection';
+    items: Array<{
+      __typename: 'Post';
+      id: string;
+      type?: string | null;
+      cafeId: string;
+      cafeName: string;
+      content?: string | null;
+      picture: string;
       createdAt: string;
       updatedAt: string;
+      tags?: {
+        __typename: 'ModelPostTagsConnection';
+        nextToken?: string | null;
+      } | null;
+      comments?: {
+        __typename: 'ModelCommentConnection';
+        nextToken?: string | null;
+      } | null;
       owner?: string | null;
-    }>;
+    } | null>;
     nextToken?: string | null;
   } | null;
 };
@@ -880,7 +955,7 @@ export type GetTagQuery = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -909,7 +984,7 @@ export type ListTagsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    }>;
+    } | null>;
     nextToken?: string | null;
   } | null;
 };
@@ -926,10 +1001,13 @@ export type GetCommentQuery = {
     post?: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -938,8 +1016,6 @@ export type GetCommentQuery = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     } | null;
     content: string;
@@ -965,6 +1041,7 @@ export type ListCommentsQuery = {
       post?: {
         __typename: 'Post';
         id: string;
+        type?: string | null;
         cafeId: string;
         cafeName: string;
         content?: string | null;
@@ -977,7 +1054,7 @@ export type ListCommentsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    }>;
+    } | null>;
     nextToken?: string | null;
   } | null;
 };
@@ -995,10 +1072,13 @@ export type GetPostTagsQuery = {
     post: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -1007,8 +1087,6 @@ export type GetPostTagsQuery = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     };
     tag: {
@@ -1046,6 +1124,7 @@ export type ListPostTagsQuery = {
       post: {
         __typename: 'Post';
         id: string;
+        type?: string | null;
         cafeId: string;
         cafeName: string;
         content?: string | null;
@@ -1065,7 +1144,7 @@ export type ListPostTagsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    }>;
+    } | null>;
     nextToken?: string | null;
   } | null;
 };
@@ -1110,10 +1189,13 @@ export type OnCreatePostSubscription = {
   onCreatePost?: {
     __typename: 'Post';
     id: string;
+    type?: string | null;
     cafeId: string;
     cafeName: string;
     content?: string | null;
     picture: string;
+    createdAt: string;
+    updatedAt: string;
     tags?: {
       __typename: 'ModelPostTagsConnection';
       items: Array<{
@@ -1124,7 +1206,7 @@ export type OnCreatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -1137,11 +1219,9 @@ export type OnCreatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
     owner?: string | null;
   } | null;
 };
@@ -1154,10 +1234,13 @@ export type OnUpdatePostSubscription = {
   onUpdatePost?: {
     __typename: 'Post';
     id: string;
+    type?: string | null;
     cafeId: string;
     cafeName: string;
     content?: string | null;
     picture: string;
+    createdAt: string;
+    updatedAt: string;
     tags?: {
       __typename: 'ModelPostTagsConnection';
       items: Array<{
@@ -1168,7 +1251,7 @@ export type OnUpdatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -1181,11 +1264,9 @@ export type OnUpdatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
     owner?: string | null;
   } | null;
 };
@@ -1198,10 +1279,13 @@ export type OnDeletePostSubscription = {
   onDeletePost?: {
     __typename: 'Post';
     id: string;
+    type?: string | null;
     cafeId: string;
     cafeName: string;
     content?: string | null;
     picture: string;
+    createdAt: string;
+    updatedAt: string;
     tags?: {
       __typename: 'ModelPostTagsConnection';
       items: Array<{
@@ -1212,7 +1296,7 @@ export type OnDeletePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -1225,11 +1309,9 @@ export type OnDeletePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
     owner?: string | null;
   } | null;
 };
@@ -1253,7 +1335,7 @@ export type OnCreateTagSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      }>;
+      } | null>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -1274,10 +1356,13 @@ export type OnCreateCommentSubscription = {
     post?: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -1286,8 +1371,6 @@ export type OnCreateCommentSubscription = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     } | null;
     content: string;
@@ -1309,10 +1392,13 @@ export type OnUpdateCommentSubscription = {
     post?: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -1321,8 +1407,6 @@ export type OnUpdateCommentSubscription = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     } | null;
     content: string;
@@ -1344,10 +1428,13 @@ export type OnDeleteCommentSubscription = {
     post?: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -1356,8 +1443,6 @@ export type OnDeleteCommentSubscription = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     } | null;
     content: string;
@@ -1380,10 +1465,13 @@ export type OnCreatePostTagsSubscription = {
     post: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -1392,8 +1480,6 @@ export type OnCreatePostTagsSubscription = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     };
     tag: {
@@ -1427,10 +1513,13 @@ export type OnUpdatePostTagsSubscription = {
     post: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -1439,8 +1528,6 @@ export type OnUpdatePostTagsSubscription = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     };
     tag: {
@@ -1474,10 +1561,13 @@ export type OnDeletePostTagsSubscription = {
     post: {
       __typename: 'Post';
       id: string;
+      type?: string | null;
       cafeId: string;
       cafeName: string;
       content?: string | null;
       picture: string;
+      createdAt: string;
+      updatedAt: string;
       tags?: {
         __typename: 'ModelPostTagsConnection';
         nextToken?: string | null;
@@ -1486,8 +1576,6 @@ export type OnDeletePostTagsSubscription = {
         __typename: 'ModelCommentConnection';
         nextToken?: string | null;
       } | null;
-      createdAt: string;
-      updatedAt: string;
       owner?: string | null;
     };
     tag: {

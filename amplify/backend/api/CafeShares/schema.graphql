@@ -1,21 +1,16 @@
-type Post
-  @model(
-    mutations: {
-      create: "createPost",
-      delete: "deletePost",
-      update: "updatePost"
-    }
-  )
-  @auth(rules: [
-    { allow: owner, provider: userPools },
-    { allow: public, operations: [read] }
+type Post @model @auth(rules: [
+    { allow: owner, provider: userPools, operations: [read, create, update, delete] },
+    { allow: public, provider: iam, operations: [read] }
   ])
 {
-  id: ID! @index(name: "byCafeId", sortKeyFields: ["cafeId"])
+  id: ID!
+  type: String @default(value: "Post") @index(name: "postsByDate", sortKeyFields: ["updatedAt"], queryField: "postsByDate")
   cafeId: String!
   cafeName: String!
   content: String
   picture: String!
+  createdAt: String!
+  updatedAt: String!
   tags: [Tag] @manyToMany(relationName: "PostTags")
   comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
 }
@@ -30,7 +25,7 @@ type Tag
   )
   @auth (rules: [
     { allow: owner, provider: userPools, operations: [read, create] },
-    { allow: public, operations: [read] }
+    { allow: public, provider: iam, operations: [read] }
   ])
 {
   id: ID!
@@ -48,7 +43,7 @@ type Comment
   )
   @auth (rules: [
     { allow: owner, provider: userPools },
-    { allow: public, operations: [read] }
+    { allow: public, provider: iam, operations: [read] }
   ])
 {
   id: ID!

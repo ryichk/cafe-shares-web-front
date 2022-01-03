@@ -30,10 +30,13 @@ export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost($owner: String) {
     onCreatePost(owner: $owner) {
       id
+      type
       cafeId
       cafeName
       content
       picture
+      createdAt
+      updatedAt
       tags {
         items {
           id
@@ -56,8 +59,6 @@ export const onCreatePost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -66,10 +67,13 @@ export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost($owner: String) {
     onUpdatePost(owner: $owner) {
       id
+      type
       cafeId
       cafeName
       content
       picture
+      createdAt
+      updatedAt
       tags {
         items {
           id
@@ -92,8 +96,6 @@ export const onUpdatePost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -102,10 +104,13 @@ export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost($owner: String) {
     onDeletePost(owner: $owner) {
       id
+      type
       cafeId
       cafeName
       content
       picture
+      createdAt
+      updatedAt
       tags {
         items {
           id
@@ -128,8 +133,6 @@ export const onDeletePost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -163,18 +166,19 @@ export const onCreateComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         cafeId
         cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -191,18 +195,19 @@ export const onUpdateComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         cafeId
         cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -219,18 +224,19 @@ export const onDeleteComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         cafeId
         cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -248,18 +254,19 @@ export const onCreatePostTags = /* GraphQL */ `
       tagID
       post {
         id
+        type
         cafeId
         cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       tag {
@@ -286,18 +293,19 @@ export const onUpdatePostTags = /* GraphQL */ `
       tagID
       post {
         id
+        type
         cafeId
         cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       tag {
@@ -324,18 +332,19 @@ export const onDeletePostTags = /* GraphQL */ `
       tagID
       post {
         id
+        type
         cafeId
         cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       tag {

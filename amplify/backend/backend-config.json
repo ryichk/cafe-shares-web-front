@@ -73,12 +73,7 @@
           },
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "API_KEY",
-              "apiKeyConfig": {
-                "apiKeyExpirationDays": 7,
-                "apiKeyExpirationDate": "2021-12-27T16:18:23.749Z",
-                "description": "CafeShares GraphQL backend API"
-              }
+              "authenticationType": "AWS_IAM"
             }
           ]
         }
