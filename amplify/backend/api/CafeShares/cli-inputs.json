@@ -10,11 +10,9 @@
     },
     "additionalAuthTypes": [
       {
-        "mode": "API_KEY",
-        "expirationTime": 7,
-        "apiKeyExpirationDate": "2021-12-27T16:18:23.749Z",
-        "keyDescription": "CafeShares GraphQL backend API"
+        "mode": "AWS_IAM"
       }
-    ]
+    ],
+    "conflictResolution": {}
   }
 }

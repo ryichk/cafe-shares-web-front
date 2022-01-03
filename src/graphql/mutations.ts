@@ -6,9 +6,13 @@ export const createPost = /* GraphQL */ `
   mutation CreatePost($input: CreatePostInput!, $condition: ModelPostConditionInput) {
     createPost(input: $input, condition: $condition) {
       id
+      type
       cafeId
+      cafeName
       content
       picture
+      createdAt
+      updatedAt
       tags {
         items {
           id
@@ -31,43 +35,6 @@ export const createPost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deletePost = /* GraphQL */ `
-  mutation DeletePost($input: DeletePostInput!, $condition: ModelPostConditionInput) {
-    deletePost(input: $input, condition: $condition) {
-      id
-      cafeId
-      content
-      picture
-      tags {
-        items {
-          id
-          postID
-          tagID
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          postID
-          content
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -76,9 +43,13 @@ export const updatePost = /* GraphQL */ `
   mutation UpdatePost($input: UpdatePostInput!, $condition: ModelPostConditionInput) {
     updatePost(input: $input, condition: $condition) {
       id
+      type
       cafeId
+      cafeName
       content
       picture
+      createdAt
+      updatedAt
       tags {
         items {
           id
@@ -101,8 +72,43 @@ export const updatePost = /* GraphQL */ `
         }
         nextToken
       }
+      owner
+    }
+  }
+`;
+export const deletePost = /* GraphQL */ `
+  mutation DeletePost($input: DeletePostInput!, $condition: ModelPostConditionInput) {
+    deletePost(input: $input, condition: $condition) {
+      id
+      type
+      cafeId
+      cafeName
+      content
+      picture
       createdAt
       updatedAt
+      tags {
+        items {
+          id
+          postID
+          tagID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          postID
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
@@ -136,17 +142,19 @@ export const createComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -163,17 +171,19 @@ export const deleteComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -190,17 +200,19 @@ export const updateComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -248,17 +260,19 @@ export const createPostTags = /* GraphQL */ `
       tagID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       tag {
@@ -285,17 +299,19 @@ export const updatePostTags = /* GraphQL */ `
       tagID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       tag {
@@ -322,17 +338,19 @@ export const deletePostTags = /* GraphQL */ `
       tagID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       tag {

@@ -1,4 +1,5 @@
-import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api-graphql/lib/types';
+import { Amplify, API, graphqlOperation, Storage, withSSRContext } from 'aws-amplify';
 import { format } from 'date-fns';
 import { NextPage, GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
@@ -7,16 +8,27 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { CreatePostInput, Post } from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
+import awsExports from '../../aws-exports';
 import { ErrorAlert, SuccessAlert } from '../../components';
-import { AlertContext, AuthContext } from '../../contexts';
+import { AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
-import { listPosts } from '../../graphql/queries';
+import { postsByDate } from '../../graphql/queries';
+import { onCreatePost } from '../../graphql/subscriptions';
 import { CloseIcon } from '../../icons';
-import type { CafeInfo, HotpepperResponse, GetPostData } from '../../interfaces';
+import type {
+  CafeInfo,
+  GetPostDataByDate,
+  HotpepperResponse,
+  ICognitoUser,
+} from '../../interfaces';
 import { Header, Footer } from '../../layouts';
 
-const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
-  const { user } = useContext(AuthContext);
+const Cafe: NextPage<{
+  cafe: CafeInfo;
+  currentUsername: string;
+  initialPosts: Array<Post | null>;
+}> = ({ cafe, currentUsername, initialPosts }) => {
+  // const { user } = useContext(AuthContext);
   const {
     isError,
     errorMessage,
@@ -31,7 +43,7 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
   const [contents, setContents] = useState('');
   const [previewURL, setPreviewURL] = useState('');
   const [imageName, setImageName] = useState('');
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(initialPosts);
 
   const cafeInfo = {
     アクセス: cafe.access,
@@ -73,9 +85,8 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
   };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
     const file = event.target.files[0];
-    if (file && file.type.includes('image')) {
+    if (currentUsername && file && file.type.includes('image')) {
       const reader = new FileReader();
       reader.onload = () => {
         setPreviewURL(reader.result as string);
@@ -83,7 +94,7 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
       reader.readAsDataURL(file);
 
       const now = format(new Date(), 'yyyyMMddhhmmss');
-      const fileName = `post_picture_${user?.username}_${file.name}_${now}`;
+      const fileName = `post_picture_${currentUsername}_${file.name}_${now}`;
       setImageName(fileName);
 
       try {
@@ -111,6 +122,7 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
       if (isValidPost()) {
         const createPostInput: CreatePostInput = {
           cafeId: String(cafe.id),
+          cafeName: cafe.name,
           content: contents,
           picture: imageName,
         };
@@ -139,6 +151,48 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
       setIsSuccess(false);
     }
   };
+
+  useEffect(() => {
+    let unsubscribe;
+    if (currentUsername) {
+      const subscription = API.graphql(graphqlOperation(onCreatePost, { owner: currentUsername }));
+      if ('subscribe' in subscription) {
+        const sub = subscription.subscribe({
+          next: ({ value }) => {
+            const post: Post = value.data.onCreatePost;
+            if (post) {
+              const newPostObject = async (): Promise<Post> => {
+                const pictureURL = await Storage.get(post.picture);
+
+                return {
+                  __typename: 'Post',
+                  id: post.id,
+                  cafeId: post.cafeId,
+                  cafeName: post.cafeName,
+                  content: post.content,
+                  picture: pictureURL,
+                  owner: post.owner,
+                  createdAt: post.createdAt,
+                  updatedAt: post.updatedAt,
+                };
+              };
+              newPostObject().then((newPost) => setPosts((prev) => [newPost, ...prev]));
+            }
+          },
+          error: (error) => {
+            console.error(error);
+            setErrorMessage(error.error.errors[0].message);
+            setIsError(true);
+          },
+        });
+        unsubscribe = () => {
+          sub.unsubscribe();
+        };
+      }
+    }
+
+    return unsubscribe;
+  }, []);
 
   return (
     <>
@@ -211,7 +265,7 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
               </div>
             </div>
           </div>
-          {user ? (
+          {currentUsername ? (
             <>
               <label htmlFor='posting-form' className='mt-5 btn btn-wide btn-primary modal-button'>
                 投稿する
@@ -271,6 +325,67 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
           ) : (
             <></>
           )}
+          <div className='mt-10'>
+            <h2 className='font-bold'>投稿一覧</h2>
+            <div className='flex flex-wrap lg:flex-row sm:flex-col'>
+              {posts.length ? (
+                posts?.map((post: Post) => (
+                  <div
+                    className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'
+                    key={post.id}
+                  >
+                    <div
+                      className='h-56 sm:h-96'
+                      style={{
+                        background: `no-repeat center / cover url(${post.picture})`,
+                      }}
+                    />
+                    <div className='card-body'>
+                      <div className='flex items-center'>
+                        {/* <div className='avatar'>
+                        <div className='rounded-full w-7 h-7'>
+                          <Image src={} height={50} width={50} />
+                        </div>
+                      </div> */}
+                        <span className='ml-2 text-sm font-bold'>{post.owner}</span>
+                      </div>
+                      <p>
+                        {post.content.length < 30 ? (
+                          post.content
+                        ) : (
+                          <>
+                            {post.content.substr(0, 20)}
+                            <span
+                              id={`read-more-${post.id}`}
+                              className='text-sm text-primary'
+                              onClick={() => {
+                                document
+                                  .getElementById(`read-more-${post.id}`)
+                                  .classList.add('hidden');
+                                document
+                                  .getElementById(`content-${post.id}`)
+                                  .classList.remove('hidden');
+                              }}
+                            >
+                              ...続きを読む
+                            </span>
+                            <span id={`content-${post.id}`} className='hidden'>
+                              {post.content.substr(20)}
+                            </span>
+                          </>
+                        )}
+                      </p>
+                      <p className='mt-2 text-xs'>
+                        投稿日時: {format(new Date(post.createdAt), 'yyyy年MM月dd日HH時mm分ss秒')}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <>まだ投稿がありません。</>
+              )}
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
@@ -281,20 +396,68 @@ const Cafe: NextPage<{ cafe: CafeInfo }> = ({ cafe }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   const URL = `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${process.env.API_KEY}&format=json&id=${id}`;
+  let cafe: CafeInfo | null = null;
   try {
     const res = await fetch(URL);
     const data: HotpepperResponse = await res.json();
-    const cafe: CafeInfo = data.results.shop[0];
-
-    return {
-      props: {
-        cafe,
-      },
-    };
+    cafe = data.results.shop[0];
   } catch (error) {
     console.error(error);
-    throw error;
   }
+
+  const { Auth } = withSSRContext(context);
+  let currentUsername = '';
+  try {
+    const user: ICognitoUser = await Auth.currentAuthenticatedUser();
+    currentUsername = user.username;
+  } catch (error) {
+    console.error(error);
+  }
+
+  Amplify.configure({ ...awsExports });
+  const initialPosts: Array<Post | null> = [];
+  try {
+    const response = await API.graphql({
+      query: postsByDate,
+      variables: {
+        type: 'Post',
+        filter: { cafeId: { eq: cafe.id } },
+        sortDirection: 'DESC',
+      },
+      authMode: GRAPHQL_AUTH_MODE.AWS_IAM,
+    });
+    if ('data' in response && response.data) {
+      const getPostData = response.data as GetPostDataByDate;
+      const listPosts = getPostData.postsByDate;
+      if (listPosts.items) {
+        for (const post of listPosts.items) {
+          const pictureURL = await Storage.get(post.picture);
+          const postObject: Post = {
+            __typename: 'Post',
+            id: post.id,
+            cafeId: post.cafeId,
+            cafeName: post.cafeName,
+            content: post.content,
+            picture: pictureURL,
+            owner: post.owner,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+          };
+          initialPosts.push(postObject);
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  return {
+    props: {
+      cafe,
+      currentUsername,
+      initialPosts,
+    },
+  };
 };
 
 export default Cafe;

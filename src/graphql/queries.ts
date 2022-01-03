@@ -37,9 +37,13 @@ export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       id
+      type
       cafeId
+      cafeName
       content
       picture
+      createdAt
+      updatedAt
       tags {
         items {
           id
@@ -62,8 +66,6 @@ export const getPost = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
       owner
     }
   }
@@ -73,17 +75,57 @@ export const listPosts = /* GraphQL */ `
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByDate = /* GraphQL */ `
+  query PostsByDate(
+    $type: String
+    $updatedAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByDate(
+      type: $type
+      updatedAt: $updatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        cafeId
+        cafeName
+        content
+        picture
         createdAt
         updatedAt
+        tags {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         owner
       }
       nextToken
@@ -136,17 +178,19 @@ export const getComment = /* GraphQL */ `
       postID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       content
@@ -164,7 +208,9 @@ export const listComments = /* GraphQL */ `
         postID
         post {
           id
+          type
           cafeId
+          cafeName
           content
           picture
           createdAt
@@ -188,17 +234,19 @@ export const getPostTags = /* GraphQL */ `
       tagID
       post {
         id
+        type
         cafeId
+        cafeName
         content
         picture
+        createdAt
+        updatedAt
         tags {
           nextToken
         }
         comments {
           nextToken
         }
-        createdAt
-        updatedAt
         owner
       }
       tag {
@@ -226,7 +274,9 @@ export const listPostTags = /* GraphQL */ `
         tagID
         post {
           id
+          type
           cafeId
+          cafeName
           content
           picture
           createdAt

@@ -1,6 +1,6 @@
 import { SearchKey } from '../interfaces';
 
-export const convertUrlParamsToJSON = (query: string): Record<SearchKey, string> => {
+export const convertQueryStringToJSON = (query: string): Record<SearchKey, string> => {
   if (
     query.includes('start') ||
     query.includes('largeArea') ||
