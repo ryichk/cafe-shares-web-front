@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react';
 import { ScrollToTop, SearchModal } from '../../components';
 import type { HotpepperResponse, SearchKey } from '../../interfaces';
 import { Header, Footer, SearchResultContainer } from '../../layouts';
-import { convertUrlParamsToJSON } from '../../lib/util';
+import { convertQueryStringToJSON } from '../../lib/convert-querystring-to-json';
 import { search } from '../api/search';
 
 const SearchResult: NextPage<{ results: HotpepperResponse['results'] }> = ({ results }) => {
   const router = useRouter();
   const { query } = router.query;
   const { start, largeArea, keyword, wifi, privateRoom, noSmoking, parking, pet, card, order } =
-    convertUrlParamsToJSON(query as string);
+    convertQueryStringToJSON(query as string);
   const [searchParams, setSearchParams] = useState<Record<SearchKey, string>>({
     start,
     largeArea,
@@ -29,7 +29,7 @@ const SearchResult: NextPage<{ results: HotpepperResponse['results'] }> = ({ res
   useEffect(() => {
     const { query } = router.query;
     const { start, largeArea, keyword, wifi, privateRoom, noSmoking, parking, pet, card, order } =
-      convertUrlParamsToJSON(query as string);
+      convertQueryStringToJSON(query as string);
     setSearchParams({
       start,
       largeArea,
@@ -70,7 +70,7 @@ const SearchResult: NextPage<{ results: HotpepperResponse['results'] }> = ({ res
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { query } = context.query;
-    const params = convertUrlParamsToJSON(query as string);
+    const params = convertQueryStringToJSON(query as string);
     const response = await search(params);
     const hotpepperResponse: HotpepperResponse = await response.json();
     const results = hotpepperResponse.results;
