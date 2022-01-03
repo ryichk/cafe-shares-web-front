@@ -6,7 +6,15 @@ import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { CreatePostInput, Post } from '../../API';
+import {
+  CreatePostInput,
+  ModelSortDirection,
+  OnCreatePostSubscriptionVariables,
+  OnCreatePostSubscription,
+  Post,
+  PostsByDateQueryVariables,
+  PostsByDateQuery,
+} from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
 import awsExports from '../../aws-exports';
 import { ErrorAlert, SuccessAlert } from '../../components';
@@ -17,9 +25,9 @@ import { onCreatePost } from '../../graphql/subscriptions';
 import { CloseIcon } from '../../icons';
 import type {
   CafeInfo,
-  GetPostDataByDate,
   HotpepperResponse,
   ICognitoUser,
+  IOnCreatePostSubscriptionObject,
 } from '../../interfaces';
 import { Header, Footer } from '../../layouts';
 
@@ -155,11 +163,17 @@ const Cafe: NextPage<{
   useEffect(() => {
     let unsubscribe;
     if (currentUsername) {
-      const subscription = API.graphql(graphqlOperation(onCreatePost, { owner: currentUsername }));
+      const onCreatePostSubscriptionVariables: OnCreatePostSubscriptionVariables = {
+        owner: currentUsername,
+      };
+      const subscription = API.graphql(
+        graphqlOperation(onCreatePost, onCreatePostSubscriptionVariables),
+      );
       if ('subscribe' in subscription) {
         const sub = subscription.subscribe({
-          next: ({ value }) => {
-            const post: Post = value.data.onCreatePost;
+          next: (object: IOnCreatePostSubscriptionObject) => {
+            const data = object.value.data as OnCreatePostSubscription;
+            const post = data.onCreatePost;
             if (post) {
               const newPostObject = async (): Promise<Post> => {
                 const pictureURL = await Storage.get(post.picture);
@@ -417,17 +431,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   Amplify.configure({ ...awsExports });
   const initialPosts: Array<Post | null> = [];
   try {
+    const postsByDateQueryVariables: PostsByDateQueryVariables = {
+      type: 'Post',
+      filter: { cafeId: { eq: cafe.id } },
+      sortDirection: ModelSortDirection.DESC,
+    };
     const response = await API.graphql({
       query: postsByDate,
-      variables: {
-        type: 'Post',
-        filter: { cafeId: { eq: cafe.id } },
-        sortDirection: 'DESC',
-      },
+      variables: postsByDateQueryVariables,
       authMode: GRAPHQL_AUTH_MODE.AWS_IAM,
     });
     if ('data' in response && response.data) {
-      const getPostData = response.data as GetPostDataByDate;
+      const getPostData = response.data as PostsByDateQuery;
       const listPosts = getPostData.postsByDate;
       if (listPosts.items) {
         for (const post of listPosts.items) {

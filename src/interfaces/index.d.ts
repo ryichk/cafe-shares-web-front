@@ -13,7 +13,7 @@ export interface Photo {
 }
 
 export interface CafeInfo {
-  id: number;
+  id: string;
   name: string;
   name_kana: string;
   address: string;
@@ -136,14 +136,8 @@ export interface ICognitoUser {
   };
 }
 
-export interface GetPostData {
-  listPosts: ListPosts;
-}
-
-export interface GetPostDataByDate {
-  postsByDate: ListPosts;
-}
-
-export interface ListPosts {
-  items?: Array<Post>;
+export interface IOnCreatePostSubscriptionObject {
+  value: {
+    data: OnCreatePostSubscription;
+  };
 }
