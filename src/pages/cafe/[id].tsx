@@ -36,7 +36,6 @@ const Cafe: NextPage<{
   currentUsername: string;
   initialPosts: Array<Post | null>;
 }> = ({ cafe, currentUsername, initialPosts }) => {
-  // const { user } = useContext(AuthContext);
   const {
     isError,
     errorMessage,

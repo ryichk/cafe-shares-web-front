@@ -1,6 +1,15 @@
 import { Story, Meta } from '@storybook/react';
 import React from 'react';
 
+import {
+  CreatePostInput,
+  ModelSortDirection,
+  OnCreatePostSubscriptionVariables,
+  OnCreatePostSubscription,
+  Post,
+  PostsByDateQueryVariables,
+  PostsByDateQuery,
+} from '../../../API';
 import type { CafeInfo } from '../../../interfaces';
 import Cafe from '../../../pages/cafe/[id]';
 
@@ -9,7 +18,11 @@ export default {
   component: Cafe,
 } as Meta<typeof Cafe>;
 
-const Template: Story<{ cafe: CafeInfo }> = (args) => <Cafe {...args} />;
+const Template: Story<{
+  cafe: CafeInfo;
+  currentUsername: string;
+  initialPosts: Array<Post | null>;
+}> = (args) => <Cafe {...args} />;
 
 export const SampleCafe = Template.bind({});
 SampleCafe.args = {
@@ -47,4 +60,6 @@ SampleCafe.args = {
     other_memo: '',
     urls: { pc: 'https://www.hotpepper.jp/strJ000763923/?vos=nhppalsa000016' },
   },
+  currentUsername: 'ryichk',
+  initialPosts: [],
 };
