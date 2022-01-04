@@ -8,7 +8,7 @@ export const ErrorAlert: React.FC<AlertProps> = ({ message }) => {
   const { setIsError } = useContext(AlertContext);
 
   return (
-    <div className='alert alert-error'>
+    <div className='fixed w-full alert bg-red-100 text-error shadow-md z-50'>
       <div className='flex-1'>
         <svg
           xmlns='http://www.w3.org/2000/svg'

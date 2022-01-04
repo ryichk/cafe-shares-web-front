@@ -154,8 +154,8 @@ const UserProfile: NextPage = () => {
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
       {isSuccess ? <SuccessAlert message={successMessage} /> : <></>}
-      <div className='bg-primary min-h-screen'>
-        <Header />
+      <Header />
+      <div className='pt-44 min-h-screen'>
         <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
           <Avatar />
           <div className='m-auto mt-5'>

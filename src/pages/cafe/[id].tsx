@@ -239,9 +239,9 @@ const Cafe: NextPage<{
       ) : (
         <></>
       )}
-      <div className='bg-primary'>
-        <Header />
-        <div className='bg-secondary m-auto max-w-5xl mt-5 p-5 sm:p-14 rounded-t-xl'>
+      <Header />
+      <div className='pt-32'>
+        <div className='m-auto max-w-5xl mt-5 p-5 sm:p-14 rounded-t-xl'>
           <h1 className='text-3xl sm:text-4xl font-bold'>{cafe.name}</h1>
           <div className='my-5'>
             <p className='text-lg sm:text-xl'>{cafe.catch}</p>

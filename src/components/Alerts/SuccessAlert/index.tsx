@@ -8,7 +8,7 @@ export const SuccessAlert: React.FC<AlertProps> = ({ message }) => {
   const { setIsSuccess } = useContext(AlertContext);
 
   return (
-    <div className='alert alert-success'>
+    <div className='fixed w-full alert bg-green-100 text-success shadow-md z-50'>
       <div className='flex-1'>
         <svg
           xmlns='http://www.w3.org/2000/svg'

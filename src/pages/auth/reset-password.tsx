@@ -102,9 +102,9 @@ const ResetPassword: NextPage = () => {
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
       {isSuccess ? <SuccessAlert message={successMessage} /> : <></>}
-      <div className='bg-primary min-h-screen'>
-        <Header />
-        <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
+      <Header />
+      <div className='pt-36 min-h-screen'>
+        <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10'>
           <div className='form-control'>
             <div className='mb-6'>
               <h1 className='text-xl font-bold text-center'>Password Reset</h1>

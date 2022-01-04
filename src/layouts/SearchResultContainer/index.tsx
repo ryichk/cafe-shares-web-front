@@ -74,7 +74,7 @@ export const SearchResultContainer: VFC<SearchResultContainerProps> = ({
   };
 
   return (
-    <div className='container max-w-full bg-secondary mt-7 mx-auto py-7 rounded-t-xl'>
+    <div className='container max-w-full mx-auto py-7'>
       <div className='flex max-w-md m-auto mb-5 text-gray-600'>
         <span className='m-auto'>
           {shop.length.toLocaleString()} / {page.results_available.toLocaleString()} cafes
