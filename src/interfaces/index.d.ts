@@ -13,7 +13,7 @@ export interface Photo {
 }
 
 export interface CafeInfo {
-  id: number;
+  id: string;
   name: string;
   name_kana: string;
   address: string;
@@ -133,5 +133,11 @@ export interface ICognitoUser {
     email: string;
     picture: string | undefined;
     profile: string | undefined;
+  };
+}
+
+export interface IOnCreatePostSubscriptionObject {
+  value: {
+    data: OnCreatePostSubscription;
   };
 }

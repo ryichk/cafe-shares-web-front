@@ -5,18 +5,17 @@ import Router from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 import { Button, ErrorAlert } from '../../components';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AlertContext, AuthContext } from '../../contexts';
 import { EyeIcon, EyeOffIcon, LockIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
 const SignIn: NextPage = () => {
   const { user, setUser } = useContext(AuthContext);
+  const { isError, errorMessage, setIsError, setErrorMessage } = useContext(AlertContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isMasked, setIsMasked] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -84,9 +83,9 @@ const SignIn: NextPage = () => {
   return (
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
-      <div className='bg-primary min-h-screen'>
-        <Header />
-        <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
+      <Header />
+      <div className='pt-36 min-h-screen'>
+        <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10'>
           <div className='form-control'>
             <div className='mb-6'>
               <h1 className='text-xl font-bold text-center'>Sign In</h1>

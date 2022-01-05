@@ -5,20 +5,27 @@ import Router from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 import { Button, ErrorAlert, SuccessAlert } from '../../components';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AlertContext, AuthContext } from '../../contexts';
 import { LockIcon, MessageIcon, UserIcon } from '../../icons';
 import { Header, Footer } from '../../layouts';
 
 const ResetPassword: NextPage = () => {
+  const { user } = useContext(AuthContext);
+  const {
+    isError,
+    errorMessage,
+    isSuccess,
+    successMessage,
+    setIsError,
+    setErrorMessage,
+    setIsSuccess,
+    setSuccessMessage,
+  } = useContext(AlertContext);
+
   const [username, setUsername] = useState('');
   const [code, setCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [isSent, setIsSent] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const { user } = useContext(AuthContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -95,9 +102,9 @@ const ResetPassword: NextPage = () => {
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
       {isSuccess ? <SuccessAlert message={successMessage} /> : <></>}
-      <div className='bg-primary min-h-screen'>
-        <Header />
-        <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
+      <Header />
+      <div className='pt-36 min-h-screen'>
+        <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10'>
           <div className='form-control'>
             <div className='mb-6'>
               <h1 className='text-xl font-bold text-center'>Password Reset</h1>

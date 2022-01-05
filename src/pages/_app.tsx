@@ -8,7 +8,7 @@ import SEO from '../../next-seo.config';
 import awsExports from '../aws-exports';
 import 'tailwindcss/tailwind.css';
 
-import { AuthContext } from '../contexts/AuthContext';
+import { AlertContext, AuthContext } from '../contexts';
 import { ICognitoUser } from '../interfaces';
 import * as gtag from '../lib/gtag';
 
@@ -17,6 +17,10 @@ Amplify.configure({ ...awsExports, ssr: true });
 const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
   const [user, setUser] = useState<ICognitoUser | undefined>();
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const init = async () => {
@@ -41,9 +45,22 @@ const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <DefaultSeo {...SEO} />
-      <AuthContext.Provider value={{ user, setUser }}>
-        <Component {...pageProps} />
-      </AuthContext.Provider>
+      <AlertContext.Provider
+        value={{
+          isError,
+          errorMessage,
+          isSuccess,
+          successMessage,
+          setIsError,
+          setErrorMessage,
+          setIsSuccess,
+          setSuccessMessage,
+        }}
+      >
+        <AuthContext.Provider value={{ user, setUser }}>
+          <Component {...pageProps} />
+        </AuthContext.Provider>
+      </AlertContext.Provider>
     </>
   );
 };

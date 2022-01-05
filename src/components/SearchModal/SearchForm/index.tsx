@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 
 import { thereOrNot, whetherPossible, largeAreas, sortOrderTypes } from '../../../data';
 import { CloseIcon } from '../../../icons';
+import { convertQueryStringToJSON } from '../../../lib/convert-querystring-to-json';
 import * as gtag from '../../../lib/gtag';
-import { convertUrlParamsToJSON } from '../../../lib/util';
 import { Button } from '../../Button';
 
 import { FilteringInput } from './FilteringInput';
@@ -14,7 +14,7 @@ export const SearchForm: React.FC = () => {
   const router = useRouter();
   const { query } = router.query;
   const params = query
-    ? convertUrlParamsToJSON(query as string)
+    ? convertQueryStringToJSON(query as string)
     : {
         largeArea: 'Z011',
         keyword: '',
