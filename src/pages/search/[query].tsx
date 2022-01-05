@@ -2,7 +2,7 @@ import { NextPage, GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-import { ScrollToTop, SearchModal } from '../../components';
+import { ScrollToTop } from '../../components';
 import type { HotpepperResponse, SearchKey } from '../../interfaces';
 import { Header, Footer, SearchResultContainer } from '../../layouts';
 import { convertQueryStringToJSON } from '../../lib/convert-querystring-to-json';
@@ -46,20 +46,17 @@ const SearchResult: NextPage<{ results: HotpepperResponse['results'] }> = ({ res
 
   return (
     <>
-      <div className='bg-primary'>
-        <div className='container mx-auto'>
-          <Header />
-          <div className='mx-3'>
-            <SearchModal />
-          </div>
+      <div className=''>
+        <Header />
+        <div className='pt-32'>
           <SearchResultContainer
             results={results}
             searchParams={searchParams}
             setSearchParams={setSearchParams}
           />
-          <div className='fixed right-3 sm:right-48 bottom-3'>
-            <ScrollToTop />
-          </div>
+        </div>
+        <div className='fixed right-3 sm:right-48 bottom-3'>
+          <ScrollToTop />
         </div>
       </div>
       <Footer />

@@ -15,7 +15,7 @@ import {
   TemplateIcon,
   UserIcon,
 } from '../../icons';
-import { ErrorAlert } from '../../components';
+import { ErrorAlert, SearchModal } from '../../components';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export const Header: VFC = () => {
@@ -39,8 +39,8 @@ export const Header: VFC = () => {
   return (
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
-      <header>
-        <div className='flex relative max-w-md sm:mx-auto pt-8 pl-4 sm:pl-9 pb-5'>
+      <header className='fixed bg-base-100 shadow-md pb-3 w-full z-40'>
+        <div className='flex relative sm:mx-auto pt-8 pl-4 pb-5'>
           <div className='w-48'>
             <Link href='/'>
               <a>
@@ -151,6 +151,9 @@ export const Header: VFC = () => {
               )}
             </ul>
           </div>
+        </div>
+        <div className='sm:absolute sm:top-8 sm:left-56 mx-4'>
+          <SearchModal />
         </div>
       </header>
     </>
