@@ -8,7 +8,7 @@ export type CreatePostInput = {
   cafeId: string;
   cafeName: string;
   content?: string | null;
-  picture: string;
+  pictures: Array<string | null>;
   createdAt?: string | null;
   updatedAt?: string | null;
 };
@@ -18,7 +18,7 @@ export type ModelPostConditionInput = {
   cafeId?: ModelStringInput | null;
   cafeName?: ModelStringInput | null;
   content?: ModelStringInput | null;
-  picture?: ModelStringInput | null;
+  pictures?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   updatedAt?: ModelStringInput | null;
   and?: Array<ModelPostConditionInput | null> | null;
@@ -72,7 +72,7 @@ export type Post = {
   cafeId: string;
   cafeName: string;
   content?: string | null;
-  picture: string;
+  pictures: Array<string | null>;
   createdAt: string;
   updatedAt: string;
   tags?: ModelPostTagsConnection | null;
@@ -82,7 +82,7 @@ export type Post = {
 
 export type ModelPostTagsConnection = {
   __typename: 'ModelPostTagsConnection';
-  items: Array<PostTags | null>;
+  items: Array<PostTags>;
   nextToken?: string | null;
 };
 
@@ -110,7 +110,7 @@ export type Tag = {
 
 export type ModelCommentConnection = {
   __typename: 'ModelCommentConnection';
-  items: Array<Comment | null>;
+  items: Array<Comment>;
   nextToken?: string | null;
 };
 
@@ -131,7 +131,7 @@ export type UpdatePostInput = {
   cafeId?: string | null;
   cafeName?: string | null;
   content?: string | null;
-  picture?: string | null;
+  pictures?: Array<string | null> | null;
   createdAt?: string | null;
   updatedAt?: string | null;
 };
@@ -254,7 +254,7 @@ export type ModelFollowRelationshipFilterInput = {
 
 export type ModelFollowRelationshipConnection = {
   __typename: 'ModelFollowRelationshipConnection';
-  items: Array<FollowRelationship | null>;
+  items: Array<FollowRelationship>;
   nextToken?: string | null;
 };
 
@@ -264,7 +264,7 @@ export type ModelPostFilterInput = {
   cafeId?: ModelStringInput | null;
   cafeName?: ModelStringInput | null;
   content?: ModelStringInput | null;
-  picture?: ModelStringInput | null;
+  pictures?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   updatedAt?: ModelStringInput | null;
   and?: Array<ModelPostFilterInput | null> | null;
@@ -274,7 +274,7 @@ export type ModelPostFilterInput = {
 
 export type ModelPostConnection = {
   __typename: 'ModelPostConnection';
-  items: Array<Post | null>;
+  items: Array<Post>;
   nextToken?: string | null;
 };
 
@@ -303,7 +303,7 @@ export type ModelTagFilterInput = {
 
 export type ModelTagConnection = {
   __typename: 'ModelTagConnection';
-  items: Array<Tag | null>;
+  items: Array<Tag>;
   nextToken?: string | null;
 };
 
@@ -338,7 +338,7 @@ export type CreatePostMutation = {
     cafeId: string;
     cafeName: string;
     content?: string | null;
-    picture: string;
+    pictures: Array<string | null>;
     createdAt: string;
     updatedAt: string;
     tags?: {
@@ -351,7 +351,7 @@ export type CreatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -364,7 +364,7 @@ export type CreatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     owner?: string | null;
@@ -384,7 +384,7 @@ export type UpdatePostMutation = {
     cafeId: string;
     cafeName: string;
     content?: string | null;
-    picture: string;
+    pictures: Array<string | null>;
     createdAt: string;
     updatedAt: string;
     tags?: {
@@ -397,7 +397,7 @@ export type UpdatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -410,7 +410,7 @@ export type UpdatePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     owner?: string | null;
@@ -430,7 +430,7 @@ export type DeletePostMutation = {
     cafeId: string;
     cafeName: string;
     content?: string | null;
-    picture: string;
+    pictures: Array<string | null>;
     createdAt: string;
     updatedAt: string;
     tags?: {
@@ -443,7 +443,7 @@ export type DeletePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -456,7 +456,7 @@ export type DeletePostMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     owner?: string | null;
@@ -483,7 +483,7 @@ export type CreateTagMutation = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -509,7 +509,7 @@ export type CreateCommentMutation = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -546,7 +546,7 @@ export type DeleteCommentMutation = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -583,7 +583,7 @@ export type UpdateCommentMutation = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -655,7 +655,7 @@ export type CreatePostTagsMutation = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -704,7 +704,7 @@ export type UpdatePostTagsMutation = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -753,7 +753,7 @@ export type DeletePostTagsMutation = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -817,7 +817,7 @@ export type ListFollowRelationshipsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    } | null>;
+    }>;
     nextToken?: string | null;
   } | null;
 };
@@ -834,7 +834,7 @@ export type GetPostQuery = {
     cafeId: string;
     cafeName: string;
     content?: string | null;
-    picture: string;
+    pictures: Array<string | null>;
     createdAt: string;
     updatedAt: string;
     tags?: {
@@ -847,7 +847,7 @@ export type GetPostQuery = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -860,7 +860,7 @@ export type GetPostQuery = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     owner?: string | null;
@@ -883,7 +883,7 @@ export type ListPostsQuery = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -895,7 +895,7 @@ export type ListPostsQuery = {
         nextToken?: string | null;
       } | null;
       owner?: string | null;
-    } | null>;
+    }>;
     nextToken?: string | null;
   } | null;
 };
@@ -919,7 +919,7 @@ export type PostsByDateQuery = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -931,7 +931,7 @@ export type PostsByDateQuery = {
         nextToken?: string | null;
       } | null;
       owner?: string | null;
-    } | null>;
+    }>;
     nextToken?: string | null;
   } | null;
 };
@@ -955,7 +955,7 @@ export type GetTagQuery = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -984,7 +984,7 @@ export type ListTagsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    } | null>;
+    }>;
     nextToken?: string | null;
   } | null;
 };
@@ -1005,7 +1005,7 @@ export type GetCommentQuery = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -1045,7 +1045,7 @@ export type ListCommentsQuery = {
         cafeId: string;
         cafeName: string;
         content?: string | null;
-        picture: string;
+        pictures: Array<string | null>;
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
@@ -1054,7 +1054,7 @@ export type ListCommentsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    } | null>;
+    }>;
     nextToken?: string | null;
   } | null;
 };
@@ -1076,7 +1076,7 @@ export type GetPostTagsQuery = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -1128,7 +1128,7 @@ export type ListPostTagsQuery = {
         cafeId: string;
         cafeName: string;
         content?: string | null;
-        picture: string;
+        pictures: Array<string | null>;
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
@@ -1144,7 +1144,7 @@ export type ListPostTagsQuery = {
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
-    } | null>;
+    }>;
     nextToken?: string | null;
   } | null;
 };
@@ -1193,7 +1193,7 @@ export type OnCreatePostSubscription = {
     cafeId: string;
     cafeName: string;
     content?: string | null;
-    picture: string;
+    pictures: Array<string | null>;
     createdAt: string;
     updatedAt: string;
     tags?: {
@@ -1206,7 +1206,7 @@ export type OnCreatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -1219,7 +1219,7 @@ export type OnCreatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     owner?: string | null;
@@ -1238,7 +1238,7 @@ export type OnUpdatePostSubscription = {
     cafeId: string;
     cafeName: string;
     content?: string | null;
-    picture: string;
+    pictures: Array<string | null>;
     createdAt: string;
     updatedAt: string;
     tags?: {
@@ -1251,7 +1251,7 @@ export type OnUpdatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -1264,7 +1264,7 @@ export type OnUpdatePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     owner?: string | null;
@@ -1283,7 +1283,7 @@ export type OnDeletePostSubscription = {
     cafeId: string;
     cafeName: string;
     content?: string | null;
-    picture: string;
+    pictures: Array<string | null>;
     createdAt: string;
     updatedAt: string;
     tags?: {
@@ -1296,7 +1296,7 @@ export type OnDeletePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     comments?: {
@@ -1309,7 +1309,7 @@ export type OnDeletePostSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     owner?: string | null;
@@ -1335,7 +1335,7 @@ export type OnCreateTagSubscription = {
         createdAt: string;
         updatedAt: string;
         owner?: string | null;
-      } | null>;
+      }>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -1360,7 +1360,7 @@ export type OnCreateCommentSubscription = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -1396,7 +1396,7 @@ export type OnUpdateCommentSubscription = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -1432,7 +1432,7 @@ export type OnDeleteCommentSubscription = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -1469,7 +1469,7 @@ export type OnCreatePostTagsSubscription = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -1517,7 +1517,7 @@ export type OnUpdatePostTagsSubscription = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {
@@ -1565,7 +1565,7 @@ export type OnDeletePostTagsSubscription = {
       cafeId: string;
       cafeName: string;
       content?: string | null;
-      picture: string;
+      pictures: Array<string | null>;
       createdAt: string;
       updatedAt: string;
       tags?: {

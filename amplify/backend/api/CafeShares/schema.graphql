@@ -8,7 +8,7 @@ type Post @model @auth(rules: [
   cafeId: String!
   cafeName: String!
   content: String
-  picture: String!
+  pictures: [String]!
   createdAt: String!
   updatedAt: String!
   tags: [Tag] @manyToMany(relationName: "PostTags")
