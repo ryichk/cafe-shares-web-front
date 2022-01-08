@@ -34,7 +34,7 @@ export const onCreatePost = /* GraphQL */ `
       cafeId
       cafeName
       content
-      picture
+      pictures
       createdAt
       updatedAt
       tags {
@@ -71,7 +71,7 @@ export const onUpdatePost = /* GraphQL */ `
       cafeId
       cafeName
       content
-      picture
+      pictures
       createdAt
       updatedAt
       tags {
@@ -108,7 +108,7 @@ export const onDeletePost = /* GraphQL */ `
       cafeId
       cafeName
       content
-      picture
+      pictures
       createdAt
       updatedAt
       tags {
@@ -170,7 +170,7 @@ export const onCreateComment = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -199,7 +199,7 @@ export const onUpdateComment = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -228,7 +228,7 @@ export const onDeleteComment = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -258,7 +258,7 @@ export const onCreatePostTags = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -297,7 +297,7 @@ export const onUpdatePostTags = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -336,7 +336,7 @@ export const onDeletePostTags = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
