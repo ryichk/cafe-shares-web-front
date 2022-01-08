@@ -1,5 +1,4 @@
-import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api-graphql/lib/types';
-import { API, graphqlOperation, Storage, withSSRContext } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { format } from 'date-fns';
 import { NextPage, GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
@@ -8,33 +7,29 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import {
   CreatePostInput,
-  ModelSortDirection,
   OnCreatePostSubscriptionVariables,
   OnCreatePostSubscription,
   Post,
-  PostsByDateQueryVariables,
-  PostsByDateQuery,
 } from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
 import { ErrorAlert, InfoAlert, SuccessAlert } from '../../components';
-import { AlertContext } from '../../contexts';
+import { AuthContext, AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
-import { postsByDate } from '../../graphql/queries';
 import { onCreatePost } from '../../graphql/subscriptions';
 import { CloseIcon, PlusIcon } from '../../icons';
 import type {
   CafeInfo,
   HotpepperResponse,
-  ICognitoUser,
   IOnCreatePostSubscriptionObject,
 } from '../../interfaces';
 import { Header, Footer } from '../../layouts';
 
 const Cafe: NextPage<{
   cafe: CafeInfo;
-  currentUsername: string;
-  initialPosts: Array<Post | null>;
-}> = ({ cafe, currentUsername, initialPosts }) => {
+}> = ({ cafe }) => {
+  const { user } = useContext(AuthContext);
+  const currentUsername = user?.username;
+
   const {
     isError,
     errorMessage,
@@ -53,7 +48,7 @@ const Cafe: NextPage<{
   const [contents, setContents] = useState('');
   const [previewURLs, setPreviewURLs] = useState<Array<string>>([]);
   const [imageNames, setImageNames] = useState<Array<string>>([]);
-  const [posts, setPosts] = useState(initialPosts);
+  const [posts, setPosts] = useState<Array<Post | null>>([]);
 
   const cafeInfo = {
     アクセス: cafe.access,
@@ -128,7 +123,6 @@ const Cafe: NextPage<{
       return false;
     } else if (imageNames.length > 10) {
       setErrorMessage('1回の投稿で選択できる写真は10枚までです。');
-      console.log(imageNames);
       return false;
     }
   };
@@ -169,6 +163,10 @@ const Cafe: NextPage<{
   };
 
   useEffect(() => {
+    fetch(`/api/posts/${cafe.id}`)
+      .then((res) => res.json())
+      .then(({ posts }) => setPosts(posts));
+
     let unsubscribe;
     if (currentUsername) {
       const onCreatePostSubscriptionVariables: OnCreatePostSubscriptionVariables = {
@@ -343,32 +341,30 @@ const Cafe: NextPage<{
                         <div className='mt-3 grid grid-cols-4 sm:grid-cols-5 gap-2'>
                           {previewURLs.length ? (
                             previewURLs.map((previewURL, previewIndex) => (
-                              <>
-                                <div
-                                  key={previewIndex}
-                                  className='w-full h-20'
-                                  style={{
-                                    background: `no-repeat center / cover url(${previewURL})`,
+                              <div
+                                key={previewIndex}
+                                className='w-full h-20'
+                                style={{
+                                  background: `no-repeat center / cover url(${previewURL})`,
+                                }}
+                              >
+                                <label
+                                  className='btn btn-circle btn-xs opacity-50'
+                                  onClick={async () => {
+                                    await Storage.remove(imageNames[previewIndex]);
+                                    setImageNames((prev) =>
+                                      [...prev].filter(
+                                        (imageName, index) => index !== previewIndex,
+                                      ),
+                                    );
+                                    setPreviewURLs((prev) =>
+                                      [...prev].filter((url, index) => index !== previewIndex),
+                                    );
                                   }}
                                 >
-                                  <label
-                                    className='btn btn-circle btn-xs opacity-50'
-                                    onClick={async () => {
-                                      await Storage.remove(imageNames[previewIndex]);
-                                      setImageNames((prev) =>
-                                        [...prev].filter(
-                                          (imageName, index) => index !== previewIndex,
-                                        ),
-                                      );
-                                      setPreviewURLs((prev) =>
-                                        [...prev].filter((url, index) => index !== previewIndex),
-                                      );
-                                    }}
-                                  >
-                                    <CloseIcon classes='h-4' />
-                                  </label>
-                                </div>
-                              </>
+                                  <CloseIcon classes='h-4' />
+                                </label>
+                              </div>
                             ))
                           ) : (
                             <></>
@@ -420,7 +416,7 @@ const Cafe: NextPage<{
             <h2 className='font-bold'>投稿一覧</h2>
             <div className='flex flex-wrap lg:flex-row sm:flex-col'>
               {posts.length ? (
-                posts?.map((post: Post) => (
+                posts.map((post: Post) => (
                   <div
                     key={post.id}
                     className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'
@@ -473,7 +469,7 @@ const Cafe: NextPage<{
                           key={`${post.id}-badge${pictureIndex}`}
                           href={`#${post.id}-slide${pictureIndex}`}
                           id={`${post.id}-badge${pictureIndex}`}
-                          className={`text-gray-300 text-xl font-bold ${
+                          className={`text-gray-300 text-md font-bold ${
                             pictureIndex === 0 ? 'text-primary' : ''
                           }`}
                           onClick={() => {
@@ -549,61 +545,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     console.error(error);
   }
 
-  const { Auth } = withSSRContext(context);
-  let currentUsername = '';
-  try {
-    const user: ICognitoUser = await Auth.currentAuthenticatedUser();
-    currentUsername = user.username;
-  } catch (error) {
-    console.error(error);
-  }
-
-  const initialPosts: Array<Post | null> = [];
-  try {
-    const postsByDateQueryVariables: PostsByDateQueryVariables = {
-      type: 'Post',
-      filter: { cafeId: { eq: cafe.id } },
-      sortDirection: ModelSortDirection.DESC,
-    };
-    const response = await API.graphql({
-      query: postsByDate,
-      variables: postsByDateQueryVariables,
-      authMode: GRAPHQL_AUTH_MODE.AWS_IAM,
-    });
-    if ('data' in response && response.data) {
-      const getPostData = response.data as PostsByDateQuery;
-      const listPosts = getPostData.postsByDate;
-      if (listPosts.items) {
-        for (const post of listPosts.items) {
-          const pictureURLs = [];
-          for (const picture of post.pictures) {
-            const pictureURL = await Storage.get(picture);
-            pictureURLs.push(pictureURL);
-          }
-          const postObject: Post = {
-            __typename: 'Post',
-            id: post.id,
-            cafeId: post.cafeId,
-            cafeName: post.cafeName,
-            content: post.content,
-            pictures: pictureURLs,
-            owner: post.owner,
-            createdAt: post.createdAt,
-            updatedAt: post.updatedAt,
-          };
-          initialPosts.push(postObject);
-        }
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
   return {
     props: {
       cafe,
-      currentUsername,
-      initialPosts,
     },
   };
 };
