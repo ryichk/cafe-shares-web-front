@@ -1,5 +1,5 @@
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api-graphql/lib/types';
-import { Amplify, API, graphqlOperation, Storage, withSSRContext } from 'aws-amplify';
+import { API, graphqlOperation, Storage, withSSRContext } from 'aws-amplify';
 import { format } from 'date-fns';
 import { NextPage, GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
@@ -16,13 +16,12 @@ import {
   PostsByDateQuery,
 } from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
-import awsExports from '../../aws-exports';
-import { ErrorAlert, SuccessAlert } from '../../components';
+import { ErrorAlert, InfoAlert, SuccessAlert } from '../../components';
 import { AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
 import { postsByDate } from '../../graphql/queries';
 import { onCreatePost } from '../../graphql/subscriptions';
-import { CloseIcon } from '../../icons';
+import { CloseIcon, PlusIcon } from '../../icons';
 import type {
   CafeInfo,
   HotpepperResponse,
@@ -39,17 +38,21 @@ const Cafe: NextPage<{
   const {
     isError,
     errorMessage,
+    isInfo,
+    infoMessage,
     isSuccess,
     successMessage,
     setIsError,
     setErrorMessage,
+    setIsInfo,
+    setInfoMessage,
     setIsSuccess,
     setSuccessMessage,
   } = useContext(AlertContext);
 
   const [contents, setContents] = useState('');
-  const [previewURL, setPreviewURL] = useState('');
-  const [imageName, setImageName] = useState('');
+  const [previewURLs, setPreviewURLs] = useState<Array<string>>([]);
+  const [imageNames, setImageNames] = useState<Array<string>>([]);
   const [posts, setPosts] = useState(initialPosts);
 
   const cafeInfo = {
@@ -92,34 +95,40 @@ const Cafe: NextPage<{
   };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files[0];
-    if (currentUsername && file && file.type.includes('image')) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewURL(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    const files = event.target.files;
+    for (const file of files) {
+      if (currentUsername && file && file.type.includes('image')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setPreviewURLs((prev) => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(file);
 
-      const now = format(new Date(), 'yyyyMMddhhmmss');
-      const fileName = `post_picture_${currentUsername}_${file.name}_${now}`;
-      setImageName(fileName);
+        const now = format(new Date(), 'yyyyMMddhhmmss');
+        const fileName = `post_picture_${currentUsername}_${now}_${file.name}`;
+        setImageNames((prev) => [...prev, fileName]);
 
-      try {
-        await Storage.put(fileName, file);
-        setErrorMessage('');
-        setIsError(false);
-      } catch (error) {
-        setErrorMessage(error);
-        setIsError(true);
+        try {
+          await Storage.put(fileName, file);
+          setErrorMessage('');
+          setIsError(false);
+        } catch (error) {
+          setErrorMessage(error);
+          setIsError(true);
+        }
       }
     }
   };
 
   const isValidPost = () => {
-    if (imageName) {
+    if (imageNames.length >= 1 && imageNames.length <= 10) {
       return true;
-    } else {
+    } else if (imageNames.length === 0) {
       setErrorMessage('写真が選択されていません。投稿する写真を選択してください。');
+      return false;
+    } else if (imageNames.length > 10) {
+      setErrorMessage('1回の投稿で選択できる写真は10枚までです。');
+      console.log(imageNames);
       return false;
     }
   };
@@ -131,7 +140,7 @@ const Cafe: NextPage<{
           cafeId: String(cafe.id),
           cafeName: cafe.name,
           content: contents,
-          picture: imageName,
+          pictures: imageNames,
         };
         await API.graphql(
           graphqlOperation(createPost, {
@@ -139,8 +148,8 @@ const Cafe: NextPage<{
           }),
         );
         setContents('');
-        setImageName('');
-        setPreviewURL('');
+        setImageNames([]);
+        setPreviewURLs([]);
         setErrorMessage('');
         setIsError(false);
         setSuccessMessage('投稿が完了しました。');
@@ -175,7 +184,11 @@ const Cafe: NextPage<{
             const post = data.onCreatePost;
             if (post) {
               const newPostObject = async (): Promise<Post> => {
-                const pictureURL = await Storage.get(post.picture);
+                const pictureURLs = [];
+                for (const picture of post.pictures) {
+                  const pictureURL = await Storage.get(picture);
+                  pictureURLs.push(pictureURL);
+                }
 
                 return {
                   __typename: 'Post',
@@ -183,7 +196,7 @@ const Cafe: NextPage<{
                   cafeId: post.cafeId,
                   cafeName: post.cafeName,
                   content: post.content,
-                  picture: pictureURL,
+                  pictures: pictureURLs,
                   owner: post.owner,
                   createdAt: post.createdAt,
                   updatedAt: post.updatedAt,
@@ -194,8 +207,6 @@ const Cafe: NextPage<{
           },
           error: (error) => {
             console.error(error);
-            setErrorMessage(error.error.errors[0].message);
-            setIsError(true);
           },
         });
         unsubscribe = () => {
@@ -206,6 +217,13 @@ const Cafe: NextPage<{
 
     return unsubscribe;
   }, []);
+
+  const pointToPositionOfPicture = (post: Post, pictureIndex: number) => {
+    for (let i = 0; i < post.pictures.length; i++) {
+      document.getElementById(`${post.id}-badge${i}`).classList.remove('text-primary');
+    }
+    document.getElementById(`${post.id}-badge${pictureIndex}`).classList.add('text-primary');
+  };
 
   return (
     <>
@@ -228,6 +246,13 @@ const Cafe: NextPage<{
       {isError ? (
         <div className='fixed w-full z-50 bg-secondary rounded-xl shadow-xl'>
           <ErrorAlert message={errorMessage} />
+        </div>
+      ) : (
+        <></>
+      )}
+      {isInfo ? (
+        <div className='fixed w-full z-50 bg-secondary rounded-xl shadow-xl'>
+          <InfoAlert message={infoMessage} />
         </div>
       ) : (
         <></>
@@ -301,25 +326,70 @@ const Cafe: NextPage<{
                           value={contents}
                           onChange={handleTextareaChange}
                         />
-                        <label className='btn mt-4'>
-                          写真を選択
-                          <input
-                            type='file'
-                            accept='image/*'
-                            className='hidden'
-                            onChange={handleFileChange}
-                          />
-                        </label>
-                        {previewURL ? (
-                          <div
-                            className='mt-3 h-56 sm:h-96'
-                            style={{
-                              background: `no-repeat center / cover url(${previewURL})`,
-                            }}
-                          />
-                        ) : (
+                        {previewURLs.length ? (
                           <></>
+                        ) : (
+                          <label className='btn mt-4'>
+                            写真を選択
+                            <input
+                              multiple
+                              type='file'
+                              accept='image/*'
+                              className='hidden'
+                              onChange={handleFileChange}
+                            />
+                          </label>
                         )}
+                        <div className='mt-3 grid grid-cols-4 sm:grid-cols-5 gap-2'>
+                          {previewURLs.length ? (
+                            previewURLs.map((previewURL, previewIndex) => (
+                              <>
+                                <div
+                                  key={previewIndex}
+                                  className='w-full h-20'
+                                  style={{
+                                    background: `no-repeat center / cover url(${previewURL})`,
+                                  }}
+                                >
+                                  <label
+                                    className='btn btn-circle btn-xs opacity-50'
+                                    onClick={async () => {
+                                      await Storage.remove(imageNames[previewIndex]);
+                                      setImageNames((prev) =>
+                                        [...prev].filter(
+                                          (imageName, index) => index !== previewIndex,
+                                        ),
+                                      );
+                                      setPreviewURLs((prev) =>
+                                        [...prev].filter((url, index) => index !== previewIndex),
+                                      );
+                                    }}
+                                  >
+                                    <CloseIcon classes='h-4' />
+                                  </label>
+                                </div>
+                              </>
+                            ))
+                          ) : (
+                            <></>
+                          )}
+                          {previewURLs.length > 0 && previewURLs.length < 10 ? (
+                            <div className='m-auto'>
+                              <label className='btn btn-circle opacity-80'>
+                                <PlusIcon classes='h-5' />
+                                <input
+                                  multiple
+                                  type='file'
+                                  accept='image/*'
+                                  className='hidden'
+                                  onChange={handleFileChange}
+                                />
+                              </label>
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
                       </div>
                       <div className='modal-action mr-1'>
                         <label
@@ -336,7 +406,15 @@ const Cafe: NextPage<{
               </div>
             </>
           ) : (
-            <></>
+            <label
+              className='mt-5 btn btn-wide btn-primary modal-button'
+              onClick={() => {
+                setInfoMessage('投稿するにはログインが必要です');
+                setIsInfo(true);
+              }}
+            >
+              投稿する
+            </label>
           )}
           <div className='mt-10'>
             <h2 className='font-bold'>投稿一覧</h2>
@@ -344,16 +422,69 @@ const Cafe: NextPage<{
               {posts.length ? (
                 posts?.map((post: Post) => (
                   <div
-                    className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'
                     key={post.id}
+                    className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'
                   >
-                    <div
-                      className='h-56 sm:h-96'
-                      style={{
-                        background: `no-repeat center / cover url(${post.picture})`,
-                      }}
-                    />
-                    <div className='card-body'>
+                    <div className='w-ful carousel'>
+                      {post.pictures.map((picture, pictureIndex) => (
+                        <div
+                          key={`${post.id}-slide${pictureIndex}`}
+                          id={`${post.id}-slide${pictureIndex}`}
+                          className='relative h-56 sm:h-96 w-full carousel-item'
+                          style={{
+                            background: `no-repeat center / cover url(${picture})`,
+                          }}
+                        >
+                          <div className='absolute flex justify-between transform -translate-y-1/2 left-3 right-3 top-1/2'>
+                            {pictureIndex ? (
+                              <a
+                                href={`#${post.id}-slide${pictureIndex - 1}`}
+                                className='btn btn-circle btn-xs text-white opacity-40'
+                                onClick={() => {
+                                  pointToPositionOfPicture(post, pictureIndex - 1);
+                                }}
+                              >
+                                ❮
+                              </a>
+                            ) : (
+                              <a></a>
+                            )}
+                            {pictureIndex + 1 === post.pictures.length ||
+                            post.pictures.length === 1 ? (
+                              <a></a>
+                            ) : (
+                              <a
+                                href={`#${post.id}-slide${pictureIndex + 1}`}
+                                className='btn btn-circle btn-xs text-white opacity-40'
+                                onClick={() => {
+                                  pointToPositionOfPicture(post, pictureIndex + 1);
+                                }}
+                              >
+                                ❯
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className='flex justify-center w-full my-3'>
+                      {post.pictures.map((picture, pictureIndex) => (
+                        <a
+                          key={`${post.id}-badge${pictureIndex}`}
+                          href={`#${post.id}-slide${pictureIndex}`}
+                          id={`${post.id}-badge${pictureIndex}`}
+                          className={`text-gray-300 text-xl font-bold ${
+                            pictureIndex === 0 ? 'text-primary' : ''
+                          }`}
+                          onClick={() => {
+                            pointToPositionOfPicture(post, pictureIndex);
+                          }}
+                        >
+                          ・
+                        </a>
+                      ))}
+                    </div>
+                    <div className='mx-4 mb-4'>
                       <div className='flex items-center'>
                         {/* <div className='avatar'>
                         <div className='rounded-full w-7 h-7'>
@@ -427,7 +558,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     console.error(error);
   }
 
-  Amplify.configure({ ...awsExports });
   const initialPosts: Array<Post | null> = [];
   try {
     const postsByDateQueryVariables: PostsByDateQueryVariables = {
@@ -445,14 +575,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const listPosts = getPostData.postsByDate;
       if (listPosts.items) {
         for (const post of listPosts.items) {
-          const pictureURL = await Storage.get(post.picture);
+          const pictureURLs = [];
+          for (const picture of post.pictures) {
+            const pictureURL = await Storage.get(picture);
+            pictureURLs.push(pictureURL);
+          }
           const postObject: Post = {
             __typename: 'Post',
             id: post.id,
             cafeId: post.cafeId,
             cafeName: post.cafeName,
             content: post.content,
-            picture: pictureURL,
+            pictures: pictureURLs,
             owner: post.owner,
             createdAt: post.createdAt,
             updatedAt: post.updatedAt,
