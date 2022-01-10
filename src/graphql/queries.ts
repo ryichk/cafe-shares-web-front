@@ -41,7 +41,7 @@ export const getPost = /* GraphQL */ `
       cafeId
       cafeName
       content
-      picture
+      pictures
       createdAt
       updatedAt
       tags {
@@ -79,7 +79,7 @@ export const listPosts = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -117,7 +117,7 @@ export const postsByDate = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -182,7 +182,7 @@ export const getComment = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -212,7 +212,7 @@ export const listComments = /* GraphQL */ `
           cafeId
           cafeName
           content
-          picture
+          pictures
           createdAt
           updatedAt
           owner
@@ -238,7 +238,7 @@ export const getPostTags = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -278,7 +278,7 @@ export const listPostTags = /* GraphQL */ `
           cafeId
           cafeName
           content
-          picture
+          pictures
           createdAt
           updatedAt
           owner

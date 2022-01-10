@@ -8,6 +8,7 @@ export { EyeIcon } from './EyeIcon';
 export { EyeOffIcon } from './EyeOffIcon';
 export { HeartIcon } from './HeartIcon';
 export { HomeIcon } from './HomeIcon';
+export { InfoIcon } from './InfoIcon';
 export { LocationIcon } from './LocationIcon';
 export { LockIcon } from './LockIcon';
 export { MailIcon } from './MailIcon';

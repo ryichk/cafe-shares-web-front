@@ -19,6 +19,8 @@ const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = useState<ICognitoUser | undefined>();
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isInfo, setIsInfo] = useState(false);
+  const [infoMessage, setInfoMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -49,10 +51,14 @@ const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
         value={{
           isError,
           errorMessage,
+          isInfo,
+          infoMessage,
           isSuccess,
           successMessage,
           setIsError,
           setErrorMessage,
+          setIsInfo,
+          setInfoMessage,
           setIsSuccess,
           setSuccessMessage,
         }}

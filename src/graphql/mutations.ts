@@ -10,7 +10,7 @@ export const createPost = /* GraphQL */ `
       cafeId
       cafeName
       content
-      picture
+      pictures
       createdAt
       updatedAt
       tags {
@@ -47,7 +47,7 @@ export const updatePost = /* GraphQL */ `
       cafeId
       cafeName
       content
-      picture
+      pictures
       createdAt
       updatedAt
       tags {
@@ -84,7 +84,7 @@ export const deletePost = /* GraphQL */ `
       cafeId
       cafeName
       content
-      picture
+      pictures
       createdAt
       updatedAt
       tags {
@@ -146,7 +146,7 @@ export const createComment = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -175,7 +175,7 @@ export const deleteComment = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -204,7 +204,7 @@ export const updateComment = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -264,7 +264,7 @@ export const createPostTags = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -303,7 +303,7 @@ export const updatePostTags = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
@@ -342,7 +342,7 @@ export const deletePostTags = /* GraphQL */ `
         cafeId
         cafeName
         content
-        picture
+        pictures
         createdAt
         updatedAt
         tags {
