@@ -162,6 +162,13 @@ const Cafe: NextPage<{
     }
   };
 
+  const pointToPositionOfPicture = (post: Post, pictureIndex: number) => {
+    for (let i = 0; i < post.pictures.length; i++) {
+      document.getElementById(`${post.id}-badge${i}`).classList.remove('text-primary');
+    }
+    document.getElementById(`${post.id}-badge${pictureIndex}`).classList.add('text-primary');
+  };
+
   useEffect(() => {
     fetch(`/api/posts/${cafe.id}`)
       .then((res) => res.json())
@@ -216,12 +223,22 @@ const Cafe: NextPage<{
     return unsubscribe;
   }, []);
 
-  const pointToPositionOfPicture = (post: Post, pictureIndex: number) => {
-    for (let i = 0; i < post.pictures.length; i++) {
-      document.getElementById(`${post.id}-badge${i}`).classList.remove('text-primary');
+  useEffect(() => {
+    for (const post of posts) {
+      for (let i = 0; i < post.pictures.length; i++) {
+        const options = {
+          root: document.getElementById(`${post.id}-carousel`),
+          rootMargin: '0px',
+          threshold: 0.9,
+        };
+        const observer = new IntersectionObserver(() => {
+          pointToPositionOfPicture(post, i);
+        }, options);
+        const target = document.getElementById(`${post.id}-slide${i}`);
+        observer.observe(target);
+      }
     }
-    document.getElementById(`${post.id}-badge${pictureIndex}`).classList.add('text-primary');
-  };
+  }, [posts]);
 
   return (
     <>
@@ -421,7 +438,7 @@ const Cafe: NextPage<{
                     key={post.id}
                     className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'
                   >
-                    <div className='w-ful carousel'>
+                    <div id={`${post.id}=carousel`} className='w-ful carousel'>
                       {post.pictures.map((picture, pictureIndex) => (
                         <div
                           key={`${post.id}-slide${pictureIndex}`}
@@ -436,9 +453,6 @@ const Cafe: NextPage<{
                               <a
                                 href={`#${post.id}-slide${pictureIndex - 1}`}
                                 className='btn btn-circle btn-xs text-white opacity-40'
-                                onClick={() => {
-                                  pointToPositionOfPicture(post, pictureIndex - 1);
-                                }}
                               >
                                 ❮
                               </a>
@@ -452,9 +466,6 @@ const Cafe: NextPage<{
                               <a
                                 href={`#${post.id}-slide${pictureIndex + 1}`}
                                 className='btn btn-circle btn-xs text-white opacity-40'
-                                onClick={() => {
-                                  pointToPositionOfPicture(post, pictureIndex + 1);
-                                }}
                               >
                                 ❯
                               </a>
@@ -472,9 +483,6 @@ const Cafe: NextPage<{
                           className={`text-gray-300 text-md font-bold ${
                             pictureIndex === 0 ? 'text-primary' : ''
                           }`}
-                          onClick={() => {
-                            pointToPositionOfPicture(post, pictureIndex);
-                          }}
                         >
                           ・
                         </a>
