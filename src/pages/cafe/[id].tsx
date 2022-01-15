@@ -16,6 +16,7 @@ import { ErrorAlert, InfoAlert, SuccessAlert } from '../../components';
 import { AuthContext, AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
 import { onCreatePost } from '../../graphql/subscriptions';
+import { usePointToPositionOfSlide } from '../../hooks';
 import { CloseIcon, PlusIcon } from '../../icons';
 import type {
   CafeInfo,
@@ -49,6 +50,8 @@ const Cafe: NextPage<{
   const [previewURLs, setPreviewURLs] = useState<Array<string>>([]);
   const [imageNames, setImageNames] = useState<Array<string>>([]);
   const [posts, setPosts] = useState<Array<Post | null>>([]);
+
+  usePointToPositionOfSlide(posts);
 
   const cafeInfo = {
     アクセス: cafe.access,
@@ -162,13 +165,6 @@ const Cafe: NextPage<{
     }
   };
 
-  const pointToPositionOfPicture = (post: Post, pictureIndex: number) => {
-    for (let i = 0; i < post.pictures.length; i++) {
-      document.getElementById(`${post.id}-badge${i}`).classList.remove('text-primary');
-    }
-    document.getElementById(`${post.id}-badge${pictureIndex}`).classList.add('text-primary');
-  };
-
   useEffect(() => {
     fetch(`/api/posts/${cafe.id}`)
       .then((res) => res.json())
@@ -222,23 +218,6 @@ const Cafe: NextPage<{
 
     return unsubscribe;
   }, []);
-
-  useEffect(() => {
-    for (const post of posts) {
-      for (let i = 0; i < post.pictures.length; i++) {
-        const options = {
-          root: document.getElementById(`${post.id}-carousel`),
-          rootMargin: '0px',
-          threshold: 0.9,
-        };
-        const observer = new IntersectionObserver(() => {
-          pointToPositionOfPicture(post, i);
-        }, options);
-        const target = document.getElementById(`${post.id}-slide${i}`);
-        observer.observe(target);
-      }
-    }
-  }, [posts]);
 
   return (
     <>
@@ -438,7 +417,7 @@ const Cafe: NextPage<{
                     key={post.id}
                     className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'
                   >
-                    <div id={`${post.id}=carousel`} className='w-ful carousel'>
+                    <div className='w-ful carousel'>
                       {post.pictures.map((picture, pictureIndex) => (
                         <div
                           key={`${post.id}-slide${pictureIndex}`}
