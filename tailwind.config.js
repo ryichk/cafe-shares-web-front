@@ -1,6 +1,6 @@
 module.exports = {
   purge: ['./src/**/*.tsx'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class',
   theme: {
     backgroundColor: (theme) => ({
       ...theme('colors'),
@@ -8,7 +8,11 @@ module.exports = {
       secondary: '#F4F1DE',
       danger: '#E07A5F',
     }),
-    extend: {},
+    extend: {
+      colors: {
+        dark: '#0f172a',
+      },
+    },
   },
   variants: {
     extend: {},
