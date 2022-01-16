@@ -12,7 +12,7 @@ import {
   Post,
 } from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
-import { ErrorAlert, InfoAlert, SuccessAlert } from '../../components';
+import { ErrorAlert, InfoAlert, PostCard, SuccessAlert } from '../../components';
 import { AuthContext, AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
 import { onCreatePost } from '../../graphql/subscriptions';
@@ -166,7 +166,7 @@ const Cafe: NextPage<{
   };
 
   useEffect(() => {
-    fetch(`/api/posts/${cafe.id}`)
+    fetch(`/api/posts?cafeId=${cafe.id}`)
       .then((res) => res.json())
       .then(({ posts }) => setPosts(posts));
 
@@ -412,102 +412,7 @@ const Cafe: NextPage<{
             <h2 className='font-bold'>投稿一覧</h2>
             <div className='flex flex-wrap lg:flex-row sm:flex-col'>
               {posts.length ? (
-                posts.map((post: Post) => (
-                  <div
-                    key={post.id}
-                    className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'
-                  >
-                    <div className='w-ful carousel'>
-                      {post.pictures.map((picture, pictureIndex) => (
-                        <div
-                          key={`${post.id}-slide${pictureIndex}`}
-                          id={`${post.id}-slide${pictureIndex}`}
-                          className='relative h-56 sm:h-96 w-full carousel-item'
-                          style={{
-                            background: `no-repeat center / cover url(${picture})`,
-                          }}
-                        >
-                          <div className='absolute flex justify-between transform -translate-y-1/2 left-3 right-3 top-1/2'>
-                            {pictureIndex ? (
-                              <a
-                                href={`#${post.id}-slide${pictureIndex - 1}`}
-                                className='btn btn-circle btn-xs text-white opacity-40'
-                              >
-                                ❮
-                              </a>
-                            ) : (
-                              <a></a>
-                            )}
-                            {pictureIndex + 1 === post.pictures.length ||
-                            post.pictures.length === 1 ? (
-                              <a></a>
-                            ) : (
-                              <a
-                                href={`#${post.id}-slide${pictureIndex + 1}`}
-                                className='btn btn-circle btn-xs text-white opacity-40'
-                              >
-                                ❯
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className='flex justify-center w-full my-3'>
-                      {post.pictures.map((picture, pictureIndex) => (
-                        <a
-                          key={`${post.id}-badge${pictureIndex}`}
-                          href={`#${post.id}-slide${pictureIndex}`}
-                          id={`${post.id}-badge${pictureIndex}`}
-                          className={`text-gray-300 text-md font-bold ${
-                            pictureIndex === 0 ? 'text-primary' : ''
-                          }`}
-                        >
-                          ・
-                        </a>
-                      ))}
-                    </div>
-                    <div className='mx-4 mb-4'>
-                      <div className='flex items-center'>
-                        {/* <div className='avatar'>
-                        <div className='rounded-full w-7 h-7'>
-                          <Image src={} height={50} width={50} />
-                        </div>
-                      </div> */}
-                        <span className='ml-2 text-sm font-bold'>{post.owner}</span>
-                      </div>
-                      <p>
-                        {post.content.length < 30 ? (
-                          post.content
-                        ) : (
-                          <>
-                            {post.content.substr(0, 20)}
-                            <span
-                              id={`read-more-${post.id}`}
-                              className='text-sm text-primary'
-                              onClick={() => {
-                                document
-                                  .getElementById(`read-more-${post.id}`)
-                                  .classList.add('hidden');
-                                document
-                                  .getElementById(`content-${post.id}`)
-                                  .classList.remove('hidden');
-                              }}
-                            >
-                              ...続きを読む
-                            </span>
-                            <span id={`content-${post.id}`} className='hidden'>
-                              {post.content.substr(20)}
-                            </span>
-                          </>
-                        )}
-                      </p>
-                      <p className='mt-2 text-xs'>
-                        投稿日時: {format(new Date(post.createdAt), 'yyyy年MM月dd日HH時mm分ss秒')}
-                      </p>
-                    </div>
-                  </div>
-                ))
+                posts.map((post: Post) => <PostCard key={post.id} post={post} />)
               ) : (
                 <>まだ投稿がありません。</>
               )}
