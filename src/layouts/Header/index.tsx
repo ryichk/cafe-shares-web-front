@@ -1,18 +1,21 @@
 import { Auth } from 'aws-amplify';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useState, VFC } from 'react';
+import { useContext, useEffect, useState, VFC } from 'react';
+import { useTheme } from 'next-themes';
 
 import cafeSharesImg from '../../assets/images/cafe-shares.png';
+import cafeSharesImgForDarkMode from '../../assets/images/cafe-shares-for-dark.png';
 import {
   BellIcon,
   CogIcon,
   HomeIcon,
   LocationIcon,
+  MoonIcon,
   PhotoIcon,
   SignInIcon,
   SignOutIcon,
-  TemplateIcon,
+  SunIcon,
   UserIcon,
 } from '../../icons';
 import { ErrorAlert, SearchModal } from '../../components';
@@ -23,6 +26,10 @@ export const Header: VFC = () => {
 
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [mounted, setMounted] = useState(false);
+
+  const { theme, setTheme } = useTheme();
+  useEffect(() => setMounted(true), []);
 
   const signOut = async () => {
     try {
@@ -39,12 +46,16 @@ export const Header: VFC = () => {
   return (
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
-      <header className='fixed bg-base-100 shadow-md pb-3 w-full z-40'>
+      <header className='fixed bg-base-100 shadow-md pb-3 w-full z-40 dark:bg-dark dark:shadow-gray-800'>
         <div className='flex relative sm:mx-auto pt-8 pl-4 pb-5'>
           <div className='w-48'>
             <Link href='/'>
               <a>
-                <Image src={cafeSharesImg} alt='Cafe Shares' />
+                {theme === 'light' ? (
+                  <Image src={cafeSharesImg} alt='Cafe Shares' />
+                ) : (
+                  <Image src={cafeSharesImgForDarkMode} alt='Cafe Shares' />
+                )}
               </a>
             </Link>
           </div>
@@ -68,6 +79,27 @@ export const Header: VFC = () => {
               tabIndex={0}
               className='menu p-4 w-max bg-base-content dropdown-content rounded-box shadow-2xl text-white'
             >
+              <li>
+                <div className='flex mx-auto mb-2'>
+                  <label htmlFor='theme-change-toggle'>
+                    <SunIcon
+                      classes={`h-6 mr-1 ${mounted && theme === 'light' && 'text-secondary'}`}
+                    />
+                  </label>
+                  <input
+                    id='theme-change-toggle'
+                    type='checkbox'
+                    className='toggle h-6'
+                    checked={theme === 'light' ? false : true}
+                    onChange={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                  />
+                  <label htmlFor='theme-change-toggle'>
+                    <MoonIcon
+                      classes={`h-6 ml-1 ${mounted && theme === 'dark' && 'text-yellow-100'}`}
+                    />
+                  </label>
+                </div>
+              </li>
               {user ? (
                 <>
                   <li>
@@ -101,23 +133,15 @@ export const Header: VFC = () => {
                 <Link href='/'>
                   <a>
                     <HomeIcon classes='h-5 sm:h-7 mr-1' />
-                    HOME
+                    CAFES
                   </a>
                 </Link>
               </li>
               <li>
-                <Link href='/'>
-                  <a>
-                    <TemplateIcon classes='h-5 sm:h-7 mr-1' />
-                    POSTS
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href='/'>
+                <Link href='/posts'>
                   <a>
                     <PhotoIcon classes='h-5 sm:h-7 mr-1' />
-                    PHOTOS
+                    POSTS
                   </a>
                 </Link>
               </li>

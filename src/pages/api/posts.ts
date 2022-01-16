@@ -2,14 +2,9 @@ import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api-graphql/lib/types';
 import { Amplify, API, Storage } from 'aws-amplify';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import {
-  ModelSortDirection,
-  Post,
-  PostsByDateQueryVariables,
-  PostsByDateQuery,
-} from '../../../API';
-import awsExports from '../../../aws-exports';
-import { postsByDate } from '../../../graphql/queries';
+import { ModelSortDirection, Post, PostsByDateQueryVariables, PostsByDateQuery } from '../../API';
+import awsExports from '../../aws-exports';
+import { postsByDate } from '../../graphql/queries';
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -23,9 +18,12 @@ const responsePostsData = async (
 ): Promise<void> => {
   const posts: Array<Post | null> = [];
   try {
+    const options = {
+      cafeId: { eq: req.query.cafeId as string },
+    };
     const postsByDateQueryVariables: PostsByDateQueryVariables = {
       type: 'Post',
-      filter: { cafeId: { eq: req.query.cafeId as string } },
+      filter: options,
       sortDirection: ModelSortDirection.DESC,
     };
     const response = await API.graphql({

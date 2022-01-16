@@ -186,9 +186,9 @@ const SignUp: NextPage = () => {
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
       {isSuccess ? <SuccessAlert message={successMessage} /> : <></>}
       <Header />
-      <div className='pt-36 min-h-screen mb-10'>
+      <div className='pt-36 pb-10 min-h-screen dark:bg-dark dark:text-gray-300'>
         {isSubmitted ? (
-          <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10'>
+          <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10 dark:bg-gray-700'>
             <div className='form-control'>
               <div className='mb-6'>
                 <h1 className='text-xl font-bold text-center'>Sign Up</h1>
@@ -202,7 +202,7 @@ const SignUp: NextPage = () => {
                     name='username'
                     type='text'
                     placeholder='ユーザー名'
-                    className='bg-white ml-1 p-2'
+                    className='bg-white ml-1 p-2 dark:bg-gray-700'
                     value={username}
                     onChange={handleInputChange}
                   />
@@ -217,7 +217,7 @@ const SignUp: NextPage = () => {
                     name='code'
                     type='text'
                     placeholder='確認コード'
-                    className='bg-white ml-1 p-2'
+                    className='bg-white ml-1 p-2 dark:bg-gray-700'
                     value={code}
                     onChange={handleInputChange}
                   />
@@ -235,7 +235,7 @@ const SignUp: NextPage = () => {
             </div>
           </div>
         ) : (
-          <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10'>
+          <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10 dark:bg-gray-700'>
             <div className='form-control'>
               <div className='mb-6'>
                 <h1 className='text-xl font-bold text-center'>Sign Up</h1>
@@ -249,7 +249,7 @@ const SignUp: NextPage = () => {
                     name='username'
                     type='text'
                     placeholder='ユーザー名'
-                    className='bg-white ml-1 p-2'
+                    className='bg-white ml-1 p-2 dark:bg-gray-700'
                     value={username}
                     onChange={handleInputChange}
                   />
@@ -264,7 +264,7 @@ const SignUp: NextPage = () => {
                     name='email'
                     type='email'
                     placeholder='user@email.com'
-                    className='bg-white ml-1 p-2'
+                    className='bg-white ml-1 p-2 dark:bg-gray-700'
                     value={email}
                     onChange={handleInputChange}
                   />
@@ -279,7 +279,7 @@ const SignUp: NextPage = () => {
                     name='password'
                     type={isMasked ? 'password' : 'text'}
                     placeholder='パスワード'
-                    className='bg-white ml-1 p-2'
+                    className='bg-white ml-1 p-2 dark:bg-gray-700'
                     value={password}
                     onChange={handleInputChange}
                   />

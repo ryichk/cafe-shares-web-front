@@ -1,5 +1,6 @@
 import 'tailwindcss/tailwind.css';
 import * as nextImage from 'next/image';
+import { RouterContext } from 'next/dist/shared/lib/router-context';
 
 Object.defineProperty(nextImage, 'default', {
   configurable: true,
@@ -13,5 +14,8 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 };

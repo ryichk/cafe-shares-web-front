@@ -155,8 +155,8 @@ const UserProfile: NextPage = () => {
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
       {isSuccess ? <SuccessAlert message={successMessage} /> : <></>}
       <Header />
-      <div className='pt-44 min-h-screen'>
-        <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10'>
+      <div className='pt-44 min-h-screen dark:bg-dark dark:text-gray-300'>
+        <div className='card bg-white shadow-2xl w-96 p-10 m-auto sm:mt-10 dark:bg-gray-700'>
           <Avatar />
           <div className='m-auto mt-5'>
             <h1>{user?.username}</h1>
@@ -171,7 +171,7 @@ const UserProfile: NextPage = () => {
             </label>
             <input type='checkbox' id='edit-profile' className='modal-toggle' />
             <div className='modal'>
-              <div className='modal-box'>
+              <div className='modal-box dark:bg-gray-600 dark:text-gray-300'>
                 <div className='modal-action mb-5 justify-between'>
                   <label htmlFor='edit-profile'>
                     <CloseIcon classes='h-5' />
@@ -200,10 +200,10 @@ const UserProfile: NextPage = () => {
                   />
                 </div>
                 <div className='form-control'>
-                  <label className='text-left text-gray-500'>自己紹介</label>
+                  <label className='text-left text-gray-500 dark:text-gray-400'>自己紹介</label>
                   <textarea
                     name='profile'
-                    className='textarea h-24 textarea-bordered textarea-primary'
+                    className='textarea h-24 textarea-bordered textarea-primary dark:bg-gray-700'
                     placeholder='はじめまして。よろしくお願いします。'
                     value={profile}
                     onChange={handleTextareaChange}
