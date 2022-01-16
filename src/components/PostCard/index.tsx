@@ -10,7 +10,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const router = useRouter();
 
   return (
-    <div className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl'>
+    <div className='card bg-white my-5 mx-5 max-w-sm w-screen shadow-xl dark:bg-gray-700 dark:text-gray-300'>
       <Carousel post={post} />
       <div className='mx-4 mb-4'>
         <div className='flex items-center'>

@@ -16,7 +16,6 @@ import { ErrorAlert, InfoAlert, PostCard, SuccessAlert } from '../../components'
 import { AuthContext, AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
 import { onCreatePost } from '../../graphql/subscriptions';
-import { usePointToPositionOfSlide } from '../../hooks';
 import { CloseIcon, PlusIcon } from '../../icons';
 import type {
   CafeInfo,
@@ -50,8 +49,6 @@ const Cafe: NextPage<{
   const [previewURLs, setPreviewURLs] = useState<Array<string>>([]);
   const [imageNames, setImageNames] = useState<Array<string>>([]);
   const [posts, setPosts] = useState<Array<Post | null>>([]);
-
-  usePointToPositionOfSlide(posts);
 
   const cafeInfo = {
     アクセス: cafe.access,
@@ -259,7 +256,7 @@ const Cafe: NextPage<{
         <></>
       )}
       <Header />
-      <div className='pt-32'>
+      <div className='pt-32 dark:bg-dark dark:text-gray-300'>
         <div className='m-auto max-w-5xl mt-5 p-5 sm:p-14 rounded-t-xl'>
           <h1 className='text-3xl sm:text-4xl font-bold'>{cafe.name}</h1>
           <div className='my-5'>
@@ -304,7 +301,7 @@ const Cafe: NextPage<{
               </label>
               <input type='checkbox' id='posting-form' className='modal-toggle' />
               <div className='modal'>
-                <div className='modal-box'>
+                <div className='modal-box dark:bg-gray-600 dark:text-gray-300'>
                   <div className='form-control'>
                     <div className='flex justify-between'>
                       <span className='text-lg font-bold'>投稿フォーム</span>
@@ -316,14 +313,14 @@ const Cafe: NextPage<{
                       <div className='form-control'>
                         <textarea
                           rows={5}
-                          className='textarea textarea-primary bg-white'
+                          className='textarea textarea-primary bg-white dark:bg-gray-700'
                           value={contents}
                           onChange={handleTextareaChange}
                         />
                         {previewURLs.length ? (
                           <></>
                         ) : (
-                          <label className='btn mt-4'>
+                          <label className='btn mt-4 dark:bg-dark'>
                             写真を選択
                             <input
                               multiple

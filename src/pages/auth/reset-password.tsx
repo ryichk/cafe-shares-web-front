@@ -103,8 +103,8 @@ const ResetPassword: NextPage = () => {
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
       {isSuccess ? <SuccessAlert message={successMessage} /> : <></>}
       <Header />
-      <div className='pt-36 min-h-screen'>
-        <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10'>
+      <div className='pt-36 min-h-screen dark:bg-dark dark:text-gray-300'>
+        <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10 dark:bg-gray-700'>
           <div className='form-control'>
             <div className='mb-6'>
               <h1 className='text-xl font-bold text-center'>Password Reset</h1>
@@ -120,7 +120,7 @@ const ResetPassword: NextPage = () => {
                       name='code'
                       type='text'
                       placeholder='確認コード'
-                      className='bg-white ml-1 p-2'
+                      className='bg-white ml-1 p-2 dark:bg-gray-700'
                       value={code}
                       onChange={handleInputChange}
                     />
@@ -135,7 +135,7 @@ const ResetPassword: NextPage = () => {
                       name='password'
                       type='password'
                       placeholder='新しいパスワード'
-                      className='bg-white ml-1 p-2'
+                      className='bg-white ml-1 p-2 dark:bg-gray-700'
                       value={newPassword}
                       onChange={handleInputChange}
                     />
@@ -156,7 +156,7 @@ const ResetPassword: NextPage = () => {
                       name='username'
                       type='text'
                       placeholder='ユーザー名'
-                      className='bg-white ml-1 p-2'
+                      className='bg-white ml-1 p-2 dark:bg-gray-700'
                       value={username}
                       onChange={handleInputChange}
                     />

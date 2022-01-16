@@ -11,14 +11,14 @@ export const FilteringSelect: React.FC<SelectProps> = ({ label, name, data, stat
   };
 
   return (
-    <div className='flex justify-between items-center bg-white border-b-2'>
-      <label htmlFor={name} className='text-base sm:text-lg font-semibold'>
+    <div className='flex justify-between items-center bg-white border-b-2 dark:bg-gray-700'>
+      <label htmlFor={name} className='text-base sm:text-lg font-semibold dark:bg-gray-700'>
         {label}
       </label>
       <select
         name={name}
         id={name}
-        className='bg-white text-sm sm:text-lg font-semibold'
+        className='bg-white text-sm sm:text-lg font-semibold dark:bg-gray-700'
         value={state}
         onChange={handleChange}
       >
