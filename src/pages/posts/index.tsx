@@ -3,12 +3,10 @@ import { useEffect, useState } from 'react';
 
 import { Post } from '../../API';
 import { PostCard, ScrollToTop } from '../../components';
-import { usePointToPositionOfSlide } from '../../hooks';
 import { Header, Footer } from '../../layouts';
 
 const Posts: NextPage = () => {
   const [posts, setPosts] = useState([]);
-  usePointToPositionOfSlide(posts);
 
   useEffect(() => {
     fetch(`/api/posts`)
@@ -19,9 +17,9 @@ const Posts: NextPage = () => {
   return (
     <>
       <Header />
-      <div className='pt-36 min-h-screen'>
+      <div className='pt-36 min-h-screen dark:bg-dark'>
         <div className='container mx-auto'>
-          <h1 className='font-bold mt-3 ml-5 sm:hidden'>投稿一覧</h1>
+          <h1 className='font-bold mt-3 ml-5 sm:hidden dark:text-gray-400'>投稿一覧</h1>
           <div className='flex flex-wrap justify-center'>
             {posts.length ? (
               posts?.map((post: Post) => <PostCard key={post.id} post={post} />)

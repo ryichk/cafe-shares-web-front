@@ -84,8 +84,8 @@ const SignIn: NextPage = () => {
     <>
       {isError ? <ErrorAlert message={errorMessage} /> : <></>}
       <Header />
-      <div className='pt-36 min-h-screen'>
-        <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10'>
+      <div className='pt-36 min-h-screen dark:bg-dark dark:text-gray-300'>
+        <div className='card bg-white shadow-2xl w-96 p-10 m-auto mt-10 dark:bg-gray-700'>
           <div className='form-control'>
             <div className='mb-6'>
               <h1 className='text-xl font-bold text-center'>Sign In</h1>
@@ -99,7 +99,7 @@ const SignIn: NextPage = () => {
                   name='username'
                   type='text'
                   placeholder='ユーザー名'
-                  className='bg-white ml-1 p-2'
+                  className='bg-white ml-1 p-2 dark:bg-gray-700'
                   value={username}
                   onChange={handleInputChange}
                 />
@@ -114,7 +114,7 @@ const SignIn: NextPage = () => {
                   name='password'
                   type={isMasked ? 'password' : 'text'}
                   placeholder='パスワード'
-                  className='bg-white ml-1 p-2'
+                  className='bg-white ml-1 p-2 dark:bg-gray-700'
                   value={password}
                   onChange={handleInputChange}
                 />
@@ -140,7 +140,7 @@ const SignIn: NextPage = () => {
             </Link>
           </div>
         </div>
-        <div className='mt-10 text-center'>
+        <div className='mt-10 pb-10 text-center'>
           <p>まだアカウントをお持ちではありませんか？</p>
           <div className='mt-2'>
             <Link href='/auth/sign-up'>

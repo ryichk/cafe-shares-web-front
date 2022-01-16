@@ -66,7 +66,9 @@ const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
         }}
       >
         <AuthContext.Provider value={{ user, setUser }}>
-          <Component {...pageProps} />
+          <ThemeProvider attribute='class'>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </AuthContext.Provider>
       </AlertContext.Provider>
     </>

@@ -90,9 +90,9 @@ export const SearchForm: React.FC = () => {
   };
 
   return (
-    <div className='modal-box flex flex-col justify-center max-w-lg h-full sm:h-3/4 w-full bg-white pt-20 xs:p-10 overflow-y-scroll'>
+    <div className='modal-box flex flex-col justify-center max-w-lg h-full sm:h-3/4 w-full bg-white pt-20 xs:p-10 overflow-y-scroll dark:bg-gray-700'>
       <div className='max-w-sm w-full m-auto'>
-        <div className='flex justify-between'>
+        <div className='flex justify-between dark:text-gray-300'>
           <h2 className='text-2xl font-semibold'>検索条件</h2>
           <div className='modal-action mt-0'>
             <label htmlFor='search-form'>
@@ -100,7 +100,7 @@ export const SearchForm: React.FC = () => {
             </label>
           </div>
         </div>
-        <div className='flex flex-col my-4'>
+        <div className='flex flex-col my-4 dark:text-gray-300'>
           <div className='m-3'>
             <FilteringSelect
               label='都道府県'

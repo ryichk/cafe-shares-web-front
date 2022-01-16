@@ -46,7 +46,7 @@ const SearchResult: NextPage<{ results: HotpepperResponse['results'] }> = ({ res
 
   return (
     <>
-      <div className=''>
+      <div className='dark:bg-dark dark:text-gray-300'>
         <Header />
         <div className='pt-32'>
           <SearchResultContainer
