@@ -1,13 +1,15 @@
 import { Amplify, Auth } from 'aws-amplify';
 import { NextPage } from 'next';
 import { DefaultSeo } from 'next-seo';
+import { ThemeProvider } from 'next-themes';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import 'tailwindcss/tailwind.css';
+import '../styles/swiper-custom.css';
+
 import SEO from '../../next-seo.config';
 import awsExports from '../aws-exports';
-import 'tailwindcss/tailwind.css';
-
 import { AlertContext, AuthContext } from '../contexts';
 import { ICognitoUser } from '../interfaces';
 import * as gtag from '../lib/gtag';
