@@ -101,23 +101,15 @@ export const Header: VFC = () => {
                 <Link href='/'>
                   <a>
                     <HomeIcon classes='h-5 sm:h-7 mr-1' />
-                    HOME
+                    CAFES
                   </a>
                 </Link>
               </li>
               <li>
-                <Link href='/'>
-                  <a>
-                    <TemplateIcon classes='h-5 sm:h-7 mr-1' />
-                    POSTS
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href='/'>
+                <Link href='/posts'>
                   <a>
                     <PhotoIcon classes='h-5 sm:h-7 mr-1' />
-                    PHOTOS
+                    POSTS
                   </a>
                 </Link>
               </li>
