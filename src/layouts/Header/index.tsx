@@ -1,6 +1,7 @@
 import { Auth } from 'aws-amplify';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState, VFC } from 'react';
 import { useTheme } from 'next-themes';
 
@@ -22,6 +23,7 @@ import { ErrorAlert, SearchModal } from '../../components';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export const Header: VFC = () => {
+  const router = useRouter();
   const { user, setUser } = useContext(AuthContext);
 
   const [isError, setIsError] = useState(false);
@@ -102,7 +104,7 @@ export const Header: VFC = () => {
               </li>
               {user ? (
                 <>
-                  <li>
+                  <li className={router.pathname === '/auth/user-profile' && 'text-primary'}>
                     <Link href='/auth/user-profile'>
                       <a>
                         <UserIcon classes='h-5 sm:h-7 mr-1' />
@@ -120,7 +122,7 @@ export const Header: VFC = () => {
                   </li>
                 </>
               ) : (
-                <li>
+                <li className={router.pathname === '/auth/sign-in' && 'text-primary'}>
                   <Link href='/auth/sign-in'>
                     <a>
                       <SignInIcon classes='h-5 sm:h-7 mr-1' />
@@ -129,7 +131,7 @@ export const Header: VFC = () => {
                   </Link>
                 </li>
               )}
-              <li>
+              <li className={router.pathname === '/' && 'text-primary'}>
                 <Link href='/'>
                   <a>
                     <HomeIcon classes='h-5 sm:h-7 mr-1' />
@@ -137,7 +139,7 @@ export const Header: VFC = () => {
                   </a>
                 </Link>
               </li>
-              <li>
+              <li className={router.pathname === '/posts' && 'text-primary'}>
                 <Link href='/posts'>
                   <a>
                     <PhotoIcon classes='h-5 sm:h-7 mr-1' />
