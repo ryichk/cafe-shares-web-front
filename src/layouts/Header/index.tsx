@@ -85,7 +85,7 @@ export const Header: VFC = () => {
                 <div className='flex mx-auto mb-2'>
                   <label htmlFor='theme-change-toggle'>
                     <SunIcon
-                      classes={`h-6 mr-1 ${mounted && theme === 'light' && 'text-secondary'}`}
+                      classes={`h-6 mr-1 ${mounted && theme === 'light' ? 'text-secondary' : ''}`}
                     />
                   </label>
                   <input
@@ -97,14 +97,14 @@ export const Header: VFC = () => {
                   />
                   <label htmlFor='theme-change-toggle'>
                     <MoonIcon
-                      classes={`h-6 ml-1 ${mounted && theme === 'dark' && 'text-yellow-100'}`}
+                      classes={`h-6 ml-1 ${mounted && theme === 'dark' ? 'text-yellow-100' : ''}`}
                     />
                   </label>
                 </div>
               </li>
               {user ? (
                 <>
-                  <li className={router.pathname === '/auth/user-profile' && 'text-primary'}>
+                  <li className={router.pathname === '/auth/user-profile' ? 'text-primary' : ''}>
                     <Link href='/auth/user-profile'>
                       <a>
                         <UserIcon classes='h-5 sm:h-7 mr-1' />
@@ -122,7 +122,7 @@ export const Header: VFC = () => {
                   </li>
                 </>
               ) : (
-                <li className={router.pathname === '/auth/sign-in' && 'text-primary'}>
+                <li className={router.pathname === '/auth/sign-in' ? 'text-primary' : ''}>
                   <Link href='/auth/sign-in'>
                     <a>
                       <SignInIcon classes='h-5 sm:h-7 mr-1' />
@@ -131,7 +131,7 @@ export const Header: VFC = () => {
                   </Link>
                 </li>
               )}
-              <li className={router.pathname === '/' && 'text-primary'}>
+              <li className={router.pathname === '/' ? 'text-primary' : ''}>
                 <Link href='/'>
                   <a>
                     <HomeIcon classes='h-5 sm:h-7 mr-1' />
@@ -139,7 +139,7 @@ export const Header: VFC = () => {
                   </a>
                 </Link>
               </li>
-              <li className={router.pathname === '/posts' && 'text-primary'}>
+              <li className={router.pathname === '/posts' ? 'text-primary' : ''}>
                 <Link href='/posts'>
                   <a>
                     <PhotoIcon classes='h-5 sm:h-7 mr-1' />
