@@ -1,18 +1,18 @@
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Post } from '../../API';
 import { PostCard, ScrollToTop } from '../../components';
+import { useFetchPosts, useInfiniteScroll } from '../../hooks';
 import { Header, Footer } from '../../layouts';
 
 const Posts: NextPage = () => {
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    fetch(`/api/posts`)
-      .then((response) => response.json())
-      .then(({ posts }) => setPosts(posts));
-  }, []);
+  const [nextToken, setNextToken] = useState('0');
+  const [pageNumber, setPageNumber] = useState(0);
+  const lastPostCardRef = useRef();
+  useFetchPosts(null, nextToken, setNextToken, setPosts, pageNumber);
+  useInfiniteScroll(lastPostCardRef, setPageNumber);
 
   return (
     <>
@@ -28,6 +28,7 @@ const Posts: NextPage = () => {
                 <span>Loading...</span>
               </>
             )}
+            <div ref={lastPostCardRef} />
           </div>
           <div className='fixed right-3 sm:right-48 bottom-3'>
             <ScrollToTop />
