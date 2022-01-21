@@ -10,6 +10,7 @@ Amplify.configure({ ...awsExports, ssr: true });
 
 export interface PostsAPIResponse {
   posts: Array<Post | null>;
+  nextToken?: string | null;
 }
 
 const responsePostsData = async (
@@ -17,14 +18,25 @@ const responsePostsData = async (
   res: NextApiResponse<PostsAPIResponse>,
 ): Promise<void> => {
   const posts: Array<Post | null> = [];
+  let nextToken;
   try {
-    const options = {
-      cafeId: { eq: req.query.cafeId as string },
-    };
+    const cafeId = req.query.cafeId as string;
+    let options = {};
+    if (cafeId !== 'null') {
+      options = {
+        cafeId: { eq: cafeId },
+      };
+    }
+
+    let _nextToken = req.query.nextToken as string;
+    if (_nextToken === '0') _nextToken = null;
+
     const postsByDateQueryVariables: PostsByDateQueryVariables = {
       type: 'Post',
       filter: options,
       sortDirection: ModelSortDirection.DESC,
+      limit: 10,
+      nextToken: _nextToken,
     };
     const response = await API.graphql({
       query: postsByDate,
@@ -34,6 +46,7 @@ const responsePostsData = async (
     if ('data' in response && response.data) {
       const getPostData = response.data as PostsByDateQuery;
       const listPosts = getPostData.postsByDate;
+      nextToken = listPosts.nextToken;
       if (listPosts.items) {
         for (const post of listPosts.items) {
           const pictureURLs = [];
@@ -60,7 +73,7 @@ const responsePostsData = async (
     console.error(error);
   }
 
-  res.status(200).json({ posts });
+  res.status(200).json({ posts, nextToken });
 };
 
 export default responsePostsData;

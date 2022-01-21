@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { NextPage, GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import {
   CreatePostInput,
@@ -16,6 +16,7 @@ import { ErrorAlert, InfoAlert, PostCard, SuccessAlert } from '../../components'
 import { AuthContext, AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
 import { onCreatePost } from '../../graphql/subscriptions';
+import { useFetchPosts, useInfiniteScroll } from '../../hooks';
 import { CloseIcon, PlusIcon } from '../../icons';
 import type {
   CafeInfo,
@@ -49,6 +50,11 @@ const Cafe: NextPage<{
   const [previewURLs, setPreviewURLs] = useState<Array<string>>([]);
   const [imageNames, setImageNames] = useState<Array<string>>([]);
   const [posts, setPosts] = useState<Array<Post | null>>([]);
+  const [nextToken, setNextToken] = useState('0');
+  const [pageNumber, setPageNumber] = useState(0);
+  const lastPostCardRef = useRef();
+  useFetchPosts(cafe.id, nextToken, setNextToken, setPosts, pageNumber);
+  useInfiniteScroll(lastPostCardRef, setPageNumber);
 
   const cafeInfo = {
     アクセス: cafe.access,
@@ -163,10 +169,6 @@ const Cafe: NextPage<{
   };
 
   useEffect(() => {
-    fetch(`/api/posts?cafeId=${cafe.id}`)
-      .then((res) => res.json())
-      .then(({ posts }) => setPosts(posts));
-
     let unsubscribe;
     if (currentUsername) {
       const onCreatePostSubscriptionVariables: OnCreatePostSubscriptionVariables = {
@@ -413,6 +415,7 @@ const Cafe: NextPage<{
               ) : (
                 <>まだ投稿がありません。</>
               )}
+              <div ref={lastPostCardRef} />
             </div>
           </div>
         </div>
