@@ -12,7 +12,7 @@ import {
   Post,
 } from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
-import { ErrorAlert, InfoAlert, PostCard, SuccessAlert } from '../../components';
+import { ErrorAlert, InfoAlert, Map, PostCard, SuccessAlert } from '../../components';
 import { AuthContext, AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
 import { onCreatePost } from '../../graphql/subscriptions';
@@ -260,6 +260,9 @@ const Cafe: NextPage<{
       <Header />
       <div className='pt-32 dark:bg-dark dark:text-gray-300'>
         <div className='m-auto max-w-5xl mt-5 p-5 sm:p-14 rounded-t-xl'>
+          <div className='m-auto mb-3'>
+            <Image src={hotpepperImg} alt='hotpepper' />
+          </div>
           <h1 className='text-3xl sm:text-4xl font-bold'>{cafe.name}</h1>
           <div className='my-5'>
             <p className='text-lg sm:text-xl'>{cafe.catch}</p>
@@ -271,8 +274,12 @@ const Cafe: NextPage<{
                 background: `no-repeat center / cover url(${cafe.photo.pc.l})`,
               }}
             />
-            <div className='m-auto pt-1'>
-              <Image src={hotpepperImg} alt='hotpepper' />
+            <div className='mt-5'>
+              <Map
+                center={{ lat: cafe.lat, lng: cafe.lng }}
+                zoom={13}
+                containerStyle={{ width: '100%', height: '200px' }}
+              />
             </div>
             <div className='mt-5'>
               {Object.entries(cafeInfo).map(([key, value]) => (
