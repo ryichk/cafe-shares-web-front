@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { NextPage, GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import {
   CreatePostInput,
@@ -12,10 +12,11 @@ import {
   Post,
 } from '../../API';
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
-import { ErrorAlert, InfoAlert, PostCard, SuccessAlert } from '../../components';
+import { ErrorAlert, InfoAlert, Map, PostCard, SuccessAlert } from '../../components';
 import { AuthContext, AlertContext } from '../../contexts';
 import { createPost } from '../../graphql/mutations';
 import { onCreatePost } from '../../graphql/subscriptions';
+import { useFetchPosts, useInfiniteScroll } from '../../hooks';
 import { CloseIcon, PlusIcon } from '../../icons';
 import type {
   CafeInfo,
@@ -49,6 +50,11 @@ const Cafe: NextPage<{
   const [previewURLs, setPreviewURLs] = useState<Array<string>>([]);
   const [imageNames, setImageNames] = useState<Array<string>>([]);
   const [posts, setPosts] = useState<Array<Post | null>>([]);
+  const [nextToken, setNextToken] = useState('0');
+  const [pageNumber, setPageNumber] = useState(0);
+  const lastPostCardRef = useRef();
+  useFetchPosts(cafe.id, nextToken, setNextToken, setPosts, pageNumber);
+  useInfiniteScroll(lastPostCardRef, setPageNumber);
 
   const cafeInfo = {
     アクセス: cafe.access,
@@ -163,10 +169,6 @@ const Cafe: NextPage<{
   };
 
   useEffect(() => {
-    fetch(`/api/posts?cafeId=${cafe.id}`)
-      .then((res) => res.json())
-      .then(({ posts }) => setPosts(posts));
-
     let unsubscribe;
     if (currentUsername) {
       const onCreatePostSubscriptionVariables: OnCreatePostSubscriptionVariables = {
@@ -258,6 +260,9 @@ const Cafe: NextPage<{
       <Header />
       <div className='pt-32 dark:bg-dark dark:text-gray-300'>
         <div className='m-auto max-w-5xl mt-5 p-5 sm:p-14 rounded-t-xl'>
+          <div className='m-auto mb-3'>
+            <Image src={hotpepperImg} alt='hotpepper' />
+          </div>
           <h1 className='text-3xl sm:text-4xl font-bold'>{cafe.name}</h1>
           <div className='my-5'>
             <p className='text-lg sm:text-xl'>{cafe.catch}</p>
@@ -269,8 +274,12 @@ const Cafe: NextPage<{
                 background: `no-repeat center / cover url(${cafe.photo.pc.l})`,
               }}
             />
-            <div className='m-auto pt-1'>
-              <Image src={hotpepperImg} alt='hotpepper' />
+            <div className='mt-5'>
+              <Map
+                center={{ lat: cafe.lat, lng: cafe.lng }}
+                zoom={13}
+                containerStyle={{ width: '100%', height: '200px' }}
+              />
             </div>
             <div className='mt-5'>
               {Object.entries(cafeInfo).map(([key, value]) => (
@@ -413,6 +422,7 @@ const Cafe: NextPage<{
               ) : (
                 <>まだ投稿がありません。</>
               )}
+              <div ref={lastPostCardRef} />
             </div>
           </div>
         </div>
