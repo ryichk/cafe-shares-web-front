@@ -36,3 +36,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 ## Deploy on AWS Amplify
 
 [Deploy and host a hybrid app (SSG and SSR)](https://docs.amplify.aws/guides/hosting/nextjs/q/platform/js/#deploy-and-host-a-hybrid-app-ssg-and-ssr)
+
+## AWS Architecture
+
+<img width="1132" alt="cafe-shares-aws-architecture" src="https://user-images.githubusercontent.com/26560390/138563377-9a99472a-d043-4c18-9d28-6b4364483105.png">
