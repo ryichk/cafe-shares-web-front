@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState, useEffect, VFC } from 'react';
+import { useState, useEffect, useRef, VFC } from 'react';
 
 import hotpepperImg from '../../assets/images/hotpepper-s.gif';
 import { Button, CardList } from '../../components';
@@ -26,6 +26,8 @@ export const SearchResultContainer: VFC<SearchResultContainerProps> = ({
     results_returned: Number(results.results_returned),
     results_start: Number(results.results_start),
   });
+
+  const lastCafeCardRef = useRef();
 
   useEffect(() => {
     const request = async () => {
@@ -56,29 +58,36 @@ export const SearchResultContainer: VFC<SearchResultContainerProps> = ({
     request();
   }, [searchParams]);
 
-  const handleReadMore = (): void => {
-    if (shop.length === page.results_available) return;
+  useEffect(() => {
+    const handleReadMore = (): void => {
+      if (shop.length === page.results_available) return;
 
-    setSearchParams((prev) => {
-      return {
-        ...prev,
-        start: String(Number(prev.start) + 10),
-      };
-    });
+      setSearchParams((prev) => {
+        return {
+          ...prev,
+          start: String(Number(prev.start) + 10),
+        };
+      });
+    };
 
-    gtag.event({
-      action: 'click_read_more',
-      category: 'Click Read More Button',
-      label: 'clicked read more button',
-    });
-  };
+    const option = {
+      rootMargin: '0px',
+      threshold: 0,
+    };
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        handleReadMore();
+      }
+    }, option);
+    if (lastCafeCardRef.current) {
+      observer.observe(lastCafeCardRef.current);
+    }
+  }, []);
 
   return (
     <div className='container max-w-full mx-auto py-7'>
       <div className='flex max-w-md m-auto mb-5 text-gray-600'>
-        <span className='m-auto'>
-          {shop.length.toLocaleString()} / {page.results_available.toLocaleString()} cafes
-        </span>
+        <span className='m-auto'>{page.results_available.toLocaleString()} cafes</span>
         <div className='m-auto'>
           <Image src={hotpepperImg} alt='hotpepper' />
         </div>
@@ -90,13 +99,7 @@ export const SearchResultContainer: VFC<SearchResultContainerProps> = ({
           <CardList loading={loading} cafes={shop} />
         )}
       </div>
-      {shop.length === page.results_available ? (
-        <></>
-      ) : (
-        <div className='grid justify-center mt-5'>
-          <Button size='large' label='Read More' onClick={handleReadMore} />
-        </div>
-      )}
+      {shop.length === page.results_available ? <></> : <div ref={lastCafeCardRef} />}
     </div>
   );
 };
