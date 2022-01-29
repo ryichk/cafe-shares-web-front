@@ -20,7 +20,7 @@ export const Card: React.FC<CardProps> = ({
       </div>
     ) : (
       <Link href={`/cafe/${id}`} passHref>
-        <div className='card bg-white max-w-xs shadow-md w-screen min-h-full dark:bg-gray-700'>
+        <div className='card bg-white max-w-xs shadow-md w-screen min-h-full dark:bg-gray-700 cursor-pointer transition ease-in-out hover:scale-105'>
           <div
             className='h-52'
             style={{
