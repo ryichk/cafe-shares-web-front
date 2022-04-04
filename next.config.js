@@ -1,4 +1,5 @@
 module.exports = {
+  swcMinify: true,
   images: {
     domains: ['imgfp.hotp.jp', process.env.S3_BUCKET_HOSTNAME],
   },
