@@ -12,7 +12,7 @@ import SEO from '../../next-seo.config';
 import awsExports from '../aws-exports';
 import { AlertContext, AuthContext } from '../contexts';
 import { ICognitoUser } from '../interfaces';
-import * as gtag from '../lib/gtag';
+import { pageView } from '../lib/gtag';
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -38,7 +38,7 @@ const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
     init();
 
     const handleRouteChange = (url: URL) => {
-      gtag.pageView(url);
+      pageView(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
